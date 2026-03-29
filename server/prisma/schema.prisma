@@ -1,0 +1,308 @@
+// Staff Scheduling Platform Prisma Schema
+// All timestamps are stored in UTC
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum ShiftStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum SwapRequestStatus {
+  PENDING
+  APPROVED
+  CANCELLED
+}
+
+enum NotificationType {
+  SHIFT_ASSIGNED
+  SHIFT_CANCELLED
+  SWAP_REQUEST
+  SWAP_APPROVED
+  SWAP_DENIED
+  SCHEDULE_PUBLISHED
+  AVAILABILITY_REMINDER
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  ASSIGN
+  UNASSIGN
+  PUBLISH
+  APPROVE
+  CANCEL
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String
+  lastName  String
+  phone     String?
+  password  String
+  role      UserRole @default(STAFF)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userSkills           UserSkill[]
+  locationCertifications LocationCertification[]
+  availability         Availability[]
+  shiftAssignments     ShiftAssignment[]
+  createdShifts        Shift[]                 @relation("ShiftCreatedBy")
+  swapRequestsFrom     SwapRequest[]           @relation("SwapRequestFrom")
+  swapRequestsTo       SwapRequest[]           @relation("SwapRequestTo")
+  notifications        Notification[]
+  auditLogs            AuditLog[]
+
+  @@index([email])
+  @@index([role])
+  @@index([isActive])
+  @@map("users")
+}
+
+model Location {
+  id          Int    @id @default(autoincrement())
+  name        String
+  address     String
+  city        String
+  state       String
+  zipCode     String
+  timezone    String // IANA timezone identifier (e.g., "America/New_York")
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  locationCertifications LocationCertification[]
+  shifts                 Shift[]
+
+  @@index([isActive])
+  @@map("locations")
+}
+
+model Skill {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  userSkills UserSkill[]
+  shifts     Shift[]
+
+  @@index([isActive])
+  @@map("skills")
+}
+
+model UserSkill {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  skillId      Int
+  proficiency  Int      @default(1) // 1-5 scale
+  certifiedAt  DateTime?
+  expiresAt    DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@index([userId])
+  @@index([skillId])
+  @@map("user_skills")
+}
+
+model LocationCertification {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  locationId Int
+  certifiedAt DateTime @default(now())
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, locationId])
+  @@index([userId])
+  @@index([locationId])
+  @@map("location_certifications")
+}
+
+model Availability {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  dayOfWeek    Int?     // 0-6 (Sunday-Saturday) for recurring, null for one-off
+  startTime    String?  // HH:mm format for recurring availability
+  endTime      String?  // HH:mm format for recurring availability
+  specificDate DateTime? // For one-off availability/unavailability
+  startDateTime DateTime? // For specific date/time availability
+  endDateTime   DateTime? // For specific date/time availability
+  isAvailable  Boolean  @default(true) // false for unavailability/time-off
+  isRecurring  Boolean  @default(true) // true for weekly recurring, false for one-off
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([dayOfWeek])
+  @@index([specificDate])
+  @@index([isRecurring])
+  @@map("availability")
+}
+
+model Shift {
+  id              Int         @id @default(autoincrement())
+  locationId      Int
+  skillId         Int?        // Required skill for this shift
+  date            DateTime    // Date of the shift (stored in UTC)
+  startTime       DateTime    // Start time (stored in UTC)
+  endTime         DateTime    // End time (stored in UTC)
+  headcountNeeded Int         @default(1)
+  status          ShiftStatus @default(DRAFT)
+  title           String?
+  description     String?
+  createdById     Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  publishedAt     DateTime?
+
+  // Relations
+  location         Location          @relation(fields: [locationId], references: [id])
+  skill            Skill?            @relation(fields: [skillId], references: [id])
+  createdBy        User              @relation("ShiftCreatedBy", fields: [createdById], references: [id])
+  shiftAssignments ShiftAssignment[]
+  swapRequests     SwapRequest[]
+
+  @@index([locationId])
+  @@index([skillId])
+  @@index([date])
+  @@index([startTime])
+  @@index([status])
+  @@index([createdById])
+  @@map("shifts")
+}
+
+model ShiftAssignment {
+  id        Int      @id @default(autoincrement())
+  shiftId   Int
+  userId    Int
+  assignedAt DateTime @default(now())
+  assignedById Int?   // Who assigned this user
+  isConfirmed Boolean @default(false)
+  confirmedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  shift    Shift @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  user     User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  swapRequestsFrom SwapRequest[] @relation("SwapRequestFromAssignment")
+  swapRequestsTo   SwapRequest[] @relation("SwapRequestToAssignment")
+
+  @@unique([shiftId, userId])
+  @@index([shiftId])
+  @@index([userId])
+  @@index([assignedAt])
+  @@map("shift_assignments")
+}
+
+model SwapRequest {
+  id                 Int               @id @default(autoincrement())
+  fromAssignmentId   Int
+  toAssignmentId     Int?              // Optional if offering to give up shift
+  fromUserId         Int
+  toUserId           Int?              // Optional if open request
+  shiftId            Int
+  status             SwapRequestStatus @default(PENDING)
+  reason             String?
+  approvedById       Int?
+  approvedAt         DateTime?
+  cancelledAt        DateTime?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  // Relations
+  fromAssignment ShiftAssignment @relation("SwapRequestFromAssignment", fields: [fromAssignmentId], references: [id])
+  toAssignment   ShiftAssignment? @relation("SwapRequestToAssignment", fields: [toAssignmentId], references: [id])
+  fromUser       User             @relation("SwapRequestFrom", fields: [fromUserId], references: [id])
+  toUser         User?            @relation("SwapRequestTo", fields: [toUserId], references: [id])
+  shift          Shift            @relation(fields: [shiftId], references: [id])
+
+  @@index([fromUserId])
+  @@index([toUserId])
+  @@index([shiftId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("swap_requests")
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  userId    Int
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?            // Additional structured data
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id          Int         @id @default(autoincrement())
+  userId      Int?        // User who performed the action
+  action      AuditAction
+  entityType  String      // e.g., "Shift", "User", "SwapRequest"
+  entityId    Int
+  oldValues   Json?       // Previous state
+  newValues   Json?       // New state
+  description String?     // Human-readable description
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([entityType])
+  @@index([entityId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
