@@ -3,21 +3,30 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import { createServer } from 'http'
 import { PrismaClient } from '@prisma/client'
 import swaggerUi from 'swagger-ui-express'
 import { swaggerSpec } from './config/swagger'
+import { initializeSocketService } from './services/socketService'
 
 // Import routes and middleware
 import authRoutes from './routes/auth'
 import shiftRoutes from './routes/shifts'
+import swapRequestRoutes from './routes/swapRequests'
+import overtimeRoutes from './routes/overtime'
+import notificationRoutes from './routes/notifications'
 import { authenticateToken } from './middleware/auth'
 import { requireAdmin, requireManagerOrAdmin } from './middleware/roleGuards'
 
 dotenv.config()
 
 const app = express()
+const httpServer = createServer(app)
 const prisma = new PrismaClient()
 const port = process.env.PORT || 3000
+
+// Initialize Socket.io
+const socketService = initializeSocketService(httpServer)
 
 app.use(helmet())
 app.use(cors())
@@ -52,6 +61,9 @@ app.use('/auth', authRoutes)
 
 // Protected API routes
 app.use('/api/shifts', shiftRoutes)
+app.use('/api/swap-requests', swapRequestRoutes)
+app.use('/api/overtime', overtimeRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 // Legacy protected routes
 app.get('/api/users', authenticateToken, requireManagerOrAdmin, async (req, res) => {
@@ -142,8 +154,9 @@ app.get('/api/my-shifts', authenticateToken, async (req, res) => {
 
 process.on('beforeExit', async () => {
   await prisma.$disconnect()
+  await socketService.close()
 })
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+httpServer.listen(port, () => {
+  console.log(`Server with Socket.io is running on port ${port}`)
 })

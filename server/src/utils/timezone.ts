@@ -1,8 +1,8 @@
 import { addDays, startOfWeek, endOfWeek, differenceInHours, differenceInMinutes, format, startOfDay, endOfDay } from 'date-fns'
-import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
+import { zonedTimeToUtc, toZonedTime } from 'date-fns-tz'
 
 export function convertToTimezone(date: Date, timezone: string): Date {
-  return utcToZonedTime(date, timezone)
+  return toZonedTime(date, timezone)
 }
 
 export function convertToUtc(date: Date, timezone: string): Date {

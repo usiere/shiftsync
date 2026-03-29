@@ -1,25 +1,34 @@
 import { ValidationResult, ConstraintContext, ConstraintType } from '../../types/constraint'
-import { getShiftDurationHours, isSameDay } from '../../utils/timezone'
+import { timezoneService } from '../timezoneService'
 
 const DAILY_HOURS_WARNING = 8
 const DAILY_HOURS_HARD_LIMIT = 12
 
 export function validateDailyHours(context: ConstraintContext): ValidationResult {
   const { proposedAssignment, existingAssignments } = context
-  const { userId, shift: proposedShift, user } = proposedAssignment
+  const { user, shift: proposedShift } = proposedAssignment
+  const userId = user.id
 
-  // Calculate hours for the proposed shift
-  const proposedShiftHours = getShiftDurationHours(proposedShift.startTime, proposedShift.endTime)
+  // Calculate hours for the proposed shift accounting for timezone
+  const proposedShiftHours = timezoneService.getShiftDurationHours(
+    proposedShift.startTime,
+    proposedShift.endTime,
+    proposedShift.location.timezone
+  )
 
   // Find existing assignments on the same day
   const sameDayAssignments = existingAssignments.filter(assignment =>
     assignment.userId === userId &&
-    isSameDay(assignment.shift.date, proposedShift.date)
+    timezoneService.areSameDay(assignment.shift.date, proposedShift.date)
   )
 
   // Calculate total hours for the day including the proposed shift
   const existingDailyHours = sameDayAssignments.reduce((total, assignment) => {
-    return total + getShiftDurationHours(assignment.shift.startTime, assignment.shift.endTime)
+    return total + timezoneService.getShiftDurationHours(
+      assignment.shift.startTime,
+      assignment.shift.endTime,
+      assignment.shift.location.timezone
+    )
   }, 0)
 
   const totalDailyHours = existingDailyHours + proposedShiftHours
@@ -43,11 +52,15 @@ export function validateDailyHours(context: ConstraintContext): ValidationResult
       // Check if alternative user would exceed daily limits
       const altSameDayAssignments = existingAssignments.filter(assignment =>
         assignment.userId === alternativeUser.id &&
-        isSameDay(assignment.shift.date, proposedShift.date)
+        timezoneService.areSameDay(assignment.shift.date, proposedShift.date)
       )
 
       const altExistingDailyHours = altSameDayAssignments.reduce((total, assignment) => {
-        return total + getShiftDurationHours(assignment.shift.startTime, assignment.shift.endTime)
+        return total + timezoneService.getShiftDurationHours(
+          assignment.shift.startTime,
+          assignment.shift.endTime,
+          assignment.shift.location.timezone
+        )
       }, 0)
 
       const altTotalDailyHours = altExistingDailyHours + proposedShiftHours

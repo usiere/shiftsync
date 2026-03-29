@@ -332,7 +332,7 @@ export class ShiftService {
         },
         shift: {
           include: {
-            location: { select: { name: true } }
+            location: { select: { name: true, timezone: true } }
           }
         }
       }

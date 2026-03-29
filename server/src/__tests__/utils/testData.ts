@@ -14,6 +14,7 @@ export const mockUsers: QualifiedUser[] = [
     isActive: true,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
+    hourlyRate: 15.00,
     userSkills: [
       {
         id: 1,
@@ -67,6 +68,7 @@ export const mockUsers: QualifiedUser[] = [
     isActive: true,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
+    hourlyRate: 16.50,
     userSkills: [
       {
         id: 2,
@@ -120,6 +122,7 @@ export const mockUsers: QualifiedUser[] = [
     isActive: true,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
+    hourlyRate: 14.75,
     userSkills: [
       {
         id: 3,
@@ -177,7 +180,7 @@ export function createShiftAssignment(
     date: Date
     startTime: Date
     endTime: Date
-  }>
+  }> = {}
 ): ShiftAssignmentData {
   const user = mockUsers.find(u => u.id === userId)
   if (!user) throw new Error(`User with id ${userId} not found`)

@@ -133,7 +133,7 @@ export class ConstraintEngine {
 
     // Test each qualified user as an alternative
     for (const user of context.allQualifiedUsers) {
-      if (user.id === context.proposedAssignment.userId) {
+      if (user.id === context.proposedAssignment.user.id) {
         continue // Skip the originally proposed user
       }
 
@@ -142,7 +142,6 @@ export class ConstraintEngine {
         ...context,
         proposedAssignment: {
           ...context.proposedAssignment,
-          userId: user.id,
           user: user as any
         }
       }

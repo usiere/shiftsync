@@ -1,10 +1,10 @@
-import { User, Shift, ShiftAssignment, UserSkill, LocationCertification, Availability } from '@prisma/client'
+import { User, Shift, UserSkill, LocationCertification, Availability } from '@prisma/client'
 
 export interface ValidationResult {
   valid: boolean
   rule: string
   message: string
-  suggestions: User[]
+  suggestions: QualifiedUser[]
   severity?: 'warning' | 'error'
 }
 
@@ -50,7 +50,8 @@ export interface ExistingAssignment {
   }
 }
 
-export interface QualifiedUser extends User {
+export interface QualifiedUser extends Omit<User, 'hourlyRate'> {
+  hourlyRate: number | null
   userSkills: (UserSkill & {
     skill: {
       id: number
@@ -62,7 +63,20 @@ export interface QualifiedUser extends User {
 }
 
 export interface ConstraintContext {
-  proposedAssignment: ShiftAssignmentData
+  proposedAssignment: {
+    user: QualifiedUser
+    shift: Shift & {
+      location: {
+        id: number
+        name: string
+        timezone: string
+      }
+      skill?: {
+        id: number
+        name: string
+      } | null
+    }
+  }
   existingAssignments: ExistingAssignment[]
   allQualifiedUsers: QualifiedUser[]
   overrideFlags?: {

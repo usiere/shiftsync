@@ -23,8 +23,15 @@ enum ShiftStatus {
 
 enum SwapRequestStatus {
   PENDING
-  APPROVED
+  ACCEPTED        // For swap requests - when target user accepts
+  APPROVED        // Manager approval
   CANCELLED
+  EXPIRED         // For drop requests that expire
+}
+
+enum SwapRequestType {
+  SWAP            // Staff A wants to swap with Staff B
+  DROP            // Staff wants to drop shift for anyone to pick up
 }
 
 enum NotificationType {
@@ -35,6 +42,12 @@ enum NotificationType {
   SWAP_DENIED
   SCHEDULE_PUBLISHED
   AVAILABILITY_REMINDER
+  SWAP_REQUESTED
+  SWAP_ACCEPTED
+  SWAP_CANCELLED
+  SWAP_PENDING_APPROVAL
+  DROP_REQUESTED
+  SHIFT_PICKED_UP
 }
 
 enum AuditAction {
@@ -57,6 +70,7 @@ model User {
   password  String
   role      UserRole @default(STAFF)
   isActive  Boolean  @default(true)
+  hourlyRate Float?  // Base hourly rate in dollars
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -70,6 +84,7 @@ model User {
   swapRequestsTo       SwapRequest[]           @relation("SwapRequestTo")
   notifications        Notification[]
   auditLogs            AuditLog[]
+  notificationPreferences UserNotificationPreferences?
 
   @@index([email])
   @@index([role])
@@ -236,15 +251,18 @@ model ShiftAssignment {
 model SwapRequest {
   id                 Int               @id @default(autoincrement())
   fromAssignmentId   Int
-  toAssignmentId     Int?              // Optional if offering to give up shift
+  toAssignmentId     Int?              // Optional for drop requests
   fromUserId         Int
-  toUserId           Int?              // Optional if open request
+  toUserId           Int?              // Optional for drop requests
   shiftId            Int
+  type               SwapRequestType   @default(SWAP)
   status             SwapRequestStatus @default(PENDING)
   reason             String?
   approvedById       Int?
   approvedAt         DateTime?
+  acceptedAt         DateTime?         // When target user accepts swap
   cancelledAt        DateTime?
+  expiresAt          DateTime?         // For drop requests - 24h before shift
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
 
@@ -305,4 +323,24 @@ model AuditLog {
   @@index([action])
   @@index([createdAt])
   @@map("audit_logs")
+}
+
+model UserNotificationPreferences {
+  id                    Int     @id @default(autoincrement())
+  userId                Int     @unique
+  emailNotifications    Boolean @default(true)
+  pushNotifications     Boolean @default(true)
+  shiftAssignments      Boolean @default(true)
+  shiftCancellations    Boolean @default(true)
+  swapRequests          Boolean @default(true)
+  schedulePublished     Boolean @default(true)
+  availabilityReminders Boolean @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_notification_preferences")
 }

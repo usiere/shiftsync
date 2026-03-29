@@ -1,86 +1,39 @@
 import { ValidationResult, ConstraintContext, ConstraintType } from '../../types/constraint'
-import { isTimeInAvailabilityWindow, convertToTimezone, isSameDay } from '../../utils/timezone'
+import { timezoneService, ShiftTimes, StaffAvailability } from '../timezoneService'
 
 export function validateAvailabilityWindow(context: ConstraintContext): ValidationResult {
   const { proposedAssignment } = context
   const { user, shift } = proposedAssignment
-  const timezone = shift.location.timezone
 
-  // Convert shift times to local timezone
-  const localShiftStart = convertToTimezone(shift.startTime, timezone)
-  const localShiftEnd = convertToTimezone(shift.endTime, timezone)
-
-  // Check recurring availability first
-  const recurringAvailability = user.availability.filter(avail => avail.isRecurring && avail.isAvailable)
-  const shiftDayOfWeek = localShiftStart.getDay()
-
-  let hasRecurringAvailability = false
-  for (const availability of recurringAvailability) {
-    if (availability.dayOfWeek === shiftDayOfWeek &&
-        availability.startTime && availability.endTime) {
-
-      if (isTimeInAvailabilityWindow(
-        shift.startTime,
-        shift.endTime,
-        availability.startTime,
-        availability.endTime,
-        shiftDayOfWeek,
-        timezone
-      )) {
-        hasRecurringAvailability = true
-        break
-      }
-    }
+  // Convert shift to TimezoneService format
+  const shiftTimes: ShiftTimes = {
+    id: shift.id,
+    date: shift.date,
+    startTime: shift.startTime,
+    endTime: shift.endTime,
+    locationTimezone: shift.location.timezone
   }
 
-  // Check for specific date unavailability
-  const specificUnavailability = user.availability.filter(avail =>
-    !avail.isRecurring &&
-    !avail.isAvailable &&
-    avail.specificDate &&
-    isSameDay(avail.specificDate, shift.date)
-  )
+  // Convert user availability to TimezoneService format
+  const staffAvailability: StaffAvailability[] = user.availability.map(avail => ({
+    id: avail.id,
+    userId: avail.userId,
+    dayOfWeek: avail.dayOfWeek,
+    startTime: avail.startTime,
+    endTime: avail.endTime,
+    specificDate: avail.specificDate,
+    startDateTime: avail.startDateTime,
+    endDateTime: avail.endDateTime,
+    isAvailable: avail.isAvailable,
+    isRecurring: avail.isRecurring,
+    notes: avail.notes
+  }))
 
-  // Check for specific date availability that might override recurring patterns
-  const specificAvailability = user.availability.filter(avail =>
-    !avail.isRecurring &&
-    avail.isAvailable &&
-    avail.specificDate &&
-    avail.startDateTime &&
-    avail.endDateTime &&
-    isSameDay(avail.specificDate, shift.date)
-  )
+  // Check availability using TimezoneService
+  const availabilityCheck = timezoneService.isWithinAvailability(shiftTimes, staffAvailability)
 
-  let hasSpecificAvailability = false
-  for (const availability of specificAvailability) {
-    if (availability.startDateTime! <= shift.startTime &&
-        availability.endDateTime! >= shift.endTime) {
-      hasSpecificAvailability = true
-      break
-    }
-  }
-
-  // If there's specific unavailability, check if it's overridden by specific availability
-  const hasSpecificUnavailability = specificUnavailability.length > 0
-
-  let isAvailable = false
-  let reasonMessage = ''
-
-  if (hasSpecificAvailability) {
-    // Specific availability overrides everything
-    isAvailable = true
-  } else if (hasSpecificUnavailability) {
-    // Specific unavailability blocks the assignment
-    isAvailable = false
-    reasonMessage = 'has requested time off on this date'
-  } else if (hasRecurringAvailability) {
-    // Recurring availability and no specific conflicts
-    isAvailable = true
-  } else {
-    // No availability window covers this shift
-    isAvailable = false
-    reasonMessage = 'is not available during these hours'
-  }
+  let isAvailable = availabilityCheck.isAvailable
+  let reasonMessage = availabilityCheck.details
 
   if (!isAvailable) {
     // Find alternative users who are available
@@ -98,73 +51,32 @@ export function validateAvailabilityWindow(context: ConstraintContext): Validati
         if (!hasSkill) return false
       }
 
-      // Check availability for this user
-      const altRecurringAvailability = alternativeUser.availability.filter(
-        avail => avail.isRecurring && avail.isAvailable
-      )
+      // Check availability using TimezoneService
+      const altStaffAvailability: StaffAvailability[] = alternativeUser.availability.map(avail => ({
+        id: avail.id,
+        userId: avail.userId,
+        dayOfWeek: avail.dayOfWeek,
+        startTime: avail.startTime,
+        endTime: avail.endTime,
+        specificDate: avail.specificDate,
+        startDateTime: avail.startDateTime,
+        endDateTime: avail.endDateTime,
+        isAvailable: avail.isAvailable,
+        isRecurring: avail.isRecurring,
+        notes: avail.notes
+      }))
 
-      let altHasRecurringAvailability = false
-      for (const availability of altRecurringAvailability) {
-        if (availability.dayOfWeek === shiftDayOfWeek &&
-            availability.startTime && availability.endTime) {
-
-          if (isTimeInAvailabilityWindow(
-            shift.startTime,
-            shift.endTime,
-            availability.startTime,
-            availability.endTime,
-            shiftDayOfWeek,
-            timezone
-          )) {
-            altHasRecurringAvailability = true
-            break
-          }
-        }
-      }
-
-      const altSpecificUnavailability = alternativeUser.availability.filter(avail =>
-        !avail.isRecurring &&
-        !avail.isAvailable &&
-        avail.specificDate &&
-        isSameDay(avail.specificDate, shift.date)
-      )
-
-      const altSpecificAvailability = alternativeUser.availability.filter(avail =>
-        !avail.isRecurring &&
-        avail.isAvailable &&
-        avail.specificDate &&
-        avail.startDateTime &&
-        avail.endDateTime &&
-        isSameDay(avail.specificDate, shift.date)
-      )
-
-      let altHasSpecificAvailability = false
-      for (const availability of altSpecificAvailability) {
-        if (availability.startDateTime! <= shift.startTime &&
-            availability.endDateTime! >= shift.endTime) {
-          altHasSpecificAvailability = true
-          break
-        }
-      }
-
-      const altHasSpecificUnavailability = altSpecificUnavailability.length > 0
-
-      // Determine if alternative user is available
-      if (altHasSpecificAvailability) {
-        return true
-      } else if (altHasSpecificUnavailability) {
-        return false
-      } else if (altHasRecurringAvailability) {
-        return true
-      }
-
-      return false
+      const altAvailabilityCheck = timezoneService.isWithinAvailability(shiftTimes, altStaffAvailability)
+      return altAvailabilityCheck.isAvailable
     })
+
+    // Get display information for error message
+    const shiftDisplay = timezoneService.getShiftDisplay(shiftTimes)
 
     return {
       valid: false,
       rule: ConstraintType.AVAILABILITY_WINDOW,
-      message: `${user.firstName} ${user.lastName} ${reasonMessage || 'is not available'} for this shift (${localShiftStart.toLocaleString()} - ${localShiftEnd.toLocaleString()} ${timezone})`,
+      message: `${user.firstName} ${user.lastName} ${reasonMessage} for this shift (${shiftDisplay.localStartTime} - ${shiftDisplay.localEndTime} ${shiftDisplay.timezoneAbbreviation} on ${shiftDisplay.localDate})`,
       suggestions
     }
   }

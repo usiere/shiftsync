@@ -1,18 +1,23 @@
 import { ValidationResult, ConstraintContext, ConstraintType } from '../../types/constraint'
-import { getShiftDurationHours, getWeekRange } from '../../utils/timezone'
+import { timezoneService } from '../timezoneService'
 
 const WEEKLY_HOURS_WARNING = 35
 const WEEKLY_HOURS_HARD_LIMIT = 40
 
 export function validateWeeklyHours(context: ConstraintContext): ValidationResult {
   const { proposedAssignment, existingAssignments } = context
-  const { userId, shift: proposedShift, user } = proposedAssignment
+  const { user, shift: proposedShift } = proposedAssignment
+  const userId = user.id
 
-  // Calculate hours for the proposed shift
-  const proposedShiftHours = getShiftDurationHours(proposedShift.startTime, proposedShift.endTime)
+  // Calculate hours for the proposed shift accounting for timezone
+  const proposedShiftHours = timezoneService.getShiftDurationHours(
+    proposedShift.startTime,
+    proposedShift.endTime,
+    proposedShift.location.timezone
+  )
 
   // Get week range for the proposed shift
-  const weekRange = getWeekRange(proposedShift.date)
+  const weekRange = timezoneService.getWeekRange(proposedShift.date)
 
   // Find existing assignments in the same week
   const sameWeekAssignments = existingAssignments.filter(assignment => {
@@ -24,7 +29,11 @@ export function validateWeeklyHours(context: ConstraintContext): ValidationResul
 
   // Calculate total hours for the week including the proposed shift
   const existingWeeklyHours = sameWeekAssignments.reduce((total, assignment) => {
-    return total + getShiftDurationHours(assignment.shift.startTime, assignment.shift.endTime)
+    return total + timezoneService.getShiftDurationHours(
+      assignment.shift.startTime,
+      assignment.shift.endTime,
+      assignment.shift.location.timezone
+    )
   }, 0)
 
   const totalWeeklyHours = existingWeeklyHours + proposedShiftHours
@@ -55,7 +64,11 @@ export function validateWeeklyHours(context: ConstraintContext): ValidationResul
         })
 
         const altExistingWeeklyHours = altSameWeekAssignments.reduce((total, assignment) => {
-          return total + getShiftDurationHours(assignment.shift.startTime, assignment.shift.endTime)
+          return total + timezoneService.getShiftDurationHours(
+            assignment.shift.startTime,
+            assignment.shift.endTime,
+            assignment.shift.location.timezone
+          )
         }, 0)
 
         const altTotalWeeklyHours = altExistingWeeklyHours + proposedShiftHours

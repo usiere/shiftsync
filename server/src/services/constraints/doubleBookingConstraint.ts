@@ -1,19 +1,22 @@
 import { ValidationResult, ConstraintContext, ConstraintType } from '../../types/constraint'
-import { doShiftsOverlap } from '../../utils/timezone'
+import { timezoneService } from '../timezoneService'
 
 export function validateNoDoubleBooking(context: ConstraintContext): ValidationResult {
   const { proposedAssignment, existingAssignments } = context
-  const { userId, shift: proposedShift } = proposedAssignment
+  const { user, shift: proposedShift } = proposedAssignment
+  const userId = user.id
 
   // Find overlapping assignments for the same user
   const overlappingAssignments = existingAssignments.filter(assignment => {
     if (assignment.userId !== userId) return false
 
-    return doShiftsOverlap(
+    return timezoneService.doShiftsOverlap(
       proposedShift.startTime,
       proposedShift.endTime,
+      proposedShift.location.timezone,
       assignment.shift.startTime,
-      assignment.shift.endTime
+      assignment.shift.endTime,
+      assignment.shift.location.timezone
     )
   })
 
@@ -39,11 +42,13 @@ export function validateNoDoubleBooking(context: ConstraintContext): ValidationR
       // Check if user has no overlapping assignments
       const hasOverlap = existingAssignments.some(assignment => {
         if (assignment.userId !== user.id) return false
-        return doShiftsOverlap(
+        return timezoneService.doShiftsOverlap(
           proposedShift.startTime,
           proposedShift.endTime,
+          proposedShift.location.timezone,
           assignment.shift.startTime,
-          assignment.shift.endTime
+          assignment.shift.endTime,
+          assignment.shift.location.timezone
         )
       })
 
@@ -53,7 +58,7 @@ export function validateNoDoubleBooking(context: ConstraintContext): ValidationR
     return {
       valid: false,
       rule: ConstraintType.NO_DOUBLE_BOOKING,
-      message: `${proposedAssignment.user.firstName} ${proposedAssignment.user.lastName} is already assigned to a shift from ${overlappingShift.shift.startTime.toLocaleTimeString()} to ${overlappingShift.shift.endTime.toLocaleTimeString()}`,
+      message: `${user.firstName} ${user.lastName} is already assigned to a shift from ${overlappingShift.shift.startTime.toLocaleTimeString()} to ${overlappingShift.shift.endTime.toLocaleTimeString()}`,
       suggestions
     }
   }

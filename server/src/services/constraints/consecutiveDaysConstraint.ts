@@ -1,5 +1,5 @@
 import { ValidationResult, ConstraintContext, ConstraintType } from '../../types/constraint'
-import { getConsecutiveDays, isSameDay } from '../../utils/timezone'
+import { timezoneService } from '../timezoneService'
 import { addDays, subDays } from 'date-fns'
 
 const CONSECUTIVE_DAYS_WARNING = 6
@@ -7,7 +7,8 @@ const CONSECUTIVE_DAYS_HARD_LIMIT = 7
 
 export function validateConsecutiveDays(context: ConstraintContext): ValidationResult {
   const { proposedAssignment, existingAssignments } = context
-  const { userId, shift: proposedShift, user } = proposedAssignment
+  const { user, shift: proposedShift } = proposedAssignment
+  const userId = user.id
 
   // Get all assignment dates for the user including the proposed shift
   const userAssignments = existingAssignments.filter(assignment => assignment.userId === userId)
@@ -27,14 +28,14 @@ export function validateConsecutiveDays(context: ConstraintContext): ValidationR
 
   // Count backward from proposed date
   let currentDate = subDays(proposedShiftDate, 1)
-  while (uniqueDates.some(date => isSameDay(date, currentDate))) {
+  while (uniqueDates.some(date => timezoneService.areSameDay(date, currentDate))) {
     consecutiveDaysIncludingProposed++
     currentDate = subDays(currentDate, 1)
   }
 
   // Count forward from proposed date
   currentDate = addDays(proposedShiftDate, 1)
-  while (uniqueDates.some(date => isSameDay(date, currentDate))) {
+  while (uniqueDates.some(date => timezoneService.areSameDay(date, currentDate))) {
     consecutiveDaysIncludingProposed++
     currentDate = addDays(currentDate, 1)
   }
@@ -70,13 +71,13 @@ export function validateConsecutiveDays(context: ConstraintContext): ValidationR
         // Calculate consecutive days for alternative user
         let altConsecutiveDays = 1
         let altCurrentDate = subDays(proposedShiftDate, 1)
-        while (altUniqueDates.some(date => isSameDay(date, altCurrentDate))) {
+        while (altUniqueDates.some(date => timezoneService.areSameDay(date, altCurrentDate))) {
           altConsecutiveDays++
           altCurrentDate = subDays(altCurrentDate, 1)
         }
 
         altCurrentDate = addDays(proposedShiftDate, 1)
-        while (altUniqueDates.some(date => isSameDay(date, altCurrentDate))) {
+        while (altUniqueDates.some(date => timezoneService.areSameDay(date, altCurrentDate))) {
           altConsecutiveDays++
           altCurrentDate = addDays(altCurrentDate, 1)
         }
