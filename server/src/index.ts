@@ -15,6 +15,12 @@ import shiftRoutes from './routes/shifts'
 import swapRequestRoutes from './routes/swapRequests'
 import overtimeRoutes from './routes/overtime'
 import notificationRoutes from './routes/notifications'
+import dashboardRoutes from './routes/dashboard'
+import analyticsRoutes from './routes/analytics'
+import auditLogRoutes from './routes/auditLogs'
+import staffRoutes from './routes/staff'
+import locationsRoutes from './routes/locations'
+import skillsRoutes from './routes/skills'
 import { authenticateToken } from './middleware/auth'
 import { requireAdmin, requireManagerOrAdmin } from './middleware/roleGuards'
 
@@ -64,6 +70,12 @@ app.use('/api/shifts', shiftRoutes)
 app.use('/api/swap-requests', swapRequestRoutes)
 app.use('/api/overtime', overtimeRoutes)
 app.use('/api/notifications', notificationRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/analytics', analyticsRoutes)
+app.use('/api/audit-logs', auditLogRoutes)
+app.use('/api/staff', staffRoutes)
+app.use('/api/locations', locationsRoutes)
+app.use('/api/skills', skillsRoutes)
 
 // Legacy protected routes
 app.get('/api/users', authenticateToken, requireManagerOrAdmin, async (req, res) => {

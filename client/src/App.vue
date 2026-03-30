@@ -1,26 +1,21 @@
 <template>
-  <component :is="layoutComponent">
+  <v-app class="app-container">
     <router-view />
-  </component>
+    <GlobalToasts />
+  </v-app>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import AuthLayout from '@/layouts/AuthLayout.vue'
-
-const route = useRoute()
-
-const layoutComponent = computed(() => {
-  const layout = route.meta.layout as string
-
-  switch (layout) {
-    case 'auth':
-      return AuthLayout
-    case 'default':
-    default:
-      return DefaultLayout
-  }
-})
+import GlobalToasts from './components/GlobalToasts.vue'
 </script>
+
+<style>
+.app-container {
+  background: #F7F8FA;
+  min-height: 100vh;
+}
+
+.app-container .v-main {
+  background: #F7F8FA !important;
+}
+</style>

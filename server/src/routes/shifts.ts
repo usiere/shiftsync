@@ -999,6 +999,104 @@ router.post('/:id/drop', authenticateToken, async (req: Request, res: Response) 
 })
 
 /**
+ * GET /shifts/available-drops - Get shifts with status DROP_REQUESTED that the logged-in staff member qualifies for
+ */
+router.get('/available-drops', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!.id
+
+    // Get user's skills and location certifications
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        userSkills: {
+          include: { skill: true }
+        },
+        locationCertifications: {
+          include: { location: true }
+        }
+      }
+    })
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found',
+        message: 'User profile not found'
+      })
+    }
+
+    const userSkillIds = user.userSkills.map(us => us.skillId)
+    const userLocationIds = user.locationCertifications.map(lc => lc.locationId)
+
+    // Find swap requests with PENDING status and type DROP where the user qualifies
+    const availableDrops = await prisma.swapRequest.findMany({
+      where: {
+        type: 'DROP',
+        status: 'PENDING',
+        fromAssignment: {
+          shift: {
+            locationId: { in: userLocationIds },
+            OR: [
+              { skillId: { in: userSkillIds } },
+              { skillId: null } // No specific skill required
+            ]
+          },
+          userId: { not: userId } // Exclude user's own shifts
+        }
+      },
+      include: {
+        fromAssignment: {
+          include: {
+            shift: {
+              include: {
+                location: {
+                  select: { id: true, name: true, timezone: true }
+                },
+                skill: {
+                  select: { id: true, name: true }
+                }
+              }
+            },
+            user: {
+              select: { id: true, firstName: true, lastName: true }
+            }
+          }
+        }
+      }
+    })
+
+    const formattedDrops = availableDrops.map(drop => ({
+      id: drop.fromAssignment.shift.id,
+      location: drop.fromAssignment.shift.location.name,
+      date: drop.fromAssignment.shift.date.toISOString().split('T')[0],
+      startTime: drop.fromAssignment.shift.startTime.toISOString().split('T')[1].slice(0, 5),
+      endTime: drop.fromAssignment.shift.endTime.toISOString().split('T')[1].slice(0, 5),
+      timezone: drop.fromAssignment.shift.location.timezone,
+      requiredSkill: drop.fromAssignment.shift.skill?.name || 'No specific skill required',
+      originalStaff: {
+        id: drop.fromAssignment.user.id,
+        name: `${drop.fromAssignment.user.firstName} ${drop.fromAssignment.user.lastName}`
+      },
+      dropReason: drop.reason,
+      requestId: drop.id
+    }))
+
+    res.json({
+      message: 'Available drops retrieved successfully',
+      count: formattedDrops.length,
+      availableDrops: formattedDrops
+    })
+
+  } catch (error) {
+    console.error('Get available drops error:', error)
+    res.status(500).json({
+      error: 'Failed to retrieve available drops',
+      message: 'An internal server error occurred'
+    })
+  }
+})
+
+/**
  * GET /shifts/available - Get shifts available for pickup
  */
 router.get('/available', authenticateToken, async (req: Request, res: Response) => {
@@ -1045,6 +1143,238 @@ router.get('/available', authenticateToken, async (req: Request, res: Response) 
       error: 'Failed to retrieve available shifts',
       message: 'An internal server error occurred'
     })
+  }
+})
+
+/**
+ * @swagger
+ * /api/shifts/on-duty:
+ *   get:
+ *     summary: Get currently active shifts
+ *     description: Returns shifts where current time is between startTime and endTime with their assigned staff
+ *     tags: [Shifts]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Currently active shifts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   date:
+ *                     type: string
+ *                     format: date
+ *                   startTime:
+ *                     type: string
+ *                     format: time
+ *                   endTime:
+ *                     type: string
+ *                     format: time
+ *                   location:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                       timezone:
+ *                         type: string
+ *                   skill:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                   assignedStaff:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         firstName:
+ *                           type: string
+ *                         lastName:
+ *                           type: string
+ *                         email:
+ *                           type: string
+ *               example:
+ *                 - id: 1
+ *                   title: "Server - Downtown Manhattan"
+ *                   date: "2024-01-15"
+ *                   startTime: "18:00:00"
+ *                   endTime: "23:00:00"
+ *                   location:
+ *                     name: "Downtown Manhattan"
+ *                     timezone: "America/New_York"
+ *                   skill:
+ *                     name: "Server"
+ *                   assignedStaff:
+ *                     - id: 1
+ *                       firstName: "John"
+ *                       lastName: "Doe"
+ *                       email: "john@example.com"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * GET /shifts/:id/eligible-staff - Get staff eligible for assignment to a specific shift
+ */
+router.get('/:id/eligible-staff', authenticateToken, requireManagerOrAdmin, async (req: Request, res: Response) => {
+  try {
+    const shiftId = parseInt(req.params.id)
+
+    // Get the shift details
+    const shift = await prisma.shift.findUnique({
+      where: { id: shiftId },
+      include: {
+        location: {
+          select: { id: true, name: true }
+        },
+        skill: {
+          select: { id: true, name: true }
+        },
+        shiftAssignments: {
+          select: { userId: true }
+        }
+      }
+    })
+
+    if (!shift) {
+      return res.status(404).json({
+        error: 'Shift not found',
+        message: `Shift with ID ${shiftId} does not exist`
+      })
+    }
+
+    // Get already assigned user IDs for this shift
+    const assignedUserIds = shift.shiftAssignments.map(assignment => assignment.userId)
+
+    // Find eligible staff
+    const eligibleStaff = await prisma.user.findMany({
+      where: {
+        role: 'STAFF',
+        isActive: true,
+        id: { notIn: assignedUserIds }, // Exclude already assigned staff
+        // Must have the required skill
+        userSkills: shift.skillId ? {
+          some: {
+            skillId: shift.skillId
+          }
+        } : undefined,
+        // Must be certified at this location
+        locationCertifications: {
+          some: {
+            locationId: shift.locationId
+          }
+        }
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        userSkills: {
+          include: {
+            skill: {
+              select: { name: true }
+            }
+          }
+        }
+      }
+    })
+
+    // Format the response
+    const formattedStaff = eligibleStaff.map(staff => ({
+      id: staff.id,
+      name: `${staff.firstName} ${staff.lastName}`,
+      email: staff.email,
+      skill: staff.userSkills.find(us => us.skillId === shift.skillId)?.skill.name ||
+             staff.userSkills[0]?.skill.name || 'No skills',
+      weeklyHours: 0 // TODO: Calculate actual weekly hours
+    }))
+
+    res.json(formattedStaff)
+
+  } catch (error) {
+    console.error('Get eligible staff error:', error)
+    res.status(500).json({
+      error: 'Failed to retrieve eligible staff',
+      message: 'An internal server error occurred'
+    })
+  }
+})
+
+router.get('/on-duty', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const now = new Date()
+
+    const activeShifts = await prisma.shift.findMany({
+      where: {
+        date: {
+          gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()), // Today
+          lt: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) // Before tomorrow
+        },
+        startTime: {
+          lte: now
+        },
+        endTime: {
+          gt: now
+        }
+      },
+      include: {
+        location: {
+          select: {
+            name: true,
+            timezone: true
+          }
+        },
+        skill: {
+          select: {
+            name: true
+          }
+        },
+        shiftAssignments: {
+          where: {
+            isConfirmed: true
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    const formattedShifts = activeShifts.map(shift => ({
+      id: shift.id,
+      title: shift.title,
+      date: shift.date.toISOString().split('T')[0],
+      startTime: shift.startTime.toISOString().split('T')[1].slice(0, 8),
+      endTime: shift.endTime.toISOString().split('T')[1].slice(0, 8),
+      location: shift.location,
+      skill: shift.skill,
+      assignedStaff: shift.shiftAssignments.map(assignment => assignment.user)
+    }))
+
+    res.json(formattedShifts)
+  } catch (error) {
+    console.error('Error fetching on-duty shifts:', error)
+    res.status(500).json({ error: 'Failed to fetch on-duty shifts' })
   }
 })
 

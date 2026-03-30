@@ -1,0 +1,382 @@
+<template>
+  <v-app>
+    <!-- Clean Linear/Vercel-style Sidebar -->
+    <div class="sidebar">
+      <!-- Logo Section -->
+      <div class="logo-area">
+        <div class="logo-mark">SS</div>
+        <span class="logo-text">ShiftSync</span>
+      </div>
+
+      <!-- Navigation Section -->
+      <nav class="nav-section">
+        <router-link
+          v-for="item in filteredNavItems"
+          :key="item.title"
+          :to="item.route"
+          class="nav-item"
+          :class="{ 'nav-item--active': $route.path === item.route }"
+        >
+          <v-icon size="16" class="nav-icon">{{ item.icon }}</v-icon>
+          <span class="nav-label">{{ item.title }}</span>
+        </router-link>
+      </nav>
+
+      <!-- Bottom User Card -->
+      <div class="user-card">
+        <div class="user-avatar">
+          {{ getUserInitials(authStore.userName) }}
+        </div>
+        <div class="user-info">
+          <div class="user-name">{{ authStore.userName }}</div>
+          <div class="user-role">{{ authStore.userRole }}</div>
+        </div>
+        <button class="logout-btn" @click="handleLogout" title="Logout">
+          <v-icon size="16">mdi-logout</v-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Clean Top Bar with Shadow -->
+    <v-app-bar
+      app
+      color="white"
+      elevation="1"
+      height="64"
+      class="border-b topbar"
+      fixed
+    >
+      <v-spacer />
+
+      <v-chip
+        v-if="authStore.userName"
+        class="me-4"
+        color="primary"
+        variant="outlined"
+        size="small"
+      >
+        <v-icon start size="small">mdi-account</v-icon>
+        {{ authStore.userName }}
+      </v-chip>
+
+      <div
+        v-if="authStore.userRole"
+        class="role-badge me-4"
+        :class="`role-${authStore.userRole.toLowerCase()}`"
+      >
+        {{ authStore.userRole }}
+      </div>
+
+
+      <v-btn
+        icon
+        @click="handleLogout"
+        variant="text"
+        class="logout-topbar-btn"
+        title="Logout"
+        color="error"
+        size="large"
+      >
+        <v-icon size="24">mdi-logout</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <v-container fluid>
+        <router-view />
+      </v-container>
+    </v-main>
+
+  </v-app>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { useAuthStore } from '../stores/auth'
+import { useNotificationStore } from '../stores/notifications'
+import { useRouter } from 'vue-router'
+
+const authStore = useAuthStore()
+const notificationStore = useNotificationStore()
+const router = useRouter()
+
+
+const navItems = [
+  { title: 'Dashboard', route: '/dashboard', icon: 'mdi-view-dashboard', roles: ['admin', 'manager'] },
+  { title: 'Shifts', route: '/shifts', icon: 'mdi-calendar-clock', roles: ['admin', 'manager'] },
+  { title: 'Schedule', route: '/schedule', icon: 'mdi-calendar', roles: ['admin', 'manager', 'staff'] },
+  { title: 'Swap Requests', route: '/swap-requests', icon: 'mdi-swap-horizontal', roles: ['admin', 'manager', 'staff'] },
+  { title: 'Notifications', route: '/notifications', icon: 'mdi-bell', roles: ['admin', 'manager', 'staff'] },
+  { title: 'Analytics', route: '/analytics', icon: 'mdi-chart-bar', roles: ['admin', 'manager'] },
+]
+
+const filteredNavItems = computed(() => {
+  if (!authStore.userRole) return []
+  const userRole = authStore.userRole.toLowerCase()
+  return navItems.filter(item => item.roles.includes(userRole))
+})
+
+function getRoleColor(role: string): string {
+  switch (role.toLowerCase()) {
+    case 'admin': return 'error'
+    case 'manager': return 'warning'
+    case 'staff': return 'info'
+    default: return 'primary'
+  }
+}
+
+function getUserInitials(name: string | null): string {
+  if (!name) return 'U'
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+}
+
+function handleLogout() {
+  authStore.logout()
+  router.push('/login')
+}
+
+onMounted(() => {
+  if (!authStore.isAuthenticated) {
+    router.push('/login')
+  }
+})
+</script>
+
+<style scoped>
+/* Sidebar Container - Linear/Vercel Style */
+.sidebar {
+  width: 220px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: #FFFFFF;
+  border-right: 1px solid #EAECF0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  z-index: 1000;
+}
+
+/* Logo Area */
+.logo-area {
+  height: 64px;
+  padding: 0 20px;
+  border-bottom: 1px solid #EAECF0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #2563EB;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+}
+
+/* Navigation Section */
+.nav-section {
+  padding: 16px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Nav Items */
+.nav-item {
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+  text-decoration: none;
+}
+
+/* Default State */
+.nav-icon {
+  color: #94A3B8 !important;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+/* Hover State */
+.nav-item:hover:not(.nav-item--active) {
+  background: #F9FAFB;
+}
+
+.nav-item:hover:not(.nav-item--active) .nav-icon {
+  color: #475569 !important;
+}
+
+.nav-item:hover:not(.nav-item--active) .nav-label {
+  color: #374151;
+}
+
+/* Active State */
+.nav-item--active {
+  background: #EFF6FF;
+  font-weight: 600;
+}
+
+.nav-item--active .nav-icon {
+  color: #2563EB !important;
+}
+
+.nav-item--active .nav-label {
+  color: #1D4ED8;
+  font-weight: 600;
+}
+
+/* Bottom User Card */
+.user-card {
+  padding: 12px 16px;
+  border-top: 1px solid #EAECF0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0F172A;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F172A;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.logout-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.logout-btn .v-icon {
+  color: #CBD5E1 !important;
+}
+
+.logout-btn:hover {
+  background: #FEF2F2;
+}
+
+.logout-btn:hover .v-icon {
+  color: #EF4444 !important;
+}
+
+/* Adjust main content to accommodate fixed sidebar and topbar */
+.v-main {
+  margin-left: 220px !important;
+  padding-top: 64px !important;
+}
+
+
+/* App bar border and fixed positioning */
+.border-b {
+  border-bottom: 1px solid #F0F0F0 !important;
+}
+
+.topbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 220px !important;
+  width: calc(100% - 220px) !important;
+  z-index: 999 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Logout button styling */
+.logout-topbar-btn {
+  border: 1px solid #e0e0e0 !important;
+  background: white !important;
+}
+
+.logout-topbar-btn:hover {
+  background: #f5f5f5 !important;
+  border-color: #d0d0d0 !important;
+}
+
+/* Role Badge */
+.role-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.role-admin {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+</style>

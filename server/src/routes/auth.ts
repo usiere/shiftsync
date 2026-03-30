@@ -95,7 +95,8 @@ router.post('/login', async (req: Request, res: Response) => {
     const token = generateToken({
       userId: user.id,
       role: user.role,
-      email: user.email
+      email: user.email,
+      name: `${user.firstName} ${user.lastName}`
     })
 
     // Return token and user info (excluding password)

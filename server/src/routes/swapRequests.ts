@@ -449,23 +449,46 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
 
     let whereClause: any = {}
 
-    // Filter by status if provided
-    if (status) {
-      whereClause.status = status
+    // Role-based filtering and status filtering combined
+    if (userRole === 'STAFF') {
+      // Staff can only see requests involving them
+      const staffFilters = [
+        { fromUserId: userId },
+        { toUserId: userId }
+      ]
+
+      // Apply status filter for staff
+      if (status) {
+        if (status === 'PENDING_APPROVAL') {
+          // Staff shouldn't see this status - return empty
+          whereClause.id = -1 // This will return no results
+        } else {
+          whereClause.OR = staffFilters.map(filter => ({
+            ...filter,
+            status: status
+          }))
+        }
+      } else {
+        whereClause.OR = staffFilters
+      }
+    } else {
+      // Managers and admins can see all requests
+      if (status) {
+        // Handle special case for PENDING_APPROVAL (frontend compatibility)
+        if (status === 'PENDING_APPROVAL') {
+          whereClause.OR = [
+            { status: 'PENDING' }, // New swap requests waiting for target user acceptance
+            { status: 'ACCEPTED' } // Swap requests accepted by target user, waiting for manager approval
+          ]
+        } else {
+          whereClause.status = status
+        }
+      }
     }
 
     // Filter by type if provided
     if (type) {
       whereClause.type = type
-    }
-
-    // Role-based filtering
-    if (userRole === 'STAFF') {
-      // Staff can only see requests involving them
-      whereClause.OR = [
-        { fromUserId: userId },
-        { toUserId: userId }
-      ]
     }
     // Managers and admins can see all requests
 

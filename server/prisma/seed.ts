@@ -9,13 +9,11 @@ function createUTCDate(year: number, month: number, day: number, hour: number, m
   return new Date(Date.UTC(year, month - 1, day, hour, minute))
 }
 
-// Get next Monday as our seed week start
-function getNextMonday(): Date {
-  const today = new Date()
-  const dayOfWeek = today.getDay()
-  const daysUntilMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek
-  const monday = addDays(today, daysUntilMonday)
-  return setHours(setMinutes(monday, 0), 0)
+// Get current week start (March 29, 2026) as our seed week start
+function getCurrentWeekStart(): Date {
+  // March 29, 2026 is a Sunday - start of the current week
+  const currentWeekStart = new Date('2026-03-29T00:00:00Z')
+  return currentWeekStart
 }
 
 async function main() {
@@ -274,7 +272,7 @@ async function main() {
 
     // Add some one-off unavailability (time-off requests)
     if (Math.random() > 0.7) {
-      const randomDay = addDays(getNextMonday(), Math.floor(Math.random() * 7))
+      const randomDay = addDays(getCurrentWeekStart(), Math.floor(Math.random() * 7))
       await prisma.availability.create({
         data: {
           userId: staff[i].id,
@@ -290,7 +288,7 @@ async function main() {
   // 6. Create Shifts with Conflicts and Issues
   console.log('Creating shifts with realistic scheduling scenarios...')
 
-  const mondayStart = getNextMonday()
+  const weekStart = getCurrentWeekStart()
   const shifts = []
 
   // Helper function to create shifts
@@ -303,7 +301,7 @@ async function main() {
     headcount: number = 1,
     status: ShiftStatus = ShiftStatus.PUBLISHED
   ) {
-    const shiftDate = addDays(mondayStart, dayOffset)
+    const shiftDate = addDays(weekStart, dayOffset)
     const startTime = createUTCDate(shiftDate.getFullYear(), shiftDate.getMonth() + 1, shiftDate.getDate(), startHour)
     const endTime = createUTCDate(shiftDate.getFullYear(), shiftDate.getMonth() + 1, shiftDate.getDate(), endHour)
 

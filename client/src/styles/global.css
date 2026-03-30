@@ -1,0 +1,478 @@
+/* ShiftSync Global Styles - Refined Operational Clarity */
+/* Pure white canvas, near-black text, electric-blue accent (#2563EB) */
+
+/* Font Family Setup and Global Variables */
+:root {
+  --font-headings: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Updated color system */
+  --color-accent: #2563EB;
+  --color-accent-soft: #EFF6FF;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-border: #E8ECEF;
+  --color-surface: #FFFFFF;
+  --color-bg: #F7F8FA;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --radius-card: 14px;
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
+
+  /* Legacy support */
+  --color-primary: #2563EB;
+  --color-near-black: #0F172A;
+  --color-border-light: #F0F0F0;
+  --color-background-hover: #F8FAFF;
+  --elevation-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --elevation-button-hover: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Base Typography */
+body, .v-application {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+code, .mono {
+  font-family: 'DM Mono', monospace;
+}
+
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-family: var(--font-headings) !important;
+  font-weight: 600 !important;
+  color: var(--color-near-black) !important;
+}
+
+.text-h4 {
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  color: var(--color-near-black) !important;
+}
+
+/* Monospace for dates, times, IDs */
+.font-mono, .time-text, .date-text, .id-text {
+  font-family: var(--font-mono) !important;
+}
+
+/* Remove gradient background from App.vue */
+.app-container {
+  background: white !important;
+  min-height: 100vh;
+}
+
+.app-container .v-main {
+  background: white !important;
+}
+
+/* Card Elevation Model - subtle shadows instead of heavy borders */
+.v-card {
+  border-radius: 12px !important;
+  box-shadow: var(--elevation-card) !important;
+  border: 1px solid var(--color-border-light) !important;
+  background: white !important;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+.v-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* Button Styles */
+.v-btn {
+  border-radius: 8px !important;
+  font-family: var(--font-headings) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+/* Primary button - solid blue */
+.v-btn--variant-flat[data-v-btn-color="primary"] {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
+.v-btn--variant-flat[data-v-btn-color="primary"]:hover {
+  background-color: var(--color-primary) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--elevation-button-hover) !important;
+}
+
+/* Ghost buttons */
+.v-btn--variant-outlined {
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+  background: white !important;
+}
+
+.v-btn--variant-outlined:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--elevation-card) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+/* Table Styling - no zebra striping, generous padding */
+.v-data-table {
+  border-radius: 12px !important;
+  background: white !important;
+  box-shadow: var(--elevation-card) !important;
+}
+
+.v-data-table .v-data-table__thead .v-data-table__th {
+  font-family: var(--font-headings) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--color-text-muted) !important;
+  background-color: white !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  padding: 16px !important;
+}
+
+.v-data-table .v-data-table__tbody .v-data-table__td {
+  padding: 16px !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  font-size: 14px !important;
+  color: var(--color-near-black) !important;
+}
+
+/* Remove zebra striping */
+.v-data-table .v-data-table__tbody tr:nth-child(even) td {
+  background-color: white !important;
+}
+
+/* Row hover effect */
+.v-data-table .v-data-table__tbody tr:hover td {
+  background-color: var(--color-background-hover) !important;
+  transition: background-color 0.2s ease-in-out !important;
+}
+
+/* Status badges - understated dots + labels */
+.status-dot {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.025em !important;
+}
+
+.status-dot::before {
+  content: '' !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+.status-published::before {
+  background-color: var(--color-primary) !important;
+}
+
+.status-published {
+  color: var(--color-primary) !important;
+}
+
+.status-draft::before {
+  background-color: var(--color-text-muted) !important;
+}
+
+.status-draft {
+  color: var(--color-text-muted) !important;
+}
+
+.status-cancelled::before {
+  background-color: #EF4444 !important;
+}
+
+.status-cancelled {
+  color: #EF4444 !important;
+}
+
+/* Form Inputs */
+.v-text-field, .v-select, .v-textarea {
+  font-family: var(--font-headings) !important;
+}
+
+.v-text-field .v-field, .v-select .v-field, .v-textarea .v-field {
+  border-radius: 8px !important;
+  border: 1px solid var(--color-border) !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  background: white !important;
+}
+
+.v-text-field .v-field--focused, .v-select .v-field--focused {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+.v-text-field .v-field-label, .v-select .v-field-label {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Skill Pills */
+.skill-pill {
+  background: #F1F5F9 !important;
+  color: var(--color-text-secondary) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+/* Progress Bar for Headcount */
+.headcount-progress {
+  height: 4px !important;
+  background-color: var(--color-border) !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+}
+
+.headcount-progress .v-progress-linear__determinate {
+  background-color: var(--color-primary) !important;
+}
+
+/* Action buttons - icon only, subtle */
+.action-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 6px !important;
+  background: white !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.action-btn:hover {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  box-shadow: var(--elevation-card) !important;
+}
+
+/* Location chips - blue pin + text */
+.location-chip {
+  color: var(--color-primary) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* Date/Time cells - DM Mono */
+.date-cell {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  color: var(--color-text-secondary) !important;
+  cursor: pointer !important;
+}
+
+.date-cell:hover {
+  color: var(--color-primary) !important;
+  text-decoration: underline !important;
+}
+
+.time-cell {
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  color: var(--color-near-black) !important;
+}
+
+/* Remove card borders and elevations for cleaner look */
+.v-card[elevation="1"] {
+  box-shadow: var(--elevation-card) !important;
+}
+
+.v-card[elevation="2"] {
+  box-shadow: var(--elevation-card) !important;
+}
+
+.v-card[elevation="3"] {
+  box-shadow: var(--elevation-card) !important;
+}
+
+/* Container improvements */
+.v-container {
+  padding: 24px !important;
+  max-width: none !important;
+}
+
+.v-card-text {
+  padding: 24px !important;
+}
+
+.v-card-title {
+  padding: 24px 24px 12px 24px !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  color: var(--color-near-black) !important;
+}
+
+.v-card-actions {
+  padding: 12px 24px 24px 24px !important;
+}
+
+/* Navigation improvements for the white sidebar */
+.v-navigation-drawer {
+  border: none !important;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.04) !important;
+}
+
+.v-list-item {
+  border-radius: 8px !important;
+  margin: 2px 12px !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.v-list-item--active {
+  background-color: #EFF6FF !important;
+  color: var(--color-primary) !important;
+  border-left: 3px solid var(--color-primary) !important;
+}
+
+.v-list-item--active .v-icon {
+  color: var(--color-primary) !important;
+}
+
+.v-list-item .v-icon {
+  color: var(--color-text-muted) !important;
+}
+
+/* App bar improvements */
+.v-app-bar {
+  background: white !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+  box-shadow: none !important;
+}
+
+/* Chips - remove background fills, use subtle styling */
+.v-chip {
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+}
+
+.v-chip--variant-tonal {
+  background: transparent !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .v-container {
+    padding: 16px !important;
+  }
+
+  .v-card-text {
+    padding: 16px !important;
+  }
+
+  .v-card-title {
+    padding: 16px 16px 8px 16px !important;
+  }
+
+  .v-card-actions {
+    padding: 8px 16px 16px 16px !important;
+  }
+
+  .text-h4 {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .v-container {
+    padding: 12px !important;
+  }
+
+  .v-card-text {
+    padding: 12px !important;
+  }
+
+  .text-h4 {
+    font-size: 20px !important;
+  }
+}
+
+/* Custom scrollbar - minimal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-border-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Focus improvements */
+.v-btn:focus-visible,
+.v-text-field:focus-within,
+.v-select:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Animation improvements */
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .v-card {
+    border: 2px solid var(--color-near-black) !important;
+  }
+
+  .v-btn {
+    border: 2px solid currentColor !important;
+  }
+}
