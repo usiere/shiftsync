@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "ShiftSync backend server",
   "main": "dist/index.js",
+
+  "prisma": {
+  "seed": "npx tsx prisma/seed.ts"
+},
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "echo 'skip build' && exit 0",
