@@ -10,5 +10,5 @@ export function extractArray(response: any): any[] {
     return response.data
   }
 
-  return response.data?.data || response.data?.shifts || []
+  return response.data?.data || response.data?.shifts || response.data?.swapRequests || []
 }

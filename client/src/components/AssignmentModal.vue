@@ -71,8 +71,39 @@
           <span class="alert-title">Assignment Constraint Violated</span>
           <button class="alert-close" @click="constraintViolation = null">×</button>
         </div>
+        <!-- Primary violation message -->
         <p class="alert-message">{{ constraintViolation.message }}</p>
 
+        <!-- Multiple violations as bullet list -->
+        <div v-if="constraintViolation.violations && constraintViolation.violations.length > 1" class="violations-list">
+          <ul class="violation-bullets">
+            <li v-for="violation in constraintViolation.violations" :key="violation.message" class="violation-item">
+              {{ violation.message }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Suggested alternatives text -->
+        <div v-if="constraintViolation.suggestions" class="suggestions-text">
+          <p class="suggestions-message">{{ constraintViolation.suggestions }}</p>
+        </div>
+
+        <!-- Warnings in amber -->
+        <div v-if="constraintViolation.warnings && constraintViolation.warnings.length > 0" class="warnings-section">
+          <div class="warning-header">
+            <svg class="warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+            </svg>
+            <span class="warning-title">Warnings</span>
+          </div>
+          <ul class="warning-list">
+            <li v-for="warning in constraintViolation.warnings" :key="warning.message" class="warning-item">
+              {{ warning.message }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Legacy alternative staff chips (for clickable staff assignments) -->
         <div v-if="constraintViolation.alternativeStaff?.length > 0" class="alternative-staff">
           <p class="alternative-title">Suggested Alternative Staff:</p>
           <div class="alternative-chips">
@@ -198,6 +229,9 @@ interface Staff {
 
 interface ConstraintViolation {
   message: string
+  violations?: Array<{ message: string }>
+  warnings?: Array<{ message: string }>
+  suggestions?: string
   alternativeStaff?: Staff[]
 }
 
@@ -275,17 +309,42 @@ async function assignStaff(staff: Staff) {
       // Log the exact error response data to console for debugging
       console.log('Assignment error response data:', error.response.data)
 
+      // Additional logging specifically for 409 errors as requested
+      if (error.response.status === 409) {
+        console.log('409 Constraint violation error details:', error.response.data)
+      }
+
       const errorData = error.response.data
 
       // Handle both 400 (bad request) and 409 (conflict/constraint violation) errors
       if (error.response.status === 400 || error.response.status === 409) {
-        // Extract error message from either 'message' or 'error' field
-        const errorMessage = errorData.message || errorData.error || 'Assignment violates scheduling constraints'
+        // Extract primary error message from violations[0].message
+        let primaryMessage = 'Assignment violates scheduling constraints'
+
+        if (errorData.violations && errorData.violations.length > 0 && errorData.violations[0].message) {
+          primaryMessage = errorData.violations[0].message
+        } else if (errorData.details) {
+          primaryMessage = errorData.details
+        } else if (errorData.message) {
+          primaryMessage = errorData.message
+        } else if (errorData.error) {
+          primaryMessage = errorData.error
+        }
+
+        // Format suggestions text if available
+        let suggestionsText = ''
+        if (errorData.suggestions?.alternatives && errorData.suggestions.alternatives.length > 0) {
+          const names = errorData.suggestions.alternatives.map((alt: any) => alt.name).join(', ')
+          suggestionsText = `Suggested alternatives: ${names}`
+        }
 
         constraintViolation.value = {
-          message: errorMessage,
-          // Handle suggestions field (could be 'suggestions', 'alternativeStaff', etc.)
-          alternativeStaff: errorData.suggestions || errorData.alternativeStaff || []
+          message: primaryMessage,
+          violations: errorData.violations || [],
+          warnings: errorData.warnings || [],
+          suggestions: suggestionsText,
+          // Keep legacy alternativeStaff for existing functionality
+          alternativeStaff: errorData.suggestions?.alternatives || errorData.suggestions || errorData.alternativeStaff || []
         }
       }
     }
@@ -560,6 +619,84 @@ watch(() => props.show, (newValue) => {
   font-size: 13px;
   color: #DC2626;
   margin: 0 0 12px 0;
+}
+
+/* Multiple violations list */
+.violations-list {
+  margin-bottom: 12px;
+}
+
+.violation-bullets {
+  margin: 0;
+  padding-left: 16px;
+  list-style-type: disc;
+}
+
+.violation-item {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #DC2626;
+  margin: 4px 0;
+}
+
+/* Suggestions text */
+.suggestions-text {
+  margin: 12px 0;
+}
+
+.suggestions-message {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #059669;
+  background: #ECFDF5;
+  border: 1px solid #BBF7D0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0;
+}
+
+/* Warnings section in amber */
+.warnings-section {
+  margin: 12px 0;
+  padding: 12px;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 8px;
+}
+
+.warning-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.warning-icon {
+  width: 14px;
+  height: 14px;
+  color: #F59E0B;
+  flex-shrink: 0;
+}
+
+.warning-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #F59E0B;
+}
+
+.warning-list {
+  margin: 0;
+  padding-left: 16px;
+  list-style-type: disc;
+}
+
+.warning-item {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #92400E;
+  margin: 2px 0;
 }
 
 .alternative-staff {

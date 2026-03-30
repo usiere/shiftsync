@@ -249,6 +249,120 @@ router.post('/:id/approve', authenticateToken, requireManagerOrAdmin, async (req
 })
 
 /**
+ * PATCH /swap-requests/:id/approve - Approve a swap request (Manager/Admin only)
+ */
+router.patch('/:id/approve', authenticateToken, requireManagerOrAdmin, async (req: Request, res: Response) => {
+  try {
+    const swapRequestId = parseInt(req.params.id)
+
+    if (!swapRequestId || isNaN(swapRequestId)) {
+      return res.status(400).json({
+        error: 'Invalid swap request ID',
+        message: 'Swap request ID must be a valid number'
+      })
+    }
+
+    const approvedRequest = await swapRequestService.approveSwapRequest(
+      swapRequestId,
+      req.user!.id
+    )
+
+    res.json({
+      success: true,
+      message: 'Swap request approved successfully',
+      swapRequest: approvedRequest
+    })
+
+  } catch (error: any) {
+    console.error('Approve swap request error:', error)
+
+    if (error.message === 'Swap request not found') {
+      return res.status(404).json({
+        error: 'Swap request not found',
+        message: `Swap request with ID ${req.params.id} does not exist`
+      })
+    }
+
+    if (error.message === 'Swap request must be accepted or pending to approve') {
+      return res.status(409).json({
+        error: 'Invalid status',
+        message: 'This swap request must be accepted or pending to approve'
+      })
+    }
+
+    if (error.message === 'Constraint validation failed for swap') {
+      return res.status(409).json({
+        error: 'Constraint violation',
+        message: 'The swap cannot be approved due to scheduling constraint violations'
+      })
+    }
+
+    res.status(500).json({
+      error: 'Failed to approve swap request',
+      message: 'An internal server error occurred'
+    })
+  }
+})
+
+/**
+ * PATCH /swap-requests/:id/reject - Reject a swap request (Manager/Admin only)
+ */
+router.patch('/:id/reject', authenticateToken, requireManagerOrAdmin, async (req: Request, res: Response) => {
+  try {
+    const swapRequestId = parseInt(req.params.id)
+    const { reason } = req.body
+
+    if (!swapRequestId || isNaN(swapRequestId)) {
+      return res.status(400).json({
+        error: 'Invalid swap request ID',
+        message: 'Swap request ID must be a valid number'
+      })
+    }
+
+    if (!reason) {
+      return res.status(400).json({
+        error: 'Rejection reason required',
+        message: 'Please provide a reason for rejecting this request'
+      })
+    }
+
+    const rejectedRequest = await swapRequestService.rejectSwapRequest(
+      swapRequestId,
+      req.user!.id,
+      reason
+    )
+
+    res.json({
+      success: true,
+      message: 'Swap request rejected successfully',
+      swapRequest: rejectedRequest
+    })
+
+  } catch (error: any) {
+    console.error('Reject swap request error:', error)
+
+    if (error.message === 'Swap request not found') {
+      return res.status(404).json({
+        error: 'Swap request not found',
+        message: `Swap request with ID ${req.params.id} does not exist`
+      })
+    }
+
+    if (error.message === 'Swap request must be pending or accepted to reject') {
+      return res.status(409).json({
+        error: 'Invalid status',
+        message: 'This swap request must be pending or accepted to reject'
+      })
+    }
+
+    res.status(500).json({
+      error: 'Failed to reject swap request',
+      message: 'An internal server error occurred'
+    })
+  }
+})
+
+/**
  * POST /swap-requests/:id/cancel - Cancel a swap request
  */
 router.post('/:id/cancel', authenticateToken, async (req: Request, res: Response) => {
@@ -443,45 +557,61 @@ router.post('/:id/pickup', authenticateToken, async (req: Request, res: Response
  */
 router.get('/', authenticateToken, async (req: Request, res: Response) => {
   try {
-    const { status, type } = req.query
+    const { status, type, mine } = req.query
     const userId = req.user!.id
     const userRole = req.user!.role
 
     let whereClause: any = {}
 
-    // Role-based filtering and status filtering combined
-    if (userRole === 'STAFF') {
-      // Staff can only see requests involving them
-      const staffFilters = [
-        { fromUserId: userId },
-        { toUserId: userId }
-      ]
-
-      // Apply status filter for staff
-      if (status) {
-        if (status === 'PENDING_APPROVAL') {
-          // Staff shouldn't see this status - return empty
-          whereClause.id = -1 // This will return no results
-        } else {
-          whereClause.OR = staffFilters.map(filter => ({
-            ...filter,
-            status: status
-          }))
-        }
+    // Handle mine=true query parameter
+    if (mine === 'true') {
+      // For MANAGER and ADMIN roles, they don't have personal shift assignments
+      // so return empty result for "my requests"
+      if (userRole === 'MANAGER' || userRole === 'ADMIN') {
+        whereClause.id = -1 // This will return no results
       } else {
-        whereClause.OR = staffFilters
+        // For STAFF, only show requests where they are the requester (fromUserId) or target (toUserId)
+        whereClause.OR = [
+          { fromUserId: userId },
+          { toUserId: userId }
+        ]
       }
     } else {
-      // Managers and admins can see all requests
-      if (status) {
-        // Handle special case for PENDING_APPROVAL (frontend compatibility)
-        if (status === 'PENDING_APPROVAL') {
-          whereClause.OR = [
-            { status: 'PENDING' }, // New swap requests waiting for target user acceptance
-            { status: 'ACCEPTED' } // Swap requests accepted by target user, waiting for manager approval
-          ]
+      // Role-based filtering and status filtering combined
+      if (userRole === 'STAFF') {
+        // Staff can only see requests involving them
+        const staffFilters = [
+          { fromUserId: userId },
+          { toUserId: userId }
+        ]
+
+        // Apply status filter for staff
+        if (status) {
+          if (status === 'PENDING_APPROVAL') {
+            // Staff shouldn't see this status - return empty
+            whereClause.id = -1 // This will return no results
+          } else {
+            whereClause.OR = staffFilters.map(filter => ({
+              ...filter,
+              status: status
+            }))
+          }
         } else {
-          whereClause.status = status
+          whereClause.OR = staffFilters
+        }
+      } else {
+        // Managers and admins can see requests based on locations they manage
+        if (status) {
+          // Handle special case for PENDING_APPROVAL (frontend compatibility)
+          if (status === 'PENDING_APPROVAL') {
+            // Both managers and admins can see all pending approval requests
+            whereClause.OR = [
+              { status: 'PENDING' }, // New swap requests waiting for target user acceptance
+              { status: 'ACCEPTED' } // Swap requests accepted by target user, waiting for manager approval
+            ]
+          } else {
+            whereClause.status = status
+          }
         }
       }
     }
@@ -503,6 +633,9 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
         },
         fromAssignment: {
           include: {
+            user: {
+              select: { id: true, firstName: true, lastName: true, email: true }
+            },
             shift: {
               include: {
                 location: { select: { id: true, name: true } },
@@ -513,6 +646,9 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
         },
         toAssignment: {
           include: {
+            user: {
+              select: { id: true, firstName: true, lastName: true, email: true }
+            },
             shift: {
               include: {
                 location: { select: { id: true, name: true } },
@@ -530,28 +666,53 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
       type: request.type,
       status: request.status,
       reason: request.reason,
-      from: {
-        userId: request.fromUserId,
-        user: `${request.fromUser.firstName} ${request.fromUser.lastName}`,
+      notes: request.reason, // Map reason to notes for client compatibility
+      fromAssignment: {
+        user: {
+          firstName: request.fromAssignment.user?.firstName || request.fromUser.firstName,
+          lastName: request.fromAssignment.user?.lastName || request.fromUser.lastName,
+          name: `${request.fromAssignment.user?.firstName || request.fromUser.firstName} ${request.fromAssignment.user?.lastName || request.fromUser.lastName}`,
+          email: request.fromAssignment.user?.email || request.fromUser.email
+        },
         shift: {
           id: request.fromAssignment.shift.id,
-          location: request.fromAssignment.shift.location.name,
-          skill: request.fromAssignment.shift.skill?.name,
-          date: request.fromAssignment.shift.date,
           startTime: request.fromAssignment.shift.startTime,
-          endTime: request.fromAssignment.shift.endTime
+          endTime: request.fromAssignment.shift.endTime,
+          date: request.fromAssignment.shift.date,
+          location: {
+            name: request.fromAssignment.shift.location.name
+          },
+          skill: {
+            name: request.fromAssignment.shift.skill?.name
+          },
+          time: {
+            localStartTime: request.fromAssignment.shift.startTime.toISOString().substr(11, 5),
+            localEndTime: request.fromAssignment.shift.endTime.toISOString().substr(11, 5)
+          }
         }
       },
-      to: request.toAssignment ? {
-        userId: request.toUserId,
-        user: `${request.toUser?.firstName} ${request.toUser?.lastName}`,
+      toAssignment: request.toAssignment ? {
+        user: {
+          firstName: request.toAssignment.user?.firstName || request.toUser?.firstName,
+          lastName: request.toAssignment.user?.lastName || request.toUser?.lastName,
+          name: `${request.toAssignment.user?.firstName || request.toUser?.firstName} ${request.toAssignment.user?.lastName || request.toUser?.lastName}`,
+          email: request.toAssignment.user?.email || request.toUser?.email
+        },
         shift: {
           id: request.toAssignment.shift.id,
-          location: request.toAssignment.shift.location.name,
-          skill: request.toAssignment.shift.skill?.name,
-          date: request.toAssignment.shift.date,
           startTime: request.toAssignment.shift.startTime,
-          endTime: request.toAssignment.shift.endTime
+          endTime: request.toAssignment.shift.endTime,
+          date: request.toAssignment.shift.date,
+          location: {
+            name: request.toAssignment.shift.location.name
+          },
+          skill: {
+            name: request.toAssignment.shift.skill?.name
+          },
+          time: {
+            localStartTime: request.toAssignment.shift.startTime.toISOString().substr(11, 5),
+            localEndTime: request.toAssignment.shift.endTime.toISOString().substr(11, 5)
+          }
         }
       } : null,
       expiresAt: request.expiresAt,
@@ -567,11 +728,18 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
       swapRequests: formattedRequests
     })
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Get swap requests error:', error)
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      meta: error.meta
+    })
     res.status(500).json({
       error: 'Failed to retrieve swap requests',
-      message: 'An internal server error occurred'
+      message: 'An internal server error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     })
   }
 })

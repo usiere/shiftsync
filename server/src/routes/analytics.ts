@@ -106,10 +106,31 @@ router.get('/hours', async (req: Request, res: Response) => {
     const hoursData = staffWithHours.map(staff => {
       const totalHours = staff.shiftAssignments.reduce((sum, assignment) => {
         const shift = assignment.shift
-        const startTime = new Date(shift.startTime)
-        const endTime = new Date(shift.endTime)
-        const hours = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60)
-        return sum + hours
+        let startTime = new Date(shift.startTime)
+        let endTime = new Date(shift.endTime)
+
+        // Debug logging for problematic shifts
+        if (endTime < startTime) {
+          console.log(`Found overnight shift - ID: ${shift.id}, Start: ${startTime.toISOString()}, End: ${endTime.toISOString()}`)
+          endTime = new Date(endTime.getTime() + (24 * 60 * 60 * 1000))
+        }
+
+        // Calculate duration in milliseconds, then convert to hours
+        const durationMs = endTime.getTime() - startTime.getTime()
+        const hours = durationMs / (1000 * 60 * 60)
+
+        // Debug logging for negative hours
+        if (hours < 0) {
+          console.log(`Negative hours detected - Shift ID: ${shift.id}, Start: ${startTime.toISOString()}, End: ${endTime.toISOString()}, Hours: ${hours}`)
+        }
+
+        // Safeguard: ensure we never add negative hours
+        const safeHours = Math.max(0, Math.abs(hours))
+
+        // Additional safeguard: if result is unreasonably large (>24 hours), cap it
+        const cappedHours = Math.min(safeHours, 24)
+
+        return sum + cappedHours
       }, 0)
 
       return {

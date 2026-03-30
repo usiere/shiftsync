@@ -154,13 +154,17 @@ router.post('/', authenticateToken, requireManagerOrAdmin, validateShiftCreation
       }
     }
 
+    // Convert local datetime strings to UTC using location's timezone
+    const startTimeUTC = timezoneService.toUTC(startTime, location.timezone)
+    const endTimeUTC = timezoneService.toUTC(endTime, location.timezone)
+
     const shift = await prisma.shift.create({
       data: {
         locationId,
         skillId: skillId || null,
         date: new Date(date),
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: startTimeUTC,
+        endTime: endTimeUTC,
         headcountNeeded,
         title: title || null,
         description: description || null,
@@ -192,7 +196,8 @@ router.post('/', authenticateToken, requireManagerOrAdmin, validateShiftCreation
     console.error('Create shift error:', error)
     res.status(500).json({
       error: 'Failed to create shift',
-      message: 'An internal server error occurred'
+      message: error instanceof Error ? error.message : 'An internal server error occurred',
+      stack: error instanceof Error ? error.stack : undefined
     })
   }
 })
@@ -200,8 +205,37 @@ router.post('/', authenticateToken, requireManagerOrAdmin, validateShiftCreation
 /**
  * GET /shifts - List shifts with filtering
  */
-router.get('/', authenticateToken, requireManagerOrAdmin, validateShiftFilters, async (req: Request, res: Response) => {
+router.get('/', authenticateToken, async (req: Request, res: Response) => {
   try {
+    // Check authorization - staff can only see their own shifts
+    const assignedTo = req.query.assignedTo ? parseInt(req.query.assignedTo as string) : undefined
+
+    if (req.user?.role === 'STAFF') {
+      // Staff users can only see their own shifts or must provide assignedTo parameter
+      if (!assignedTo) {
+        return res.status(400).json({
+          error: 'Staff users must specify assignedTo parameter to view shifts'
+        })
+      }
+
+      // Staff can only view their own assignments
+      if (assignedTo !== req.user.id) {
+        return res.status(403).json({
+          error: 'Staff users can only view their own assigned shifts'
+        })
+      }
+    } else {
+      // Managers and admins need the existing role check if not filtering by assignedTo
+      if (!assignedTo) {
+        // Apply manager/admin check for general shift viewing
+        if (!['ADMIN', 'MANAGER'].includes(req.user?.role || '')) {
+          return res.status(403).json({
+            error: 'Insufficient permissions to view all shifts'
+          })
+        }
+      }
+    }
+
     const filters: any = {}
 
     if (req.query.locationId) {
@@ -218,6 +252,10 @@ router.get('/', authenticateToken, requireManagerOrAdmin, validateShiftFilters, 
 
     if (req.query.status) {
       filters.status = req.query.status as string
+    }
+
+    if (assignedTo) {
+      filters.assignedTo = assignedTo
     }
 
     const shifts = await shiftService.getShifts(filters)
@@ -1308,6 +1346,239 @@ router.get('/:id/eligible-staff', authenticateToken, requireManagerOrAdmin, asyn
     console.error('Get eligible staff error:', error)
     res.status(500).json({
       error: 'Failed to retrieve eligible staff',
+      message: 'An internal server error occurred'
+    })
+  }
+})
+
+/**
+ * @swagger
+ * /shifts/{id}/swap-eligible-staff:
+ *   get:
+ *     summary: Get staff eligible for shift swap
+ *     description: Returns staff members who are eligible to swap shifts with the current user
+ *     tags: [Shifts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Shift ID
+ *     responses:
+ *       200:
+ *         description: List of eligible staff for swap
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   skill:
+ *                     type: string
+ *       404:
+ *         description: Shift not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/:id/swap-eligible-staff', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const shiftId = parseInt(req.params.id)
+    const currentUserId = (req as any).user?.id
+
+    console.log(`Finding swap-eligible staff for shift ${shiftId}, excluding user ${currentUserId}`)
+    console.log('JWT user object:', (req as any).user)
+
+    if (!currentUserId) {
+      return res.status(401).json({
+        error: 'Invalid authentication',
+        message: 'User ID not found in token'
+      })
+    }
+
+    // Get the shift details
+    const shift = await prisma.shift.findUnique({
+      where: { id: shiftId },
+      include: {
+        location: {
+          select: { id: true, name: true }
+        },
+        skill: {
+          select: { id: true, name: true }
+        },
+        shiftAssignments: {
+          select: { userId: true }
+        }
+      }
+    })
+
+    if (!shift) {
+      return res.status(404).json({
+        error: 'Shift not found',
+        message: `Shift with ID ${shiftId} does not exist`
+      })
+    }
+
+    console.log('Shift details:', {
+      id: shift.id,
+      locationId: shift.locationId,
+      locationName: shift.location.name,
+      skillId: shift.skillId,
+      skillName: shift.skill?.name,
+      date: shift.date,
+      startTime: shift.startTime,
+      endTime: shift.endTime
+    })
+
+    // Get already assigned user IDs for this shift
+    const assignedUserIds = shift.shiftAssignments.map(assignment => assignment.userId)
+
+    // Exclude current user and already assigned users
+    const excludedUserIds = [...assignedUserIds, currentUserId]
+
+    console.log('Excluded user IDs:', excludedUserIds)
+
+    // Find eligible staff
+    const eligibleStaff = await prisma.user.findMany({
+      where: {
+        role: 'STAFF',
+        isActive: true,
+        id: { notIn: excludedUserIds },
+        // Must have the required skill
+        userSkills: shift.skillId ? {
+          some: {
+            skillId: shift.skillId
+          }
+        } : undefined,
+        // Must be certified at this location
+        locationCertifications: {
+          some: {
+            locationId: shift.locationId
+          }
+        }
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        userSkills: {
+          include: {
+            skill: {
+              select: { id: true, name: true }
+            }
+          }
+        },
+        locationCertifications: {
+          where: {
+            locationId: shift.locationId
+          },
+          select: { locationId: true }
+        },
+        shiftAssignments: {
+          where: {
+            shift: {
+              date: shift.date,
+              OR: [
+                {
+                  AND: [
+                    { startTime: { lt: shift.endTime } },
+                    { endTime: { gt: shift.startTime } }
+                  ]
+                }
+              ]
+            }
+          },
+          select: {
+            id: true,
+            shift: {
+              select: {
+                id: true,
+                startTime: true,
+                endTime: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    console.log(`Found ${eligibleStaff.length} potentially eligible staff members`)
+
+    // Filter out staff who have conflicting shifts
+    const availableStaff = eligibleStaff.filter(staff => {
+      const hasConflict = staff.shiftAssignments.length > 0
+      if (hasConflict) {
+        console.log(`Staff ${staff.firstName} ${staff.lastName} has ${staff.shiftAssignments.length} conflicting shifts`)
+      }
+      return !hasConflict
+    })
+
+    console.log(`After conflict filtering: ${availableStaff.length} available staff members`)
+
+    // Now get their assignments that could be swapped with
+    const swapCandidates = []
+
+    for (const staff of availableStaff) {
+      // Get staff's assignments (shifts they're assigned to that we could potentially swap with)
+      const staffAssignments = await prisma.shiftAssignment.findMany({
+        where: {
+          userId: staff.id,
+          // Only include assignments from other shifts (not the current shift)
+          shiftId: { not: shiftId },
+          shift: {
+            status: 'PUBLISHED', // Only published shifts can be swapped
+            date: {
+              gte: new Date() // Only future shifts
+            }
+          }
+        },
+        include: {
+          shift: {
+            include: {
+              location: { select: { name: true } },
+              skill: { select: { name: true } }
+            }
+          }
+        }
+      })
+
+      // Add each assignment as a potential swap candidate
+      for (const assignment of staffAssignments) {
+        const relevantSkill = staff.userSkills.find(us => us.skill.id === assignment.shift.skillId)
+        const skillName = relevantSkill?.skill.name || staff.userSkills[0]?.skill.name || 'No skills'
+
+        swapCandidates.push({
+          id: staff.id,
+          assignmentId: assignment.id,
+          name: `${staff.firstName} ${staff.lastName}`,
+          skill: skillName,
+          shiftInfo: {
+            date: assignment.shift.date,
+            startTime: assignment.shift.startTime,
+            endTime: assignment.shift.endTime,
+            location: assignment.shift.location.name,
+            skillRequired: assignment.shift.skill?.name
+          }
+        })
+      }
+    }
+
+    console.log('Final swap candidates:', swapCandidates.length, 'candidates')
+
+    res.json(swapCandidates)
+
+  } catch (error) {
+    console.error('Get swap-eligible staff error:', error)
+    res.status(500).json({
+      error: 'Failed to retrieve swap-eligible staff',
       message: 'An internal server error occurred'
     })
   }

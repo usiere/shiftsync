@@ -99,6 +99,128 @@ app.get('/api/users', authenticateToken, requireManagerOrAdmin, async (req, res)
   }
 })
 
+// Get detailed user information with skills and certifications
+app.get('/api/users/:id', authenticateToken, requireManagerOrAdmin, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id)
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID' })
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        userSkills: {
+          include: {
+            skill: {
+              select: { id: true, name: true, description: true }
+            }
+          }
+        },
+        locationCertifications: {
+          include: {
+            location: {
+              select: { id: true, name: true, address: true, city: true, state: true }
+            }
+          }
+        }
+      }
+    })
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    // Remove sensitive data
+    const { hashedPassword, ...userWithoutPassword } = user
+
+    res.json(userWithoutPassword)
+  } catch (error) {
+    console.error('Error fetching user details:', error)
+    res.status(500).json({ error: 'Failed to fetch user details' })
+  }
+})
+
+// Get user availability windows
+app.get('/api/users/:id/availability', authenticateToken, requireManagerOrAdmin, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id)
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID' })
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, firstName: true, lastName: true }
+    })
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    // Fetch weekly recurring availability
+    const weeklyAvailability = await prisma.availability.findMany({
+      where: {
+        userId: userId,
+        isRecurring: true
+      },
+      select: {
+        dayOfWeek: true,
+        startTime: true,
+        endTime: true
+      },
+      orderBy: [
+        { dayOfWeek: 'asc' },
+        { startTime: 'asc' }
+      ]
+    })
+
+    // Fetch one-off exceptions (both available and unavailable)
+    const exceptions = await prisma.availability.findMany({
+      where: {
+        userId: userId,
+        isRecurring: false,
+        date: {
+          gte: new Date() // Only future/current exceptions
+        }
+      },
+      select: {
+        date: true,
+        startTime: true,
+        endTime: true,
+        isAvailable: true
+      },
+      orderBy: [
+        { date: 'asc' },
+        { startTime: 'asc' }
+      ]
+    })
+
+    // Format the response
+    const availability = {
+      weekly: weeklyAvailability.map(slot => ({
+        dayOfWeek: slot.dayOfWeek,
+        startTime: slot.startTime,
+        endTime: slot.endTime
+      })),
+      exceptions: exceptions.map(exception => ({
+        date: exception.date?.toISOString().split('T')[0] || null,
+        startTime: exception.startTime,
+        endTime: exception.endTime,
+        isAvailable: exception.isAvailable
+      }))
+    }
+
+    res.json(availability)
+  } catch (error) {
+    console.error('Error fetching user availability:', error)
+    res.status(500).json({ error: 'Failed to fetch availability data' })
+  }
+})
+
 // Example protected route - Admin only
 app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) => {
   try {

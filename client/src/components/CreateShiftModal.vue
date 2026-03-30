@@ -302,12 +302,16 @@ async function createShift() {
     creating.value = true
     error.value = ''
 
+    // Send local time without UTC conversion - let server handle timezone
+    const startDateTime = `${shiftForm.value.date}T${shiftForm.value.startTime}:00`
+    const endDateTime = `${shiftForm.value.date}T${shiftForm.value.endTime}:00`
+
     const shiftData = {
       locationId: shiftForm.value.location,
       skillId: shiftForm.value.requiredSkill,
       date: shiftForm.value.date,
-      startTime: `${shiftForm.value.date}T${shiftForm.value.startTime}:00.000Z`,
-      endTime: `${shiftForm.value.date}T${shiftForm.value.endTime}:00.000Z`,
+      startTime: startDateTime,
+      endTime: endDateTime,
       headcountNeeded: shiftForm.value.neededCount,
       description: shiftForm.value.notes || undefined
     }
@@ -325,12 +329,25 @@ async function createShift() {
 
   } catch (err: any) {
     console.error('Failed to create shift:', err)
+    console.log('Create shift error:', err.response?.data)
 
-    if (err.response?.data?.message) {
-      error.value = err.response.data.message
-    } else {
-      error.value = 'Failed to create shift. Please try again.'
+    // Extract the most appropriate error message for display
+    let errorMessage = 'Failed to create shift. Please try again.'
+
+    if (err.response?.data) {
+      // Check for specific error fields in order of preference
+      if (err.response.data.message) {
+        errorMessage = err.response.data.message
+      } else if (err.response.data.error) {
+        errorMessage = err.response.data.error
+      } else if (typeof err.response.data === 'string') {
+        errorMessage = err.response.data
+      }
+    } else if (err.message) {
+      errorMessage = `Error: ${err.message}`
     }
+
+    error.value = errorMessage
   } finally {
     creating.value = false
   }

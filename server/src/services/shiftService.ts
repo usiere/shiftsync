@@ -11,6 +11,7 @@ export interface ShiftFilters {
   endDate?: Date
   status?: 'DRAFT' | 'PUBLISHED'
   userId?: number
+  assignedTo?: number
 }
 
 export class ShiftService {
@@ -36,6 +37,14 @@ export class ShiftService {
 
     if (filters.status) {
       where.status = filters.status
+    }
+
+    if (filters.assignedTo) {
+      where.shiftAssignments = {
+        some: {
+          userId: filters.assignedTo
+        }
+      }
     }
 
     const shifts = await prisma.shift.findMany({

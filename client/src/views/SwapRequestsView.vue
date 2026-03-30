@@ -21,6 +21,7 @@
     <div class="pill-tabs-container mb-6">
       <div class="pill-tabs">
         <button
+          v-if="!isManager"
           class="pill-tab"
           :class="{ 'pill-tab--active': activeTab === 'my-requests' }"
           @click="activeTab = 'my-requests'"
@@ -126,33 +127,33 @@
                           <v-card-text class="pa-3">
                             <div class="d-flex align-center mb-1">
                               <v-icon size="16" class="me-2">mdi-calendar</v-icon>
-                              <span class="text-body-2">{{ formatDate(request.originalShift?.date) }}</span>
+                              <span class="text-body-2">{{ request.fromAssignment?.shift?.startTime ? new Date(request.fromAssignment.shift.startTime).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }) : 'Invalid Date' }}</span>
                             </div>
                             <div class="d-flex align-center mb-1">
                               <v-icon size="16" class="me-2">mdi-clock</v-icon>
-                              <span class="text-body-2">{{ request.originalShift ? formatShiftTime(request.originalShift) : '' }}</span>
+                              <span class="text-body-2">{{ request.fromAssignment?.shift?.time ? (request.fromAssignment.shift.time.localStartTime + ' - ' + request.fromAssignment.shift.time.localEndTime) : 'N/A' }}</span>
                             </div>
                             <div class="d-flex align-center mb-1">
                               <v-icon size="16" class="me-2">mdi-map-marker</v-icon>
-                              <span class="text-body-2">{{ request.originalShift?.location }}</span>
+                              <span class="text-body-2">{{ request.fromAssignment?.shift?.location?.name || 'N/A' }}</span>
                             </div>
                             <v-chip size="x-small" color="info" variant="tonal">
-                              {{ request.originalShift?.requiredSkill }}
+                              {{ request.fromAssignment?.shift?.skill?.name || 'N/A' }}
                             </v-chip>
                           </v-card-text>
                         </v-card>
                       </div>
 
                       <!-- Target Staff (for swaps) -->
-                      <div v-if="request.type === 'SWAP' && request.targetStaff" class="mb-3">
+                      <div v-if="request.type === 'SWAP' && request.toAssignment" class="mb-3">
                         <h4 class="text-subtitle-2 mb-2">Swap With</h4>
                         <div class="d-flex align-center">
                           <v-avatar size="32" color="secondary" class="me-2">
                             <v-icon>mdi-account</v-icon>
                           </v-avatar>
                           <div>
-                            <div class="text-body-2 font-weight-medium">{{ request.targetStaff.name }}</div>
-                            <div class="text-caption text-grey">{{ request.targetStaff.skill }}</div>
+                            <div class="text-body-2 font-weight-medium">{{ request.toAssignment?.user?.firstName || 'N/A' }} {{ request.toAssignment?.user?.lastName || '' }}</div>
+                            <div class="text-caption text-grey">{{ request.toAssignment?.shift?.skill?.name || 'N/A' }}</div>
                           </div>
                         </div>
                       </div>
@@ -370,8 +371,8 @@
                             <v-icon>mdi-account</v-icon>
                           </v-avatar>
                           <div>
-                            <div class="text-body-2 font-weight-medium">{{ approval.requesterStaff.name }}</div>
-                            <div class="text-caption text-grey">{{ approval.requesterStaff.skill }}</div>
+                            <div class="text-body-2 font-weight-medium">{{ approval.fromAssignment?.user?.name || 'N/A' }}</div>
+                            <div class="text-caption text-grey">{{ approval.fromAssignment?.shift?.skill?.name || 'N/A' }}</div>
                           </div>
                         </div>
 
@@ -380,22 +381,22 @@
                             <div class="text-caption text-grey mb-1">Their Shift</div>
                             <div class="d-flex align-center mb-1">
                               <v-icon size="14" class="me-1">mdi-calendar</v-icon>
-                              <span class="text-body-2">{{ formatDate(approval.originalShift?.date) }}</span>
+                              <span class="text-body-2">{{ approval.fromAssignment?.shift?.startTime ? formatShiftDate(approval.fromAssignment.shift.startTime) : 'Invalid Date' }}</span>
                             </div>
                             <div class="d-flex align-center mb-1">
                               <v-icon size="14" class="me-1">mdi-clock</v-icon>
-                              <span class="text-body-2">{{ approval.originalShift ? formatShiftTime(approval.originalShift) : '' }}</span>
+                              <span class="text-body-2">{{ approval.fromAssignment?.shift?.time ? (approval.fromAssignment.shift.time.localStartTime + ' - ' + approval.fromAssignment.shift.time.localEndTime) : 'N/A' }}</span>
                             </div>
                             <div class="d-flex align-center">
                               <v-icon size="14" class="me-1">mdi-map-marker</v-icon>
-                              <span class="text-body-2">{{ approval.originalShift?.location }}</span>
+                              <span class="text-body-2">{{ approval.fromAssignment?.shift?.location?.name || 'N/A' }}</span>
                             </div>
                           </v-card-text>
                         </v-card>
                       </div>
 
                       <!-- Staff B (Target) for swaps -->
-                      <div v-if="approval.type === 'SWAP' && approval.targetStaff" class="mb-4">
+                      <div v-if="approval.type === 'SWAP' && approval.toAssignment" class="mb-4">
                         <h4 class="text-subtitle-2 mb-2 d-flex align-center">
                           <v-icon class="me-2" color="secondary">mdi-account-switch</v-icon>
                           Target Staff
@@ -406,8 +407,8 @@
                             <v-icon>mdi-account</v-icon>
                           </v-avatar>
                           <div>
-                            <div class="text-body-2 font-weight-medium">{{ approval.targetStaff.name }}</div>
-                            <div class="text-caption text-grey">{{ approval.targetStaff.skill }}</div>
+                            <div class="text-body-2 font-weight-medium">{{ approval.toAssignment?.user?.name || 'N/A' }}</div>
+                            <div class="text-caption text-grey">{{ approval.toAssignment?.shift?.skill?.name || 'N/A' }}</div>
                           </div>
                         </div>
                       </div>
@@ -541,7 +542,7 @@ interface AvailableDrop {
   dropReason?: string
 }
 
-const activeTab = ref('my-requests')
+const activeTab = ref(authStore.userRole === 'MANAGER' || authStore.userRole === 'ADMIN' ? 'available-drops' : 'my-requests')
 const refreshing = ref(false)
 
 // My Requests
@@ -580,6 +581,7 @@ async function fetchMyRequests() {
     myRequestsLoading.value = true
     const response = await api.get('/api/swap-requests?mine=true')
     myRequests.value = extractArray(response)
+    console.log('My Requests Data:', myRequests.value)
   } catch (error) {
     console.error('Failed to fetch my requests:', error)
     showMessage('Failed to load your requests', 'error')
@@ -608,6 +610,7 @@ async function fetchPendingApprovals() {
     pendingApprovalsLoading.value = true
     const response = await api.get('/api/swap-requests?status=PENDING_APPROVAL')
     pendingApprovals.value = extractArray(response)
+    console.log('Pending Approvals Data:', pendingApprovals.value)
   } catch (error) {
     console.error('Failed to fetch pending approvals:', error)
     showMessage('Failed to load pending approvals', 'error')
@@ -709,9 +712,12 @@ async function refreshAllData() {
     refreshing.value = true
 
     const promises = [
-      fetchMyRequests(),
       fetchAvailableDrops()
     ]
+
+    if (!isManager.value) {
+      promises.push(fetchMyRequests())
+    }
 
     if (isManager.value) {
       promises.push(fetchPendingApprovals())
@@ -747,6 +753,14 @@ function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString()
 }
 
+function formatShiftDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
 function formatDateTime(dateTimeString: string): string {
   return new Date(dateTimeString).toLocaleString()
 }
@@ -771,7 +785,7 @@ function showMessage(message: string, color: string = 'success') {
 watch(activeTab, (newTab) => {
   switch (newTab) {
     case 'my-requests':
-      if (myRequests.value.length === 0) fetchMyRequests()
+      if (!isManager.value && myRequests.value.length === 0) fetchMyRequests()
       break
     case 'available-drops':
       if (availableDrops.value.length === 0) fetchAvailableDrops()
@@ -783,8 +797,12 @@ watch(activeTab, (newTab) => {
 })
 
 onMounted(() => {
-  // Load data for the default tab
-  fetchMyRequests()
+  // Load data for the default tab based on user role
+  if (isManager.value) {
+    fetchAvailableDrops()
+  } else {
+    fetchMyRequests()
+  }
 })
 </script>
 

@@ -29,10 +29,10 @@
       <v-col cols="12" md="6">
         <div class="stat-card">
           <div class="stat-label">THIS WEEK HOURS</div>
-          <div class="stat-number">{{ weeklyHours }}h</div>
+          <div class="stat-number">{{ isNaN(weeklyHours) ? 0 : weeklyHours }}h</div>
           <v-icon class="stat-icon" size="18" color="#CBD5E1">mdi-clock</v-icon>
           <div class="stat-meta">
-            {{ weeklyHours > 35 ? (weeklyHours > 40 ? 'Over 40h limit' : 'Over 35h') : 'Within limits' }}
+            {{ (isNaN(weeklyHours) ? 0 : weeklyHours) > 35 ? ((isNaN(weeklyHours) ? 0 : weeklyHours) > 40 ? 'Over 40h limit' : 'Over 35h') : 'Within limits' }}
           </div>
         </div>
       </v-col>
@@ -131,6 +131,31 @@
                       {{ shift.requiredSkill?.name || shift.skill?.name }}
                     </div>
 
+                    <!-- Assigned Staff -->
+                    <div class="shift-staff">
+                      <template v-if="shift.shiftAssignments && shift.shiftAssignments.length > 0">
+                        <div class="staff-avatars">
+                          <div
+                            v-for="(assignment, index) in shift.shiftAssignments"
+                            :key="assignment.user.id"
+                            class="staff-avatar"
+                            :title="`${assignment.user.firstName} ${assignment.user.lastName}`"
+                          >
+                            {{ assignment.user.firstName.charAt(0) }}{{ assignment.user.lastName.charAt(0) }}
+                          </div>
+                        </div>
+                        <div class="staff-names" v-if="shift.shiftAssignments.length <= 2">
+                          {{ getAssignedStaffNames(shift) }}
+                        </div>
+                        <div class="staff-names" v-else>
+                          {{ shift.shiftAssignments.length }} assigned
+                        </div>
+                      </template>
+                      <div v-else class="unassigned-text">
+                        Unassigned
+                      </div>
+                    </div>
+
                     <!-- Status -->
                     <div class="shift-status" :class="`status-${shift.status.toLowerCase()}`">
                       {{ shift.status }}
@@ -181,6 +206,17 @@ interface Skill {
   name: string
 }
 
+interface AssignedUser {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+}
+
+interface ShiftAssignment {
+  user: AssignedUser
+}
+
 interface Shift {
   id: number
   location: Location
@@ -192,6 +228,7 @@ interface Shift {
   skill?: Skill
   status: 'DRAFT' | 'PUBLISHED'
   assignedStaffIds?: number[]
+  shiftAssignments?: ShiftAssignment[]
 }
 
 const loading = ref(true)
@@ -256,9 +293,17 @@ async function fetchShifts() {
     let response;
 
     if (authStore.userRole === 'STAFF') {
-      // Staff users can only see available shifts assigned to them
-      response = await api.get('/api/shifts/available', {
+      // Staff users can only see shifts assigned to them
+      console.log('Fetching shifts for staff user - userId:', authStore.userId, 'user object:', authStore.user)
+
+      if (!authStore.userId) {
+        console.error('No user ID available in auth store for staff user')
+        throw new Error('Authentication required - no user ID available')
+      }
+
+      response = await api.get('/api/shifts', {
         params: {
+          assignedTo: authStore.userId,
           startDate: format(currentWeekStart.value, 'yyyy-MM-dd'),
           endDate: format(addDays(currentWeekStart.value, 6), 'yyyy-MM-dd')
         }
@@ -273,7 +318,19 @@ async function fetchShifts() {
       })
     }
 
-    shifts.value = extractArray(response)
+    let fetchedShifts = extractArray(response)
+
+    // Additional frontend filter for staff users to ensure they only see their own shifts
+    if (authStore.userRole === 'STAFF' && authStore.userId) {
+      fetchedShifts = fetchedShifts.filter(shift => {
+        // Check if the current user is assigned to this shift
+        return shift.shiftAssignments?.some(assignment => assignment.user.id === authStore.userId)
+      })
+      console.log('After frontend filtering:', fetchedShifts.length, 'shifts for staff user')
+    }
+
+    shifts.value = fetchedShifts
+    console.log('Fetched shifts:', shifts.value.length, 'shifts for', authStore.userRole, 'user')
 
   } catch (error) {
     console.error('Failed to fetch shifts:', error)
@@ -316,7 +373,14 @@ function getDayShifts(date: Date) {
 
 function isMyShift(shift: Shift): boolean {
   if (authStore.userRole !== 'STAFF') return false
-  return shift.assignedStaffIds?.includes(authStore.userId!) || false
+
+  // Check both old assignedStaffIds and new shiftAssignments for compatibility
+  const isAssignedViaIds = shift.assignedStaffIds?.includes(authStore.userId!) || false
+  const isAssignedViaAssignments = shift.shiftAssignments?.some(assignment =>
+    assignment.user.id === authStore.userId
+  ) || false
+
+  return isAssignedViaIds || isAssignedViaAssignments
 }
 
 function canClickShift(shift: Shift): boolean {
@@ -332,9 +396,39 @@ function handleShiftClick(shift: Shift) {
 }
 
 function calculateShiftHours(shift: Shift): number {
-  const start = new Date(`1970-01-01T${shift.startTime}`)
-  const end = new Date(`1970-01-01T${shift.endTime}`)
-  return (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+  try {
+    // Check if we have timezone data with duration
+    if ((shift as any).timezone?.duration && typeof (shift as any).timezone.duration === 'number') {
+      return Math.abs((shift as any).timezone.duration)
+    }
+
+    // Fallback to parsing times
+    let startTime: string
+    let endTime: string
+
+    // Handle both ISO strings and time-only strings
+    if (shift.startTime.includes('T')) {
+      startTime = shift.startTime
+      endTime = shift.endTime
+    } else {
+      startTime = `1970-01-01T${shift.startTime}`
+      endTime = `1970-01-01T${shift.endTime}`
+    }
+
+    const start = new Date(startTime)
+    const end = new Date(endTime)
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      console.warn('Invalid date in calculateShiftHours:', { shift, startTime, endTime })
+      return 0
+    }
+
+    const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+    return Math.abs(hours) // Return positive hours
+  } catch (error) {
+    console.error('Error calculating shift hours:', error, shift)
+    return 0
+  }
 }
 
 function formatShiftTime(shift: Shift): string {
@@ -472,6 +566,24 @@ async function refreshSchedule() {
 function handleRequestSubmitted() {
   fetchPendingRequests()
   showMessage('Request submitted successfully', 'success')
+}
+
+function getAssignedStaffNames(shift: Shift): string {
+  if (!shift.shiftAssignments || shift.shiftAssignments.length === 0) {
+    return ''
+  }
+  return shift.shiftAssignments
+    .map(assignment => `${assignment.user.firstName} ${assignment.user.lastName}`)
+    .join(', ')
+}
+
+function getAssignedStaffInitials(shift: Shift): string[] {
+  if (!shift.shiftAssignments || shift.shiftAssignments.length === 0) {
+    return []
+  }
+  return shift.shiftAssignments.map(assignment =>
+    `${assignment.user.firstName.charAt(0)}${assignment.user.lastName.charAt(0)}`.toUpperCase()
+  )
 }
 
 function showMessage(message: string, color: string = 'success') {
@@ -832,5 +944,47 @@ h1 {
   .shift-time {
     font-size: 13px;
   }
+}
+
+/* Assigned Staff Styles */
+.shift-staff {
+  margin-bottom: 8px;
+}
+
+.staff-avatars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.staff-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2563EB;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.staff-names {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #475569;
+  line-height: 1.3;
+}
+
+.unassigned-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #94A3B8;
+  font-style: italic;
 }
 </style>

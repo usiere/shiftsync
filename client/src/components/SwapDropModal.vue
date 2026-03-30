@@ -25,7 +25,7 @@
                       <v-icon class="me-2">mdi-map-marker</v-icon>
                       <strong>Location:</strong>
                       <v-chip size="small" class="ms-2" variant="outlined">
-                        {{ shift.location }}
+                        {{ shift.location?.name }}
                       </v-chip>
                     </div>
                     <div class="d-flex align-center mb-2">
@@ -36,7 +36,7 @@
                     <div class="d-flex align-center mb-2">
                       <v-icon class="me-2">mdi-clock</v-icon>
                       <strong>Time:</strong>
-                      <span class="ms-2">{{ formatTime(shift.startTime) }} - {{ formatTime(shift.endTime) }}</span>
+                      <span class="ms-2">{{ shift.timezone?.localStartTime }} - {{ shift.timezone?.localEndTime }} {{ shift.timezone?.timezoneAbbreviation }}</span>
                     </div>
                   </v-col>
                   <v-col cols="12" md="6">
@@ -44,7 +44,7 @@
                       <v-icon class="me-2">mdi-cog</v-icon>
                       <strong>Required Skill:</strong>
                       <v-chip size="small" class="ms-2" color="info" variant="tonal">
-                        {{ shift.requiredSkill }}
+                        {{ shift.requiredSkill?.name || shift.skill?.name }}
                       </v-chip>
                     </div>
                     <div class="d-flex align-center mb-2">
@@ -58,11 +58,6 @@
                       >
                         {{ shift.status }}
                       </v-chip>
-                    </div>
-                    <div class="d-flex align-center mb-2">
-                      <v-icon class="me-2">mdi-earth</v-icon>
-                      <strong>Timezone:</strong>
-                      <span class="ms-2">{{ shift.timezone }}</span>
                     </div>
                   </v-col>
                 </v-row>
@@ -163,9 +158,16 @@
                       <v-icon>mdi-account</v-icon>
                     </v-avatar>
                   </template>
+                  <template v-slot:subtitle v-if="item.raw?.shiftInfo">
+                    <div class="text-caption">
+                      {{ formatDate(item.raw.shiftInfo.date) }} • {{ formatTime(item.raw.shiftInfo.startTime) }} - {{ formatTime(item.raw.shiftInfo.endTime) }}
+                      <br>
+                      {{ item.raw.shiftInfo.location }}
+                    </div>
+                  </template>
                   <template v-slot:append>
                     <v-chip size="small" color="info" variant="tonal">
-                      {{ item.raw.skill }}
+                      {{ item.raw?.skill || 'No skill' }}
                     </v-chip>
                   </template>
                 </v-list-item>
@@ -233,8 +235,16 @@ interface Shift {
 
 interface Staff {
   id: number
+  assignmentId: number
   name: string
   skill: string
+  shiftInfo?: {
+    date: string
+    startTime: string
+    endTime: string
+    location: string
+    skillRequired: string
+  }
 }
 
 interface Props {
@@ -311,7 +321,7 @@ async function submitRequest() {
 
     if (selectedAction.value === 'swap') {
       await api.post(`/api/shifts/${props.shift.id}/swap`, {
-        targetStaffId: selectedStaff.value?.id,
+        toAssignmentId: selectedStaff.value?.assignmentId,
         notes: notes.value || undefined
       })
     } else {
