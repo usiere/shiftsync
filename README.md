@@ -9,7 +9,7 @@
 |------|-------|----------|
 | Admin | admin@shiftsync.com | admin123 |
 | Manager | manager.east@shiftsync.com | manager123 |
-| Staff | staff1@shiftsync.com | staff123 |
+| Staff (Alex Thompson — Bartender) | staff1@shiftsync.com | staff123 |
 
 ## Tech Stack
 - Frontend: Vue 3, TypeScript, Vuetify 3, Pinia
