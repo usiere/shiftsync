@@ -44,7 +44,7 @@ class SocketService {
     }
 
     try {
-      this.socket = io('http://localhost:3000', {
+      this.socket = io(import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000', {
         auth: {
           token: token
         },
