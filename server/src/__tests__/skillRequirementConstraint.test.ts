@@ -5,7 +5,7 @@ import { createShiftAssignment, createConstraintContext } from './utils/testData
 describe('Skill Requirement Constraint', () => {
   it('should pass when shift requires no specific skill', () => {
     const assignment = createShiftAssignment(1, {
-      skillId: null, // No skill required
+      skillId: undefined, // No skill required
       skillName: undefined
     })
 

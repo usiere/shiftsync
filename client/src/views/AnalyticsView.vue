@@ -323,9 +323,9 @@ const snackbar = ref({
 
 const fairnessHeaders = [
   { title: 'Staff Member', key: 'staffName', sortable: true },
-  { title: 'Friday Shifts', key: 'fridayShifts', sortable: true, align: 'center' },
-  { title: 'Saturday Shifts', key: 'saturdayShifts', sortable: true, align: 'center' },
-  { title: 'Total Premium', key: 'totalPremiumShifts', sortable: true, align: 'center' },
+  { title: 'Friday Shifts', key: 'fridayShifts', sortable: true, align: 'center' as const },
+  { title: 'Saturday Shifts', key: 'saturdayShifts', sortable: true, align: 'center' as const },
+  { title: 'Total Premium', key: 'totalPremiumShifts', sortable: true, align: 'center' as const },
   { title: 'Fairness Score', key: 'fairnessScore', sortable: true },
   { title: 'Last Premium Shift', key: 'lastPremiumShift', sortable: true }
 ]

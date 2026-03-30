@@ -206,19 +206,7 @@
 import { ref, computed, watch } from 'vue'
 import api from '../api/axios'
 import { AxiosError } from 'axios'
-
-interface Shift {
-  id: number
-  location: string
-  date: string
-  startTime: string
-  endTime: string
-  timezone: string
-  requiredSkill: string
-  assignedCount: number
-  neededCount: number
-  status: 'DRAFT' | 'PUBLISHED'
-}
+import type { Shift } from '../types'
 
 interface Staff {
   id: number
@@ -235,7 +223,7 @@ interface ConstraintViolation {
   alternativeStaff?: Staff[]
 }
 
-interface ErrorResponse {
+interface _ErrorResponse {
   message: string
   constraint?: boolean
   alternativeStaff?: Staff[]
@@ -372,7 +360,7 @@ function getShiftHours(): number {
   return (end.getTime() - start.getTime()) / (1000 * 60 * 60)
 }
 
-function getHeadcountColor(assigned: number, needed: number): string {
+function _getHeadcountColor(assigned: number, needed: number): string {
   if (assigned === 0) return 'error'
   if (assigned < needed) return 'warning'
   if (assigned === needed) return 'success'

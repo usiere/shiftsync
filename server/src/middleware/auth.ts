@@ -62,7 +62,7 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
     }
 
     req.user = user
-    next()
+    return next()
   } catch (error) {
     return res.status(401).json({ error: 'Invalid or expired token' })
   }

@@ -1,3 +1,4 @@
+/// <reference types='vite/client' />
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import LoginView from '../views/LoginView.vue'
@@ -15,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/',
-      redirect: (to) => {
+      redirect: () => {
         const authStore = useAuthStore()
         return authStore.userRole === 'STAFF' ? '/schedule' : '/dashboard'
       }
@@ -85,7 +86,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore()
 
   // Check if route requires authentication

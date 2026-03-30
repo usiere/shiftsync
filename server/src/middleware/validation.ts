@@ -13,7 +13,7 @@ export const handleValidationErrors = (req: Request, res: Response, next: NextFu
       }))
     })
   }
-  next()
+  return next()
 }
 
 export const validateShiftCreation = [
@@ -183,7 +183,7 @@ export const validateShiftFilters = [
     .isISO8601()
     .withMessage('End date must be in ISO 8601 format')
     .custom((value, { req }) => {
-      if (req.query.startDate) {
+      if (req.query?.startDate) {
         const startDate = new Date(req.query.startDate as string)
         const endDate = new Date(value)
 

@@ -197,39 +197,7 @@ import { extractArray } from '../utils/apiHelpers'
 
 const authStore = useAuthStore()
 
-interface Location {
-  name: string
-  timezone: string
-}
-
-interface Skill {
-  name: string
-}
-
-interface AssignedUser {
-  id: number
-  firstName: string
-  lastName: string
-  email: string
-}
-
-interface ShiftAssignment {
-  user: AssignedUser
-}
-
-interface Shift {
-  id: number
-  location: Location
-  date: string
-  startTime: string
-  endTime: string
-  timezone?: string
-  requiredSkill?: Skill
-  skill?: Skill
-  status: 'DRAFT' | 'PUBLISHED'
-  assignedStaffIds?: number[]
-  shiftAssignments?: ShiftAssignment[]
-}
+import type { Shift, Location, Skill, AssignedUser, ShiftAssignment } from '../types'
 
 const loading = ref(true)
 const shifts = ref<Shift[]>([])

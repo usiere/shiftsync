@@ -78,6 +78,10 @@ export class SwapRequestService {
       throw new Error(`User ${fromAssignment.user.firstName} ${fromAssignment.user.lastName} has reached the limit of 3 pending requests`)
     }
 
+    if (!toUserLimit.valid) {
+      throw new Error(`User ${toAssignment.user.firstName} ${toAssignment.user.lastName} has reached the limit of 3 pending requests`)
+    }
+
     // Validate both users are qualified for each other's shifts
     const fromUserQualified = await this.validateUserQualification(
       toAssignment.userId,
@@ -684,7 +688,7 @@ export class SwapRequestService {
   }
 
   // Cancel swaps when shift is edited
-  async cancelSwapsForEditedShift(shiftId: number, editorId: number) {
+  async cancelSwapsForEditedShift(shiftId: number, _editorId: number) {
     const activeSwaps = await this.prisma.swapRequest.findMany({
       where: {
         shiftId,

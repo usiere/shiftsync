@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express'
 import { PrismaClient, UserRole } from '@prisma/client'
 import { authenticateToken } from '../middleware/auth'
-import { requireManagerOrAdmin } from '../middleware/roleGuards'
-import { startOfWeek, endOfWeek, parseISO, getISOWeek, getYear } from 'date-fns'
+// import { requireManagerOrAdmin } from '../middleware/roleGuards'
+import { startOfWeek, endOfWeek, parseISO } from 'date-fns'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -205,7 +205,7 @@ router.get('/hours', async (req: Request, res: Response) => {
           endTime: shift.endTime.toISOString().split('T')[1].slice(0, 8),
           hours: parseFloat(shiftHours.toFixed(1)),
           location: shift.location.name,
-          skill: shift.skill.name
+          skill: shift.skill?.name || 'No specific skill'
         }
       })
 
@@ -232,10 +232,10 @@ router.get('/hours', async (req: Request, res: Response) => {
     // Sort by total hours descending
     staffHoursData.sort((a, b) => b.totalHours - a.totalHours)
 
-    res.json(staffHoursData)
+    return res.json(staffHoursData)
   } catch (error) {
     console.error('Error fetching staff hours:', error)
-    res.status(500).json({ error: 'Failed to fetch staff hours' })
+    return res.status(500).json({ error: 'Failed to fetch staff hours' })
   }
 })
 

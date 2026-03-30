@@ -499,35 +499,14 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import api from '../api/axios'
 import { extractArray } from '../utils/apiHelpers'
+import type { SwapRequest } from '../types'
 
 const authStore = useAuthStore()
-
-interface Shift {
-  id: number
-  location: string
-  date: string
-  startTime: string
-  endTime: string
-  timezone: string
-  requiredSkill: string
-  status: 'DRAFT' | 'PUBLISHED'
-}
 
 interface Staff {
   id: number
   name: string
   skill: string
-}
-
-interface SwapRequest {
-  id: number
-  type: 'SWAP' | 'DROP'
-  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PENDING_APPROVAL'
-  originalShift: Shift
-  targetStaff?: Staff
-  requesterStaff: Staff
-  notes?: string
-  createdAt: string
 }
 
 interface AvailableDrop {

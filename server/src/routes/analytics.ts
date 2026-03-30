@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express'
 import { PrismaClient, UserRole } from '@prisma/client'
 import { authenticateToken } from '../middleware/auth'
 import { requireManagerOrAdmin } from '../middleware/roleGuards'
-import { startOfWeek, endOfWeek, parseISO, getISOWeek, getYear, format, getDay } from 'date-fns'
+import { startOfWeek, endOfWeek, parseISO, format, getDay } from 'date-fns'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -202,7 +202,7 @@ router.get('/hours', async (req: Request, res: Response) => {
  *       500:
  *         description: Server error
  */
-router.get('/fairness', async (req: Request, res: Response) => {
+router.get('/fairness', async (_req: Request, res: Response) => {
   try {
     // Get last 3 months of data for fairness calculation
     const threeMonthsAgo = new Date()

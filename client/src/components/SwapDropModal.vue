@@ -158,16 +158,16 @@
                       <v-icon>mdi-account</v-icon>
                     </v-avatar>
                   </template>
-                  <template v-slot:subtitle v-if="item.raw?.shiftInfo">
+                  <template v-slot:subtitle v-if="(item as any).raw?.shiftInfo">
                     <div class="text-caption">
-                      {{ formatDate(item.raw.shiftInfo.date) }} • {{ formatTime(item.raw.shiftInfo.startTime) }} - {{ formatTime(item.raw.shiftInfo.endTime) }}
+                      {{ formatDate((item as any).raw.shiftInfo.date) }} • {{ formatTime((item as any).raw.shiftInfo.startTime) }} - {{ formatTime((item as any).raw.shiftInfo.endTime) }}
                       <br>
-                      {{ item.raw.shiftInfo.location }}
+                      {{ (item as any).raw.shiftInfo.location }}
                     </div>
                   </template>
                   <template v-slot:append>
                     <v-chip size="small" color="info" variant="tonal">
-                      {{ item.raw?.skill || 'No skill' }}
+                      {{ (item as any).raw?.skill || 'No skill' }}
                     </v-chip>
                   </template>
                 </v-list-item>
@@ -221,17 +221,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import api from '../api/axios'
-
-interface Shift {
-  id: number
-  location: string
-  date: string
-  startTime: string
-  endTime: string
-  timezone: string
-  requiredSkill: string
-  status: 'DRAFT' | 'PUBLISHED'
-}
+import type { Shift } from '../types'
 
 interface Staff {
   id: number

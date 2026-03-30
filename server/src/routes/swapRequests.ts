@@ -36,7 +36,7 @@ router.post('/:id/accept', authenticateToken, async (req: Request, res: Response
         swapRequestId: updatedRequest.id,
         status: 'ACCEPTED',
         fromUserId: updatedRequest.fromUserId,
-        toUserId: updatedRequest.toUserId,
+        toUserId: updatedRequest.toUserId ?? undefined,
         resolvedBy: {
           id: req.user!.id,
           name: `${req.user!.firstName} ${req.user!.lastName}`,
@@ -71,7 +71,7 @@ router.post('/:id/accept', authenticateToken, async (req: Request, res: Response
       console.error('Failed to create swap accepted notification:', notificationError)
     }
 
-    res.json({
+    return res.json({
       message: 'Swap request accepted successfully',
       swapRequest: {
         id: updatedRequest.id,
@@ -138,7 +138,7 @@ router.post('/:id/accept', authenticateToken, async (req: Request, res: Response
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to accept swap request',
       message: 'An internal server error occurred'
     })
@@ -187,7 +187,7 @@ router.post('/:id/approve', authenticateToken, requireManagerOrAdmin, async (req
           swapRequestId: approvedRequest.id,
           status: 'APPROVED',
           fromUserId: fullSwapRequest.fromUserId,
-          toUserId: fullSwapRequest.toUserId,
+          toUserId: fullSwapRequest.toUserId || undefined,
           resolvedBy: {
             id: req.user!.id,
             name: `${req.user!.firstName} ${req.user!.lastName}`,
@@ -206,7 +206,7 @@ router.post('/:id/approve', authenticateToken, requireManagerOrAdmin, async (req
       console.error('Failed to emit swap approved event:', socketError)
     }
 
-    res.json({
+    return res.json({
       message: 'Swap request approved successfully',
       swapRequest: {
         id: approvedRequest.id,
@@ -241,7 +241,7 @@ router.post('/:id/approve', authenticateToken, requireManagerOrAdmin, async (req
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to approve swap request',
       message: 'An internal server error occurred'
     })
@@ -267,7 +267,7 @@ router.patch('/:id/approve', authenticateToken, requireManagerOrAdmin, async (re
       req.user!.id
     )
 
-    res.json({
+    return res.json({
       success: true,
       message: 'Swap request approved successfully',
       swapRequest: approvedRequest
@@ -297,7 +297,7 @@ router.patch('/:id/approve', authenticateToken, requireManagerOrAdmin, async (re
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to approve swap request',
       message: 'An internal server error occurred'
     })
@@ -332,7 +332,7 @@ router.patch('/:id/reject', authenticateToken, requireManagerOrAdmin, async (req
       reason
     )
 
-    res.json({
+    return res.json({
       success: true,
       message: 'Swap request rejected successfully',
       swapRequest: rejectedRequest
@@ -355,7 +355,7 @@ router.patch('/:id/reject', authenticateToken, requireManagerOrAdmin, async (req
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to reject swap request',
       message: 'An internal server error occurred'
     })
@@ -404,7 +404,7 @@ router.post('/:id/cancel', authenticateToken, async (req: Request, res: Response
           swapRequestId: cancelledRequest.id,
           status: 'CANCELLED',
           fromUserId: fullSwapRequest.fromUserId,
-          toUserId: fullSwapRequest.toUserId,
+          toUserId: fullSwapRequest.toUserId ?? undefined,
           resolvedBy: {
             id: req.user!.id,
             name: `${req.user!.firstName} ${req.user!.lastName}`,
@@ -423,7 +423,7 @@ router.post('/:id/cancel', authenticateToken, async (req: Request, res: Response
       console.error('Failed to emit swap cancelled event:', socketError)
     }
 
-    res.json({
+    return res.json({
       message: 'Swap request cancelled successfully',
       swapRequest: {
         id: cancelledRequest.id,
@@ -456,7 +456,7 @@ router.post('/:id/cancel', authenticateToken, async (req: Request, res: Response
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to cancel swap request',
       message: 'An internal server error occurred'
     })
@@ -482,7 +482,7 @@ router.post('/:id/pickup', authenticateToken, async (req: Request, res: Response
       req.user!.id
     )
 
-    res.json({
+    return res.json({
       message: 'Shift picked up successfully',
       assignment: {
         id: assignment.id,
@@ -545,7 +545,7 @@ router.post('/:id/pickup', authenticateToken, async (req: Request, res: Response
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to pick up shift',
       message: 'An internal server error occurred'
     })
@@ -722,7 +722,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
       createdAt: request.createdAt
     }))
 
-    res.json({
+    return res.json({
       message: 'Swap requests retrieved successfully',
       count: formattedRequests.length,
       swapRequests: formattedRequests
@@ -736,7 +736,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
       code: error.code,
       meta: error.meta
     })
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve swap requests',
       message: 'An internal server error occurred',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined

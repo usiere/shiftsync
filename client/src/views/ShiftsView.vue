@@ -231,31 +231,7 @@ import api from '../api/axios'
 import AssignmentModal from '../components/AssignmentModal.vue'
 import CreateShiftModal from '../components/CreateShiftModal.vue'
 import { extractArray } from '../utils/apiHelpers'
-
-interface Location {
-  name: string
-  timezone: string
-}
-
-interface Skill {
-  name: string
-}
-
-interface Shift {
-  id: number
-  location: Location
-  date: string
-  startTime: string
-  endTime: string
-  timezone?: string
-  requiredSkill?: Skill
-  skill?: Skill
-  assignedCount: number
-  neededCount: number
-  headcount: number
-  status: 'DRAFT' | 'PUBLISHED'
-  createdAt: string
-}
+import type { Shift, Location, Skill } from '../types'
 
 const loading = ref(true)
 const shifts = ref<Shift[]>([])
@@ -290,10 +266,10 @@ const headers = [
   { title: 'Date', key: 'date', sortable: true },
   { title: 'Time', key: 'time', sortable: false },
   { title: 'Required Skill', key: 'requiredSkill', sortable: true },
-  { title: 'Headcount', key: 'headcount', sortable: false, align: 'center' },
+  { title: 'Headcount', key: 'headcount', sortable: false, align: 'center' as const },
   { title: 'Date Added', key: 'createdAt', sortable: true },
   { title: 'Status', key: 'status', sortable: true },
-  { title: 'Actions', key: 'actions', sortable: false, align: 'center' }
+  { title: 'Actions', key: 'actions', sortable: false, align: 'center' as const }
 ]
 
 const filteredShifts = computed(() => {

@@ -2,7 +2,7 @@ import { io, Socket } from 'socket.io-client'
 import { useAuthStore } from '../stores/auth'
 import { useNotificationStore } from '../stores/notifications'
 
-interface ServerToClientEvents {
+interface _ServerToClientEvents {
   'schedule:published': (data: { scheduleId: string; title: string }) => void
   'schedule:updated': (data: { scheduleId: string; title: string; changes: string[] }) => void
   'swap:requested': (data: { requestId: string; requesterName: string; shiftTitle: string }) => void
@@ -13,13 +13,13 @@ interface ServerToClientEvents {
   'notification:unread-count': (data: { count: number }) => void
 }
 
-interface ClientToServerEvents {
+interface _ClientToServerEvents {
   'join:user-room': (userId: number) => void
   'leave:user-room': (userId: number) => void
 }
 
 class SocketService {
-  private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null
+  private socket: Socket<_ServerToClientEvents, _ClientToServerEvents> | null = null
   private reconnectAttempts = 0
   private maxReconnectAttempts = 5
   private reconnectDelay = 1000
@@ -87,17 +87,17 @@ class SocketService {
       this.joinUserRoom()
     })
 
-    this.socket.on('disconnect', (reason) => {
+    this.socket.on('disconnect', (reason: string) => {
       console.log('Socket disconnected:', reason)
     })
 
-    this.socket.on('connect_error', (error) => {
+    this.socket.on('connect_error', (error: Error) => {
       console.error('Socket connection error:', error)
       this.handleReconnect()
     })
 
     // Schedule events
-    this.socket.on('schedule:published', (data) => {
+    this.socket.on('schedule:published', (data: { scheduleId: string; title: string }) => {
       notificationStore.showToast({
         title: 'Schedule Published',
         message: `${data.title} has been published`,
@@ -106,7 +106,7 @@ class SocketService {
       })
     })
 
-    this.socket.on('schedule:updated', (data) => {
+    this.socket.on('schedule:updated', (data: { scheduleId: string; title: string; changes: string[] }) => {
       notificationStore.showToast({
         title: 'Schedule Updated',
         message: `${data.title} has been updated: ${data.changes.join(', ')}`,
@@ -116,7 +116,7 @@ class SocketService {
     })
 
     // Swap events
-    this.socket.on('swap:requested', (data) => {
+    this.socket.on('swap:requested', (data: { requestId: string; requesterName: string; shiftTitle: string }) => {
       notificationStore.showToast({
         title: 'Swap Request',
         message: `${data.requesterName} wants to swap ${data.shiftTitle}`,
@@ -126,7 +126,7 @@ class SocketService {
       })
     })
 
-    this.socket.on('swap:resolved', (data) => {
+    this.socket.on('swap:resolved', (data: { requestId: string; status: 'approved' | 'rejected'; shiftTitle: string }) => {
       const isApproved = data.status === 'approved'
       notificationStore.showToast({
         title: `Swap ${isApproved ? 'Approved' : 'Rejected'}`,
@@ -137,7 +137,7 @@ class SocketService {
     })
 
     // Overtime warning
-    this.socket.on('overtime:warning', (data) => {
+    this.socket.on('overtime:warning', (data: { userId: string; userName: string; hours: number; week: string }) => {
       notificationStore.showToast({
         title: 'Overtime Warning',
         message: `${data.userName} is approaching ${data.hours}h for ${data.week}`,
@@ -148,7 +148,7 @@ class SocketService {
     })
 
     // Conflict detection
-    this.socket.on('conflict:detected', (data) => {
+    this.socket.on('conflict:detected', (data: { type: string; description: string; severity: 'warning' | 'error' }) => {
       notificationStore.showToast({
         title: 'Scheduling Conflict',
         message: data.description,
@@ -159,11 +159,11 @@ class SocketService {
     })
 
     // Real-time notifications
-    this.socket.on('notification:new', (data) => {
+    this.socket.on('notification:new', (data: { id: number; title: string; message: string; type: string }) => {
       notificationStore.handleNewNotification(data)
     })
 
-    this.socket.on('notification:unread-count', (data) => {
+    this.socket.on('notification:unread-count', (data: { count: number }) => {
       notificationStore.updateUnreadCount(data.count)
     })
   }

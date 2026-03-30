@@ -288,7 +288,7 @@ export class OvertimeService {
 
   private calculateConsecutiveDaysWorked(
     dailyBreakdown: HoursBreakdown[],
-    weekStart: Date
+    _weekStart: Date
   ): number {
     // We need to look at days leading up to this week as well to count consecutive days
     // For now, we'll count within the week and add logic to look back if needed

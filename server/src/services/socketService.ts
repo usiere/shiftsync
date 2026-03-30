@@ -328,7 +328,7 @@ export class SocketService {
 
   public getOnlineUsersInLocation(locationId: number): SocketUser[] {
     const onlineUsers: SocketUser[] = []
-    for (const [socketId, user] of this.socketUsers) {
+    for (const [_socketId, user] of this.socketUsers) {
       if (user.locationIds.includes(locationId)) {
         onlineUsers.push(user)
       }

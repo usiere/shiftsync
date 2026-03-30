@@ -66,7 +66,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
 
     const result = await notificationService.getUserNotifications(userId, limit, offset)
 
-    res.json({
+    return res.json({
       message: 'Notifications retrieved successfully',
       notifications: result.notifications,
       total: result.total,
@@ -80,7 +80,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error('Get notifications error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve notifications',
       message: 'An internal server error occurred'
     })
@@ -116,11 +116,11 @@ router.get('/unread-count', authenticateToken, async (req: Request, res: Respons
     const userId = req.user!.id
     const unreadCount = await notificationService.getUnreadCount(userId)
 
-    res.json({ unreadCount })
+    return res.json({ unreadCount })
 
   } catch (error) {
     console.error('Get unread count error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to get unread count',
       message: 'An internal server error occurred'
     })
@@ -180,7 +180,7 @@ router.patch('/:id/read', authenticateToken, async (req: Request, res: Response)
 
     const result = await notificationService.markAsRead(notificationId, userId)
 
-    res.json({
+    return res.json({
       message: 'Notification marked as read successfully',
       success: result.success,
       unreadCount: result.unreadCount
@@ -228,7 +228,7 @@ router.patch('/read-all', authenticateToken, async (req: Request, res: Response)
     const userId = req.user!.id
     const result = await notificationService.markAllAsRead(userId)
 
-    res.json({
+    return res.json({
       message: 'All notifications marked as read successfully',
       success: result.success,
       updatedCount: result.updatedCount
@@ -236,7 +236,7 @@ router.patch('/read-all', authenticateToken, async (req: Request, res: Response)
 
   } catch (error) {
     console.error('Mark all notifications as read error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to mark all notifications as read',
       message: 'An internal server error occurred'
     })
@@ -272,11 +272,11 @@ router.get('/preferences', authenticateToken, async (req: Request, res: Response
     const userId = req.user!.id
     const preferences = await notificationService.getUserPreferences(userId)
 
-    res.json({ preferences })
+    return res.json({ preferences })
 
   } catch (error) {
     console.error('Get notification preferences error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to get notification preferences',
       message: 'An internal server error occurred'
     })
@@ -353,14 +353,14 @@ router.patch('/preferences', authenticateToken, async (req: Request, res: Respon
       availabilityReminders
     })
 
-    res.json({
+    return res.json({
       message: 'Notification preferences updated successfully',
       preferences
     })
 
   } catch (error) {
     console.error('Update notification preferences error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to update notification preferences',
       message: 'An internal server error occurred'
     })

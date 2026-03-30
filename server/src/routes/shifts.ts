@@ -7,7 +7,6 @@ import {
   validateShiftUpdate,
   validateShiftAssignment,
   validateShiftRemoveAssignment,
-  validateShiftFilters,
   validateShiftId
 } from '../middleware/validation'
 import { ShiftService } from '../services/shiftService'
@@ -187,14 +186,14 @@ router.post('/', authenticateToken, requireManagerOrAdmin, validateShiftCreation
     // Add timezone display information
     const shiftWithTimezone = addTimezoneDisplay(shift)
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Shift created successfully',
       shift: shiftWithTimezone
     })
 
   } catch (error) {
     console.error('Create shift error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to create shift',
       message: error instanceof Error ? error.message : 'An internal server error occurred',
       stack: error instanceof Error ? error.stack : undefined
@@ -263,7 +262,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
     // Add timezone display information to all shifts
     const shiftsWithTimezone = shifts.map(shift => addTimezoneDisplay(shift))
 
-    res.json({
+    return res.json({
       message: 'Shifts retrieved successfully',
       count: shifts.length,
       shifts: shiftsWithTimezone
@@ -271,7 +270,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error('Get shifts error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve shifts',
       message: 'An internal server error occurred'
     })
@@ -375,14 +374,14 @@ router.patch('/:id', authenticateToken, requireManagerOrAdmin, validateShiftUpda
     // Add timezone display information
     const shiftWithTimezone = addTimezoneDisplay(updatedShift)
 
-    res.json({
+    return res.json({
       message: 'Shift updated successfully',
       shift: shiftWithTimezone
     })
 
   } catch (error) {
     console.error('Update shift error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to update shift',
       message: 'An internal server error occurred'
     })
@@ -462,7 +461,7 @@ router.post('/:id/publish', authenticateToken, requireManagerOrAdmin, validateSh
       console.error('Failed to create schedule published notifications:', notificationError)
     }
 
-    res.json({
+    return res.json({
       message: 'Schedule published successfully',
       weekStart: result.weekStart,
       weekEnd: result.weekEnd,
@@ -471,7 +470,7 @@ router.post('/:id/publish', authenticateToken, requireManagerOrAdmin, validateSh
 
   } catch (error) {
     console.error('Publish schedule error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to publish schedule',
       message: 'An internal server error occurred'
     })
@@ -653,7 +652,12 @@ router.post('/:id/assign', authenticateToken, requireManagerOrAdmin, validateShi
             endTime: shift.endTime.toISOString(),
             location: shift.location?.name || 'Unknown'
           },
-          overtimeImpact: shiftPreview.overtimeImpact,
+          overtimeImpact: {
+            currentWeeklyHours: shiftPreview.currentHours.weeklyTotal,
+            projectedWeeklyHours: shiftPreview.projectedHours.weeklyTotal,
+            additionalOvertimeHours: shiftPreview.overtimeImpact.additionalOvertimeHours,
+            additionalOvertimeCost: shiftPreview.overtimeImpact.additionalOvertimeCost
+          },
           warnings: overtimeCheck.warnings,
           locationId: shift.locationId
         })
@@ -715,7 +719,7 @@ router.post('/:id/assign', authenticateToken, requireManagerOrAdmin, validateShi
       console.error('Failed to create shift assignment notification:', notificationError)
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'User assigned to shift successfully',
       assignment: {
         id: result.assignment?.id,
@@ -751,7 +755,7 @@ router.post('/:id/assign', authenticateToken, requireManagerOrAdmin, validateShi
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to assign user to shift',
       message: 'An internal server error occurred'
     })
@@ -787,7 +791,7 @@ router.delete('/:id/assign/:userId', authenticateToken, requireManagerOrAdmin, v
       console.error('Failed to create shift cancellation notification:', notificationError)
     }
 
-    res.json({
+    return res.json({
       message: 'Assignment removed successfully',
       removedAssignment: {
         user: `${removedAssignment.user.firstName} ${removedAssignment.user.lastName}`,
@@ -806,7 +810,7 @@ router.delete('/:id/assign/:userId', authenticateToken, requireManagerOrAdmin, v
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to remove assignment',
       message: 'An internal server error occurred'
     })
@@ -906,7 +910,7 @@ router.post('/:id/swap', authenticateToken, async (req: Request, res: Response) 
       console.error('Failed to emit swap requested event:', socketError)
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Swap request created successfully',
       swapRequest: {
         id: swapRequest.id,
@@ -957,7 +961,7 @@ router.post('/:id/swap', authenticateToken, async (req: Request, res: Response) 
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to create swap request',
       message: 'An internal server error occurred'
     })
@@ -992,7 +996,7 @@ router.post('/:id/drop', authenticateToken, async (req: Request, res: Response) 
       reason
     )
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Drop request created successfully',
       dropRequest: {
         id: dropRequest.id,
@@ -1029,7 +1033,7 @@ router.post('/:id/drop', authenticateToken, async (req: Request, res: Response) 
       })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to create drop request',
       message: 'An internal server error occurred'
     })
@@ -1119,7 +1123,7 @@ router.get('/available-drops', authenticateToken, async (req: Request, res: Resp
       requestId: drop.id
     }))
 
-    res.json({
+    return res.json({
       message: 'Available drops retrieved successfully',
       count: formattedDrops.length,
       availableDrops: formattedDrops
@@ -1127,7 +1131,7 @@ router.get('/available-drops', authenticateToken, async (req: Request, res: Resp
 
   } catch (error) {
     console.error('Get available drops error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve available drops',
       message: 'An internal server error occurred'
     })
@@ -1169,7 +1173,7 @@ router.get('/available', authenticateToken, async (req: Request, res: Response) 
       createdAt: dropRequest.createdAt
     }))
 
-    res.json({
+    return res.json({
       message: 'Available shifts retrieved successfully',
       count: formattedShifts.length,
       availableShifts: formattedShifts
@@ -1177,7 +1181,7 @@ router.get('/available', authenticateToken, async (req: Request, res: Response) 
 
   } catch (error) {
     console.error('Get available shifts error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve available shifts',
       message: 'An internal server error occurred'
     })
@@ -1340,11 +1344,11 @@ router.get('/:id/eligible-staff', authenticateToken, requireManagerOrAdmin, asyn
       weeklyHours: 0 // TODO: Calculate actual weekly hours
     }))
 
-    res.json(formattedStaff)
+    return res.json(formattedStaff)
 
   } catch (error) {
     console.error('Get eligible staff error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve eligible staff',
       message: 'An internal server error occurred'
     })
@@ -1573,18 +1577,18 @@ router.get('/:id/swap-eligible-staff', authenticateToken, async (req: Request, r
 
     console.log('Final swap candidates:', swapCandidates.length, 'candidates')
 
-    res.json(swapCandidates)
+    return res.json(swapCandidates)
 
   } catch (error) {
     console.error('Get swap-eligible staff error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve swap-eligible staff',
       message: 'An internal server error occurred'
     })
   }
 })
 
-router.get('/on-duty', authenticateToken, async (req: Request, res: Response) => {
+router.get('/on-duty', authenticateToken, async (_req: Request, res: Response) => {
   try {
     const now = new Date()
 
@@ -1642,10 +1646,10 @@ router.get('/on-duty', authenticateToken, async (req: Request, res: Response) =>
       assignedStaff: shift.shiftAssignments.map(assignment => assignment.user)
     }))
 
-    res.json(formattedShifts)
+    return res.json(formattedShifts)
   } catch (error) {
     console.error('Error fetching on-duty shifts:', error)
-    res.status(500).json({ error: 'Failed to fetch on-duty shifts' })
+    return res.status(500).json({ error: 'Failed to fetch on-duty shifts' })
   }
 })
 

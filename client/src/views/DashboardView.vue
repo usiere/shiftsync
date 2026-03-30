@@ -116,7 +116,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import api from '../api/axios'
 
-const authStore = useAuthStore()
+const _authStore = useAuthStore()
 
 interface DashboardStats {
   totalStaff: number
@@ -195,7 +195,7 @@ function getActivityIcon(action: string): string {
   return 'mdi-information'
 }
 
-function getActivityColor(action: string): string {
+function _getActivityColor(action: string): string {
   const actionLower = action.toLowerCase()
   if (actionLower.includes('delete')) return 'error'
   if (actionLower.includes('create') || actionLower.includes('publish')) return 'success'
@@ -203,7 +203,7 @@ function getActivityColor(action: string): string {
   return 'primary'
 }
 
-function formatDate(timestamp: string): string {
+function _formatDate(timestamp: string): string {
   return new Date(timestamp).toLocaleString()
 }
 

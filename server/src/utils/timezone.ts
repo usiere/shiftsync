@@ -1,12 +1,12 @@
-import { addDays, startOfWeek, endOfWeek, differenceInHours, differenceInMinutes, format, startOfDay, endOfDay } from 'date-fns'
-import { zonedTimeToUtc, toZonedTime } from 'date-fns-tz'
+import { startOfWeek, endOfWeek, differenceInHours, differenceInMinutes, startOfDay } from 'date-fns'
+import { fromZonedTime, toZonedTime } from 'date-fns-tz'
 
 export function convertToTimezone(date: Date, timezone: string): Date {
   return toZonedTime(date, timezone)
 }
 
 export function convertToUtc(date: Date, timezone: string): Date {
-  return zonedTimeToUtc(date, timezone)
+  return fromZonedTime(date, timezone)
 }
 
 export function getShiftDurationHours(startTime: Date, endTime: Date): number {

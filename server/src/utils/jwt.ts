@@ -16,7 +16,7 @@ export function generateToken(payload: JwtPayload): string {
     expiresIn: JWT_EXPIRES_IN,
     issuer: 'shiftsync',
     audience: 'shiftsync-users'
-  })
+  } as jwt.SignOptions)
 }
 
 export function verifyToken(token: string): JwtPayload {

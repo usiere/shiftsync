@@ -91,13 +91,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
-import { useNotificationStore } from '../stores/notifications'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
-const notificationStore = useNotificationStore()
 const router = useRouter()
 
 
@@ -116,7 +114,7 @@ const filteredNavItems = computed(() => {
   return navItems.filter(item => item.roles.includes(userRole))
 })
 
-function getRoleColor(role: string): string {
+function _getRoleColor(role: string): string {
   switch (role.toLowerCase()) {
     case 'admin': return 'error'
     case 'manager': return 'warning'

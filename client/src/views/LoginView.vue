@@ -144,7 +144,7 @@ const error = ref('')
 const showPassword = ref(false)
 const showDemo = ref(false)
 
-const rules = {
+const _rules = {
   required: (value: string) => !!value || 'This field is required',
   email: (value: string) => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

@@ -100,7 +100,7 @@ router.post('/login', async (req: Request, res: Response) => {
     })
 
     // Return token and user info (excluding password)
-    res.json({
+    return res.json({
       token,
       user: {
         id: user.id,
@@ -113,7 +113,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error('Login error:', error)
-    res.status(500).json({ error: 'Internal server error' })
+    return res.status(500).json({ error: 'Internal server error' })
   }
 })
 
@@ -176,7 +176,7 @@ router.get('/me', authenticateToken, (req: Request, res: Response) => {
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post('/logout', authenticateToken, (req: Request, res: Response) => {
+router.post('/logout', authenticateToken, (_req: Request, res: Response) => {
   // Since we're not using refresh tokens, logout is essentially a client-side operation
   // The client should remove the token from storage
   res.json({ message: 'Logged out successfully' })

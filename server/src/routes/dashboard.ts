@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
 import { PrismaClient, UserRole } from '@prisma/client'
 import { authenticateToken } from '../middleware/auth'
-import { startOfWeek, endOfWeek, startOfDay, endOfDay, parseISO } from 'date-fns'
+import { startOfWeek, endOfWeek } from 'date-fns'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -48,7 +48,7 @@ router.use(authenticateToken)
  *       500:
  *         description: Server error
  */
-router.get('/stats', async (req: Request, res: Response) => {
+router.get('/stats', async (_req: Request, res: Response) => {
   try {
     const now = new Date()
     const weekStart = startOfWeek(now, { weekStartsOn: 1 }) // Monday

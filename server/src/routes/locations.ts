@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 /**
  * GET /locations - Get all locations
  */
-router.get('/', authenticateToken, requireManagerOrAdmin, async (req: Request, res: Response) => {
+router.get('/', authenticateToken, requireManagerOrAdmin, async (_req: Request, res: Response) => {
   try {
     const locations = await prisma.location.findMany({
       select: {

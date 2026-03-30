@@ -41,7 +41,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Public health check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'OK', message: 'ShiftSync server is running' })
 })
 
@@ -57,7 +57,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 }))
 
 // Swagger JSON endpoint
-app.get('/api-docs.json', (req, res) => {
+app.get('/api-docs.json', (_req, res) => {
   res.setHeader('Content-Type', 'application/json')
   res.send(swaggerSpec)
 })
@@ -78,7 +78,7 @@ app.use('/api/locations', locationsRoutes)
 app.use('/api/skills', skillsRoutes)
 
 // Legacy protected routes
-app.get('/api/users', authenticateToken, requireManagerOrAdmin, async (req, res) => {
+app.get('/api/users', authenticateToken, requireManagerOrAdmin, async (_req, res) => {
   try {
     const users = await prisma.user.findMany({
       select: {
@@ -133,12 +133,12 @@ app.get('/api/users/:id', authenticateToken, requireManagerOrAdmin, async (req, 
     }
 
     // Remove sensitive data
-    const { hashedPassword, ...userWithoutPassword } = user
+    const { hashedPassword, ...userWithoutPassword } = user as any
 
-    res.json(userWithoutPassword)
+    return res.json(userWithoutPassword)
   } catch (error) {
     console.error('Error fetching user details:', error)
-    res.status(500).json({ error: 'Failed to fetch user details' })
+    return res.status(500).json({ error: 'Failed to fetch user details' })
   }
 })
 
@@ -183,18 +183,18 @@ app.get('/api/users/:id/availability', authenticateToken, requireManagerOrAdmin,
       where: {
         userId: userId,
         isRecurring: false,
-        date: {
+        specificDate: {
           gte: new Date() // Only future/current exceptions
         }
       },
       select: {
-        date: true,
+        specificDate: true,
         startTime: true,
         endTime: true,
         isAvailable: true
       },
       orderBy: [
-        { date: 'asc' },
+        { specificDate: 'asc' },
         { startTime: 'asc' }
       ]
     })
@@ -207,22 +207,22 @@ app.get('/api/users/:id/availability', authenticateToken, requireManagerOrAdmin,
         endTime: slot.endTime
       })),
       exceptions: exceptions.map(exception => ({
-        date: exception.date?.toISOString().split('T')[0] || null,
+        date: exception.specificDate?.toISOString().split('T')[0] || null,
         startTime: exception.startTime,
         endTime: exception.endTime,
         isAvailable: exception.isAvailable
       }))
     }
 
-    res.json(availability)
+    return res.json(availability)
   } catch (error) {
     console.error('Error fetching user availability:', error)
-    res.status(500).json({ error: 'Failed to fetch availability data' })
+    return res.status(500).json({ error: 'Failed to fetch availability data' })
   }
 })
 
 // Example protected route - Admin only
-app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) => {
+app.get('/api/admin/stats', authenticateToken, requireAdmin, async (_req, res) => {
   try {
     const stats = {
       totalUsers: await prisma.user.count(),
@@ -230,14 +230,14 @@ app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) =>
       totalLocations: await prisma.location.count(),
       activeUsers: await prisma.user.count({ where: { isActive: true } })
     }
-    res.json(stats)
+    return res.json(stats)
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch stats' })
+    return res.status(500).json({ error: 'Failed to fetch stats' })
   }
 })
 
 // Example protected route - Manager or Admin
-app.get('/api/shifts', authenticateToken, requireManagerOrAdmin, async (req, res) => {
+app.get('/api/shifts', authenticateToken, requireManagerOrAdmin, async (_req, res) => {
   try {
     const shifts = await prisma.shift.findMany({
       include: {
@@ -256,9 +256,9 @@ app.get('/api/shifts', authenticateToken, requireManagerOrAdmin, async (req, res
         }
       }
     })
-    res.json(shifts)
+    return res.json(shifts)
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch shifts' })
+    return res.status(500).json({ error: 'Failed to fetch shifts' })
   }
 })
 
@@ -280,9 +280,9 @@ app.get('/api/my-shifts', authenticateToken, async (req, res) => {
         }
       }
     })
-    res.json(shifts)
+    return res.json(shifts)
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch your shifts' })
+    return res.status(500).json({ error: 'Failed to fetch your shifts' })
   }
 })
 

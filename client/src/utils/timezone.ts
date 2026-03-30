@@ -1,5 +1,5 @@
-import { format, parseISO } from 'date-fns'
-import { zonedTimeToUtc, utcToZonedTime, format as formatTz } from 'date-fns-tz'
+import { parseISO } from 'date-fns'
+import { fromZonedTime, toZonedTime, format as formatTz } from 'date-fns-tz'
 
 export class TimezoneUtils {
   /**
@@ -29,7 +29,7 @@ export class TimezoneUtils {
       }
 
       // Convert to target timezone
-      const zonedDate = utcToZonedTime(date, timezone)
+      const zonedDate = toZonedTime(date, timezone)
       return formatTz(zonedDate, formatString, { timeZone: timezone })
     } catch (error) {
       console.error('Error formatting time in timezone:', error)
@@ -50,7 +50,7 @@ export class TimezoneUtils {
   ): string {
     try {
       const date = parseISO(dateString)
-      const zonedDate = utcToZonedTime(date, timezone)
+      const zonedDate = toZonedTime(date, timezone)
       return formatTz(zonedDate, formatString, { timeZone: timezone })
     } catch (error) {
       console.error('Error formatting date in timezone:', error)
@@ -71,7 +71,7 @@ export class TimezoneUtils {
   ): string {
     try {
       const date = parseISO(datetimeString)
-      const zonedDate = utcToZonedTime(date, timezone)
+      const zonedDate = toZonedTime(date, timezone)
       return formatTz(zonedDate, formatString, { timeZone: timezone })
     } catch (error) {
       console.error('Error formatting datetime in timezone:', error)
@@ -119,8 +119,8 @@ export class TimezoneUtils {
       }
 
       // Convert to timezone
-      const startZoned = utcToZonedTime(startDateTime, timezone)
-      const endZoned = utcToZonedTime(endDateTime, timezone)
+      const startZoned = toZonedTime(startDateTime, timezone)
+      const endZoned = toZonedTime(endDateTime, timezone)
 
       const startFormatted = formatTz(startZoned, 'h:mm a', { timeZone: timezone })
       const endFormatted = formatTz(endZoned, 'h:mm a', { timeZone: timezone })
@@ -140,7 +140,7 @@ export class TimezoneUtils {
   static getTimezoneAbbreviation(timezone: string, date?: Date): string {
     try {
       const targetDate = date || new Date()
-      const zonedDate = utcToZonedTime(targetDate, timezone)
+      const zonedDate = toZonedTime(targetDate, timezone)
 
       // Get the timezone abbreviation
       const formatter = new Intl.DateTimeFormat('en', {
@@ -166,7 +166,7 @@ export class TimezoneUtils {
   static convertToUTC(localTimeString: string, userTimezone: string): Date {
     try {
       const localDate = parseISO(localTimeString)
-      return zonedTimeToUtc(localDate, userTimezone)
+      return fromZonedTime(localDate, userTimezone)
     } catch (error) {
       console.error('Error converting to UTC:', error)
       return new Date()
@@ -202,8 +202,8 @@ export class TimezoneUtils {
     try {
       const date = parseISO(dateString)
       const now = new Date()
-      const zonedDate = utcToZonedTime(date, timezone)
-      const zonedNow = utcToZonedTime(now, timezone)
+      const zonedDate = toZonedTime(date, timezone)
+      const zonedNow = toZonedTime(now, timezone)
 
       const diffMs = zonedDate.getTime() - zonedNow.getTime()
       const diffMinutes = Math.floor(diffMs / (1000 * 60))

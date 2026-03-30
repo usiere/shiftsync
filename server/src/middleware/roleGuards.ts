@@ -10,7 +10,7 @@ export function requireAdmin(req: Request, res: Response, next: NextFunction) {
     return res.status(403).json({ error: 'Admin access required' })
   }
 
-  next()
+  return next()
 }
 
 export function requireManager(req: Request, res: Response, next: NextFunction) {
@@ -22,7 +22,7 @@ export function requireManager(req: Request, res: Response, next: NextFunction) 
     return res.status(403).json({ error: 'Manager access required' })
   }
 
-  next()
+  return next()
 }
 
 export function requireManagerOrAdmin(req: Request, res: Response, next: NextFunction) {
@@ -34,7 +34,7 @@ export function requireManagerOrAdmin(req: Request, res: Response, next: NextFun
     return res.status(403).json({ error: 'Manager or Admin access required' })
   }
 
-  next()
+  return next()
 }
 
 export function requireStaffOrAbove(req: Request, res: Response, next: NextFunction) {
@@ -43,5 +43,5 @@ export function requireStaffOrAbove(req: Request, res: Response, next: NextFunct
   }
 
   // All authenticated users have at least STAFF level access
-  next()
+  return next()
 }

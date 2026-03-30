@@ -1,7 +1,8 @@
 import { describe, test, expect, beforeAll, afterAll, beforeEach } from '@jest/globals'
 import { createServer } from 'http'
 import express from 'express'
-import { io as ioClient, Socket as ClientSocket } from 'socket.io-client'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ioClient = require('socket.io-client')
 import { PrismaClient } from '@prisma/client'
 import { initializeSocketService, SocketService } from '../services/socketService'
 import { generateToken } from '../utils/jwt'
@@ -79,7 +80,7 @@ describe('Socket.io Real-Time Events', () => {
     })
 
     // Generate JWT token
-    const token = generateToken(user.id, user.email, user.role)
+    const token = generateToken({ userId: user.id, email: user.email, role: user.role, name: `${user.firstName} ${user.lastName}` })
 
     // Connect client with authentication
     const clientSocket = ioClient(serverUrl, {
@@ -87,7 +88,7 @@ describe('Socket.io Real-Time Events', () => {
     })
 
     const connectionEstablished = await new Promise((resolve) => {
-      clientSocket.on('connection:established', (data) => {
+      clientSocket.on('connection:established', (data: any) => {
         resolve(data)
       })
     })
@@ -132,7 +133,7 @@ describe('Socket.io Real-Time Events', () => {
       data: { userId: user.id, locationId: location.id }
     })
 
-    const token = generateToken(user.id, user.email, user.role)
+    const token = generateToken({ userId: user.id, email: user.email, role: user.role, name: `${user.firstName} ${user.lastName}` })
 
     // Connect client
     const clientSocket = ioClient(serverUrl, {
@@ -200,8 +201,8 @@ describe('Socket.io Real-Time Events', () => {
       }
     })
 
-    const token1 = generateToken(user1.id, user1.email, user1.role)
-    const token2 = generateToken(user2.id, user2.email, user2.role)
+    const token1 = generateToken({ userId: user1.id, email: user1.email, role: user1.role, name: `${user1.firstName} ${user1.lastName}` })
+    const token2 = generateToken({ userId: user2.id, email: user2.email, role: user2.role, name: `${user2.firstName} ${user2.lastName}` })
 
     // Connect both clients
     const client1 = ioClient(serverUrl, { auth: { token: token1 } })
@@ -297,7 +298,7 @@ describe('Socket.io Real-Time Events', () => {
       data: { userId: manager.id, locationId: location.id }
     })
 
-    const managerToken = generateToken(manager.id, manager.email, manager.role)
+    const managerToken = generateToken({ userId: manager.id, email: manager.email, role: manager.role, name: `${manager.firstName} ${manager.lastName}` })
 
     // Connect manager client
     const managerClient = ioClient(serverUrl, {
@@ -353,7 +354,7 @@ describe('Socket.io Real-Time Events', () => {
     })
 
     const connectionError = await new Promise((resolve) => {
-      clientSocket.on('connect_error', (error) => {
+      clientSocket.on('connect_error', (error: any) => {
         resolve(error.message)
       })
     })

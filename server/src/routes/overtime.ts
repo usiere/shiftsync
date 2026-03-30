@@ -105,7 +105,7 @@ router.get('/staff/:id/hours', authenticateToken, requireManagerOrAdmin, async (
 
     const hourlyRate = user?.hourlyRate || 0
 
-    res.json({
+    return res.json({
       staffId,
       staffName: staffHours.userName,
       week: weekString || 'current',
@@ -127,7 +127,7 @@ router.get('/staff/:id/hours', authenticateToken, requireManagerOrAdmin, async (
 
   } catch (error) {
     console.error('Get staff hours error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve staff hours',
       message: 'An internal server error occurred'
     })
@@ -243,7 +243,7 @@ router.get('/locations/:id/overtime', authenticateToken, requireManagerOrAdmin, 
 
     const weekPeriod = `${weekStart.toISOString().split('T')[0]} to ${weekEnd.toISOString().split('T')[0]}`
 
-    res.json({
+    return res.json({
       locationId: projection.locationId,
       locationName: projection.locationName,
       weekPeriod,
@@ -254,7 +254,7 @@ router.get('/locations/:id/overtime', authenticateToken, requireManagerOrAdmin, 
 
   } catch (error) {
     console.error('Get location overtime projection error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to retrieve location overtime projection',
       message: 'An internal server error occurred'
     })
@@ -445,7 +445,7 @@ router.post('/shifts/:id/assign/override', authenticateToken, requireManagerOrAd
       }
     })
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Override assignment created successfully',
       assignment: {
         id: assignment.id,
@@ -472,7 +472,7 @@ router.post('/shifts/:id/assign/override', authenticateToken, requireManagerOrAd
 
   } catch (error) {
     console.error('Override assignment error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to create override assignment',
       message: 'An internal server error occurred'
     })
@@ -600,7 +600,7 @@ router.get('/shifts/:id/assign/preview', authenticateToken, requireManagerOrAdmi
     // Get assignment preview
     const preview = await overtimeService.getShiftAssignmentPreview(shiftId, userId)
 
-    res.json({
+    return res.json({
       shiftId,
       userId,
       userName: `${user.firstName} ${user.lastName}`,
@@ -625,7 +625,7 @@ router.get('/shifts/:id/assign/preview', authenticateToken, requireManagerOrAdmi
 
   } catch (error) {
     console.error('Get assignment preview error:', error)
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Failed to generate assignment preview',
       message: 'An internal server error occurred'
     })

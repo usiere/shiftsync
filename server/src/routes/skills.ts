@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 /**
  * GET /skills - Get all skills
  */
-router.get('/', authenticateToken, async (req: Request, res: Response) => {
+router.get('/', authenticateToken, async (_req: Request, res: Response) => {
   try {
     const skills = await prisma.skill.findMany({
       select: {
