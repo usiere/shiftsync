@@ -40,7 +40,7 @@
     <!-- Clean Top Bar with Shadow -->
     <v-app-bar
       app
-      color="white"
+      :color="theme.global.current.value.dark ? 'surface' : 'white'"
       elevation="1"
       height="64"
       class="border-b topbar"
@@ -67,6 +67,16 @@
         {{ authStore.userRole }}
       </div>
 
+      <v-btn
+        icon
+        @click="toggleTheme"
+        variant="text"
+        class="me-2"
+        :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        size="large"
+      >
+        <v-icon size="22">{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+      </v-btn>
 
       <v-btn
         icon
@@ -94,9 +104,19 @@
 import { computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const theme = useTheme()
+
+const isDark = computed(() => theme.global.current.value.dark)
+
+function toggleTheme() {
+  const next = isDark.value ? 'light' : 'dark'
+  theme.global.name.value = next
+  localStorage.setItem('theme', next)
+}
 
 
 const navItems = [
@@ -148,8 +168,8 @@ onMounted(() => {
   top: 0;
   left: 0;
   height: 100vh;
-  background: #FFFFFF;
-  border-right: 1px solid #EAECF0;
+  background: rgb(var(--v-theme-surface));
+  border-right: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -160,7 +180,7 @@ onMounted(() => {
 .logo-area {
   height: 64px;
   padding: 0 20px;
-  border-bottom: 1px solid #EAECF0;
+  border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   display: flex;
   align-items: center;
   gap: 10px;
@@ -184,7 +204,7 @@ onMounted(() => {
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: #0F172A;
+  color: rgb(var(--v-theme-on-surface));
   letter-spacing: -0.01em;
 }
 
@@ -254,7 +274,7 @@ onMounted(() => {
 /* Bottom User Card */
 .user-card {
   padding: 12px 16px;
-  border-top: 1px solid #EAECF0;
+  border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   height: 64px;
   display: flex;
   align-items: center;
@@ -286,7 +306,7 @@ onMounted(() => {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #0F172A;
+  color: rgb(var(--v-theme-on-surface));
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;

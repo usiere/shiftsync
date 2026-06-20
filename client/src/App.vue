@@ -11,11 +11,16 @@ import GlobalToasts from './components/GlobalToasts.vue'
 
 <style>
 .app-container {
-  background: #F7F8FA;
   min-height: 100vh;
 }
 
-.app-container .v-main {
+.v-theme--light .app-container,
+.v-theme--light .app-container .v-main {
   background: #F7F8FA !important;
+}
+
+.v-theme--dark .app-container,
+.v-theme--dark .app-container .v-main {
+  background: rgb(var(--v-theme-background)) !important;
 }
 </style>
