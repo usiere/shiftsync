@@ -126,6 +126,7 @@ const navItems = [
   { title: 'Swap Requests', route: '/swap-requests', icon: 'mdi-swap-horizontal', roles: ['admin', 'manager', 'staff'] },
   { title: 'Notifications', route: '/notifications', icon: 'mdi-bell', roles: ['admin', 'manager', 'staff'] },
   { title: 'Analytics', route: '/analytics', icon: 'mdi-chart-bar', roles: ['admin', 'manager'] },
+  { title: 'Reports', route: '/reports', icon: 'mdi-file-export', roles: ['admin', 'manager'] },
   { title: 'Settings', route: '/settings', icon: 'mdi-cog', roles: ['admin', 'manager', 'staff'] },
 ]
 
