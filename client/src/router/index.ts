@@ -78,8 +78,7 @@ const router = createRouter({
         {
           path: 'settings',
           name: 'settings',
-          component: () => import('../views/SettingsView.vue'),
-          meta: { requiredRoles: ['ADMIN'] }
+          component: () => import('../views/SettingsView.vue')
         }
       ]
     }
