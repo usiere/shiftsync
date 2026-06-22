@@ -48,6 +48,16 @@
     >
       <v-spacer />
 
+      <button
+        class="cmdk-trigger me-4"
+        @click="openPalette"
+        title="Quick search (⌘K)"
+      >
+        <v-icon size="16" class="me-2">mdi-magnify</v-icon>
+        <span class="cmdk-text">Search…</span>
+        <span class="cmdk-kbd">⌘K</span>
+      </button>
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -97,6 +107,7 @@
       </v-container>
     </v-main>
 
+    <CommandPalette />
   </v-app>
 </template>
 
@@ -105,10 +116,16 @@ import { computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
+import CommandPalette from '../components/CommandPalette.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const theme = useTheme()
+
+function openPalette() {
+  const evt = new KeyboardEvent('keydown', { key: 'k', metaKey: true })
+  window.dispatchEvent(evt)
+}
 
 const isDark = computed(() => theme.global.current.value.dark)
 
@@ -399,5 +416,41 @@ onMounted(() => {
 .role-admin {
   background: #EFF6FF;
   color: #2563EB;
+}
+
+/* Command palette trigger in topbar */
+.cmdk-trigger {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-radius: 8px;
+  background: transparent;
+  color: #94A3B8;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+  min-width: 180px;
+}
+
+.cmdk-trigger:hover {
+  background: rgba(148, 163, 184, 0.08);
+  border-color: rgba(148, 163, 184, 0.5);
+}
+
+.cmdk-text {
+  flex: 1;
+  text-align: left;
+}
+
+.cmdk-kbd {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-radius: 4px;
+  color: #94A3B8;
 }
 </style>
