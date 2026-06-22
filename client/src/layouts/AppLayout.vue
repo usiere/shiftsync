@@ -146,6 +146,7 @@ const navItems = [
   { title: 'Reports', route: '/reports', icon: 'mdi-file-export', roles: ['admin', 'manager'] },
   { title: 'Settings', route: '/settings', icon: 'mdi-cog', roles: ['admin', 'manager', 'staff'] },
   { title: 'Profile', route: '/profile', icon: 'mdi-account-circle', roles: ['admin', 'manager', 'staff'] },
+  { title: 'Help', route: '/help', icon: 'mdi-help-circle-outline', roles: ['admin', 'manager', 'staff'] },
 ]
 
 const filteredNavItems = computed(() => {

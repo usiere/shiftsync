@@ -79,7 +79,8 @@ const ALL_ITEMS: PaletteItem[] = [
   { title: 'Analytics', subtitle: 'Trends & reports', route: '/analytics', icon: 'mdi-chart-bar', roles: ['admin', 'manager'] },
   { title: 'Reports', subtitle: 'CSV / data export', route: '/reports', icon: 'mdi-file-export', roles: ['admin', 'manager'] },
   { title: 'Settings', subtitle: 'Preferences', route: '/settings', icon: 'mdi-cog', roles: ['admin', 'manager', 'staff'] },
-  { title: 'My Profile', subtitle: 'Account details', route: '/profile', icon: 'mdi-account-circle', roles: ['admin', 'manager', 'staff'] }
+  { title: 'My Profile', subtitle: 'Account details', route: '/profile', icon: 'mdi-account-circle', roles: ['admin', 'manager', 'staff'] },
+  { title: 'Help & FAQ', subtitle: 'Get help and answers', route: '/help', icon: 'mdi-help-circle-outline', roles: ['admin', 'manager', 'staff'] }
 ]
 
 const router = useRouter()
