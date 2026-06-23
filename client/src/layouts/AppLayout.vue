@@ -79,6 +79,17 @@
 
       <v-btn
         icon
+        @click="openShortcuts"
+        variant="text"
+        class="me-2"
+        title="Keyboard shortcuts (?)"
+        size="large"
+      >
+        <v-icon size="22">mdi-keyboard-outline</v-icon>
+      </v-btn>
+
+      <v-btn
+        icon
         @click="toggleTheme"
         variant="text"
         class="me-2"
@@ -108,23 +119,32 @@
     </v-main>
 
     <CommandPalette />
+    <ShortcutsModal ref="shortcutsRef" />
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 import CommandPalette from '../components/CommandPalette.vue'
+import ShortcutsModal from '../components/ShortcutsModal.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const theme = useTheme()
+const shortcutsRef = ref<InstanceType<typeof ShortcutsModal> | null>(null)
 
 function openPalette() {
   const evt = new KeyboardEvent('keydown', { key: 'k', metaKey: true })
   window.dispatchEvent(evt)
+}
+
+function openShortcuts() {
+  if (shortcutsRef.value) {
+    shortcutsRef.value.open = true
+  }
 }
 
 const isDark = computed(() => theme.global.current.value.dark)
