@@ -10,16 +10,45 @@
 
       <!-- Navigation Section -->
       <nav class="nav-section">
-        <router-link
-          v-for="item in filteredNavItems"
-          :key="item.title"
-          :to="item.route"
+        <template v-if="pinnedNavItems.length">
+          <div class="nav-group-label">Pinned</div>
+          <div
+            v-for="item in pinnedNavItems"
+            :key="`pinned-${item.route}`"
+            class="nav-item"
+            :class="{ 'nav-item--active': $route.path === item.route }"
+            @click="goTo(item.route)"
+          >
+            <v-icon size="16" class="nav-icon">{{ item.icon }}</v-icon>
+            <span class="nav-label">{{ item.title }}</span>
+            <button
+              class="pin-btn pin-btn--active"
+              :title="`Unpin ${item.title}`"
+              @click.stop="togglePin(item.route)"
+            >
+              <v-icon size="14">mdi-pin</v-icon>
+            </button>
+          </div>
+          <div class="nav-group-divider"></div>
+        </template>
+
+        <div
+          v-for="item in unpinnedNavItems"
+          :key="item.route"
           class="nav-item"
           :class="{ 'nav-item--active': $route.path === item.route }"
+          @click="goTo(item.route)"
         >
           <v-icon size="16" class="nav-icon">{{ item.icon }}</v-icon>
           <span class="nav-label">{{ item.title }}</span>
-        </router-link>
+          <button
+            class="pin-btn"
+            :title="`Pin ${item.title}`"
+            @click.stop="togglePin(item.route)"
+          >
+            <v-icon size="14">mdi-pin-outline</v-icon>
+          </button>
+        </div>
       </nav>
 
       <!-- Bottom User Card -->
@@ -130,6 +159,7 @@ import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 import CommandPalette from '../components/CommandPalette.vue'
 import ShortcutsModal from '../components/ShortcutsModal.vue'
+import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -174,6 +204,26 @@ const filteredNavItems = computed(() => {
   const userRole = authStore.userRole.toLowerCase()
   return navItems.filter(item => item.roles.includes(userRole))
 })
+
+const pinnedNavItems = computed(() =>
+  pinnedRoutes.value
+    .map(route => filteredNavItems.value.find(i => i.route === route))
+    .filter((i): i is typeof navItems[number] => Boolean(i))
+)
+
+const unpinnedNavItems = computed(() =>
+  filteredNavItems.value.filter(i => !pinnedRoutes.value.includes(i.route))
+)
+
+function togglePin(route: string) {
+  togglePinned(route)
+}
+
+function goTo(route: string) {
+  if (router.currentRoute.value.path !== route) {
+    router.push(route)
+  }
+}
 
 function _getRoleColor(role: string): string {
   switch (role.toLowerCase()) {
@@ -258,6 +308,23 @@ onMounted(() => {
   gap: 2px;
 }
 
+/* Group label above pinned items */
+.nav-group-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+  padding: 4px 10px 2px;
+}
+
+.nav-group-divider {
+  height: 1px;
+  background: rgba(var(--v-border-color), var(--v-border-opacity));
+  margin: 8px 4px;
+}
+
 /* Nav Items */
 .nav-item {
   height: 36px;
@@ -269,6 +336,43 @@ onMounted(() => {
   cursor: pointer;
   transition: background 120ms ease, color 120ms ease;
   text-decoration: none;
+  position: relative;
+}
+
+.nav-label {
+  flex: 1;
+}
+
+.pin-btn {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms ease, background 120ms ease;
+  flex-shrink: 0;
+}
+
+.pin-btn .v-icon {
+  color: #94A3B8 !important;
+}
+
+.nav-item:hover .pin-btn,
+.pin-btn--active {
+  opacity: 1;
+}
+
+.pin-btn--active .v-icon {
+  color: #2563EB !important;
+}
+
+.pin-btn:hover {
+  background: rgba(148, 163, 184, 0.15);
 }
 
 /* Default State */
