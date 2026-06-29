@@ -1,6 +1,7 @@
 /// <reference types='vite/client' />
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { pushRecent } from '../utils/recentRoutes'
 import LoginView from '../views/LoginView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AppLayout from '../layouts/AppLayout.vue'
@@ -130,6 +131,12 @@ router.beforeEach((to, _from, next) => {
   }
 
   next()
+})
+
+router.afterEach((to) => {
+  if (to.meta.requiresAuth) {
+    pushRecent(to.path)
+  }
 })
 
 export default router

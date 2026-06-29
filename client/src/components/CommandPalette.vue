@@ -16,7 +16,7 @@
           class="palette-input"
           @keydown.down.prevent="move(1)"
           @keydown.up.prevent="move(-1)"
-          @keydown.enter.prevent="run(filtered[activeIndex])"
+          @keydown.enter.prevent="run(flatList[activeIndex])"
           @keydown.esc="open = false"
         />
         <v-chip size="x-small" variant="outlined" class="palette-kbd">ESC</v-chip>
@@ -29,21 +29,27 @@
       </div>
 
       <ul v-else class="palette-list">
-        <li
-          v-for="(item, i) in filtered"
-          :key="item.route"
-          class="palette-item"
-          :class="{ 'palette-item--active': i === activeIndex }"
-          @mouseenter="activeIndex = i"
-          @click="run(item)"
-        >
-          <v-icon size="18" class="me-3 palette-item-icon">{{ item.icon }}</v-icon>
-          <div class="palette-item-text">
-            <div class="palette-item-title">{{ item.title }}</div>
-            <div class="palette-item-sub">{{ item.subtitle }}</div>
-          </div>
-          <v-icon size="14" class="palette-item-arrow">mdi-arrow-right</v-icon>
-        </li>
+        <template v-for="(group, gi) in groupedFiltered" :key="group.key">
+          <li v-if="group.label" class="palette-group-label">
+            <v-icon size="12" class="me-1">{{ group.icon }}</v-icon>
+            {{ group.label }}
+          </li>
+          <li
+            v-for="item in group.items"
+            :key="`${group.key}-${item.route}`"
+            class="palette-item"
+            :class="{ 'palette-item--active': flatIndex(gi, item) === activeIndex }"
+            @mouseenter="activeIndex = flatIndex(gi, item)"
+            @click="run(item)"
+          >
+            <v-icon size="18" class="me-3 palette-item-icon">{{ item.icon }}</v-icon>
+            <div class="palette-item-text">
+              <div class="palette-item-title">{{ item.title }}</div>
+              <div class="palette-item-sub">{{ item.subtitle }}</div>
+            </div>
+            <v-icon size="14" class="palette-item-arrow">mdi-arrow-right</v-icon>
+          </li>
+        </template>
       </ul>
 
       <div class="palette-footer">
@@ -59,6 +65,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { loadRecents } from '../utils/recentRoutes'
 
 interface PaletteItem {
   title: string
@@ -89,6 +96,7 @@ const open = ref(false)
 const query = ref('')
 const activeIndex = ref(0)
 const inputRef = ref<HTMLInputElement | null>(null)
+const recentRoutes = ref<string[]>([])
 
 const visibleItems = computed(() => {
   const role = (authStore.userRole || '').toLowerCase()
@@ -96,7 +104,32 @@ const visibleItems = computed(() => {
   return ALL_ITEMS.filter(i => i.roles.includes(role))
 })
 
-const filtered = computed(() => {
+interface PaletteGroup {
+  key: string
+  label: string
+  icon: string
+  items: PaletteItem[]
+}
+
+const recentItems = computed<PaletteItem[]>(() => {
+  if (!recentRoutes.value.length) return []
+  const visible = visibleItems.value
+  const currentPath = router.currentRoute.value.path
+  const seen = new Set<string>()
+  const out: PaletteItem[] = []
+  for (const route of recentRoutes.value) {
+    if (route === currentPath || seen.has(route)) continue
+    const match = visible.find(i => i.route === route)
+    if (match) {
+      seen.add(route)
+      out.push(match)
+    }
+    if (out.length >= 4) break
+  }
+  return out
+})
+
+const filtered = computed<PaletteItem[]>(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return visibleItems.value
   return visibleItems.value.filter(i =>
@@ -104,11 +137,35 @@ const filtered = computed(() => {
   )
 })
 
-watch(filtered, () => { activeIndex.value = 0 })
+const groupedFiltered = computed<PaletteGroup[]>(() => {
+  const groups: PaletteGroup[] = []
+  if (!query.value.trim() && recentItems.value.length) {
+    groups.push({ key: 'recent', label: 'Recent', icon: 'mdi-history', items: recentItems.value })
+    const recentRouteSet = new Set(recentItems.value.map(i => i.route))
+    const rest = filtered.value.filter(i => !recentRouteSet.has(i.route))
+    if (rest.length) {
+      groups.push({ key: 'all', label: 'All pages', icon: 'mdi-view-grid-outline', items: rest })
+    }
+  } else {
+    groups.push({ key: 'all', label: '', icon: '', items: filtered.value })
+  }
+  return groups
+})
+
+const flatList = computed<PaletteItem[]>(() =>
+  groupedFiltered.value.flatMap(g => g.items)
+)
+
+function flatIndex(_groupIndex: number, item: PaletteItem): number {
+  return flatList.value.findIndex(i => i === item)
+}
+
+watch(flatList, () => { activeIndex.value = 0 })
 watch(open, (v) => {
   if (v) {
     query.value = ''
     activeIndex.value = 0
+    recentRoutes.value = loadRecents()
   }
 })
 
@@ -117,7 +174,7 @@ function focusInput() {
 }
 
 function move(delta: number) {
-  const len = filtered.value.length
+  const len = flatList.value.length
   if (!len) return
   activeIndex.value = (activeIndex.value + delta + len) % len
 }
@@ -187,6 +244,23 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleKey))
   margin: 0;
   max-height: 360px;
   overflow-y: auto;
+}
+
+.palette-group-label {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+}
+
+.palette-group-label .v-icon {
+  color: #94A3B8 !important;
 }
 
 .palette-item {
