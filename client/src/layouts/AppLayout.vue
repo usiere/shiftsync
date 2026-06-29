@@ -149,6 +149,7 @@
 
     <CommandPalette />
     <ShortcutsModal ref="shortcutsRef" />
+    <ScrollToTopButton />
   </v-app>
 </template>
 
@@ -159,6 +160,7 @@ import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 import CommandPalette from '../components/CommandPalette.vue'
 import ShortcutsModal from '../components/ShortcutsModal.vue'
+import ScrollToTopButton from '../components/ScrollToTopButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
