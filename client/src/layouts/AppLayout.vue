@@ -108,6 +108,17 @@
 
       <v-btn
         icon
+        @click="openWhatsNew"
+        variant="text"
+        class="me-2"
+        title="What's new"
+        size="large"
+      >
+        <v-icon size="22">mdi-gift-outline</v-icon>
+      </v-btn>
+
+      <v-btn
+        icon
         @click="openShortcuts"
         variant="text"
         class="me-2"
@@ -150,6 +161,7 @@
     <CommandPalette />
     <ShortcutsModal ref="shortcutsRef" />
     <ScrollToTopButton />
+    <WhatsNewModal ref="whatsNewRef" />
   </v-app>
 </template>
 
@@ -161,12 +173,14 @@ import { useTheme } from 'vuetify'
 import CommandPalette from '../components/CommandPalette.vue'
 import ShortcutsModal from '../components/ShortcutsModal.vue'
 import ScrollToTopButton from '../components/ScrollToTopButton.vue'
+import WhatsNewModal from '../components/WhatsNewModal.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const theme = useTheme()
 const shortcutsRef = ref<InstanceType<typeof ShortcutsModal> | null>(null)
+const whatsNewRef = ref<InstanceType<typeof WhatsNewModal> | null>(null)
 
 function openPalette() {
   const evt = new KeyboardEvent('keydown', { key: 'k', metaKey: true })
@@ -177,6 +191,10 @@ function openShortcuts() {
   if (shortcutsRef.value) {
     shortcutsRef.value.open = true
   }
+}
+
+function openWhatsNew() {
+  whatsNewRef.value?.open()
 }
 
 const isDark = computed(() => theme.global.current.value.dark)
