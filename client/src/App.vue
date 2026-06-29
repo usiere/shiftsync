@@ -2,11 +2,13 @@
   <v-app class="app-container">
     <router-view />
     <GlobalToasts />
+    <NetworkStatusBanner />
   </v-app>
 </template>
 
 <script setup lang="ts">
 import GlobalToasts from './components/GlobalToasts.vue'
+import NetworkStatusBanner from './components/NetworkStatusBanner.vue'
 </script>
 
 <style>
