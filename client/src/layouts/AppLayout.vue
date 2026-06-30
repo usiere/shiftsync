@@ -162,6 +162,7 @@
     <ShortcutsModal ref="shortcutsRef" />
     <ScrollToTopButton />
     <WhatsNewModal ref="whatsNewRef" />
+    <IdleTimeoutModal />
   </v-app>
 </template>
 
@@ -174,6 +175,7 @@ import CommandPalette from '../components/CommandPalette.vue'
 import ShortcutsModal from '../components/ShortcutsModal.vue'
 import ScrollToTopButton from '../components/ScrollToTopButton.vue'
 import WhatsNewModal from '../components/WhatsNewModal.vue'
+import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
