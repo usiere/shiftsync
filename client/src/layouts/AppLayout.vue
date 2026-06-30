@@ -60,7 +60,7 @@
           <div class="user-name">{{ authStore.userName }}</div>
           <div class="user-role">{{ authStore.userRole }}</div>
         </div>
-        <button class="logout-btn" @click="handleLogout" title="Logout">
+        <button class="logout-btn" @click="requestLogout" title="Logout">
           <v-icon size="16">mdi-logout</v-icon>
         </button>
       </div>
@@ -142,7 +142,7 @@
 
       <v-btn
         icon
-        @click="handleLogout"
+        @click="requestLogout"
         variant="text"
         class="logout-topbar-btn"
         title="Logout"
@@ -164,6 +164,7 @@
     <ScrollToTopButton />
     <WhatsNewModal ref="whatsNewRef" />
     <IdleTimeoutModal />
+    <LogoutConfirmDialog ref="logoutDialogRef" @confirm="handleLogout" />
   </v-app>
 </template>
 
@@ -178,6 +179,7 @@ import ScrollToTopButton from '../components/ScrollToTopButton.vue'
 import WhatsNewModal from '../components/WhatsNewModal.vue'
 import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
+import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
@@ -185,6 +187,7 @@ const router = useRouter()
 const theme = useTheme()
 const shortcutsRef = ref<InstanceType<typeof ShortcutsModal> | null>(null)
 const whatsNewRef = ref<InstanceType<typeof WhatsNewModal> | null>(null)
+const logoutDialogRef = ref<InstanceType<typeof LogoutConfirmDialog> | null>(null)
 
 function openPalette() {
   const evt = new KeyboardEvent('keydown', { key: 'k', metaKey: true })
@@ -261,6 +264,10 @@ function _getRoleColor(role: string): string {
 function getUserInitials(name: string | null): string {
   if (!name) return 'U'
   return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+}
+
+function requestLogout() {
+  logoutDialogRef.value?.show()
 }
 
 function handleLogout() {
