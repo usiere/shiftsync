@@ -75,6 +75,7 @@
       class="border-b topbar"
       fixed
     >
+      <Breadcrumbs class="ms-4" />
       <v-spacer />
 
       <button
@@ -176,6 +177,7 @@ import ShortcutsModal from '../components/ShortcutsModal.vue'
 import ScrollToTopButton from '../components/ScrollToTopButton.vue'
 import WhatsNewModal from '../components/WhatsNewModal.vue'
 import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
+import Breadcrumbs from '../components/Breadcrumbs.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 
 const authStore = useAuthStore()
