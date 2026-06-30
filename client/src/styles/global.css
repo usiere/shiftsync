@@ -486,3 +486,74 @@ html[data-density='compact'] .v-list-item { min-height: 36px !important; padding
 html[data-density='compact'] .v-data-table td,
 html[data-density='compact'] .v-data-table th { padding: 6px 10px !important; height: auto !important; }
 html[data-density='compact'] .v-container { padding-top: 12px !important; padding-bottom: 12px !important; }
+
+/* Print styles — strip chrome so the current view prints cleanly */
+@media print {
+  /* Hide app chrome */
+  .sidebar,
+  .topbar,
+  .v-app-bar,
+  .scroll-top-btn,
+  .cmdk-trigger,
+  .net-banner,
+  .v-snackbar,
+  .v-dialog,
+  .v-overlay__scrim,
+  .breadcrumbs,
+  .role-badge,
+  .logout-topbar-btn,
+  .user-card,
+  .nav-section,
+  .logo-area,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Reset main content offset that the fixed sidebar/topbar create */
+  .v-main {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  body,
+  .v-application,
+  .v-application__wrap,
+  .app-container,
+  .v-theme--light .app-container,
+  .v-theme--light .app-container .v-main,
+  .v-theme--dark .app-container,
+  .v-theme--dark .app-container .v-main {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Flatten cards — no shadows or borders that waste ink */
+  .v-card {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Buttons and other interactive controls add noise on paper */
+  .v-btn,
+  button:not([data-print-keep]) {
+    display: none !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  /* Avoid awkward breaks inside tables/rows */
+  tr,
+  .v-list-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}

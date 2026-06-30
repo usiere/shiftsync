@@ -95,6 +95,14 @@
             </v-btn>
             <v-spacer />
             <v-btn
+              variant="text"
+              :disabled="!summary"
+              @click="printReport"
+            >
+              <v-icon start>mdi-printer-outline</v-icon>
+              Print
+            </v-btn>
+            <v-btn
               color="primary"
               :loading="loading"
               :disabled="!dateRangeValid"
@@ -329,6 +337,10 @@ async function downloadCsv() {
   } finally {
     loading.value = false
   }
+}
+
+function printReport() {
+  window.print()
 }
 
 onMounted(loadLocations)
