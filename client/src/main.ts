@@ -11,6 +11,7 @@ import './styles/global.css'
 
 import App from './App.vue'
 import router from './router'
+import './utils/density'
 
 const savedTheme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
 

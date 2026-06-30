@@ -113,6 +113,42 @@
           </v-card-actions>
         </v-card>
 
+        <v-card class="mt-4">
+          <v-card-title class="d-flex align-center">
+            <v-icon class="me-2">mdi-view-dashboard-edit-outline</v-icon>
+            Appearance
+          </v-card-title>
+          <v-card-subtitle>
+            Tune how dense the interface feels.
+          </v-card-subtitle>
+
+          <v-divider />
+
+          <v-card-text>
+            <div class="text-subtitle-2 mb-2">UI density</div>
+            <v-btn-toggle
+              :model-value="density"
+              mandatory
+              color="primary"
+              variant="outlined"
+              divided
+              @update:model-value="onDensityChange"
+            >
+              <v-btn value="comfortable">
+                <v-icon start size="18">mdi-format-line-spacing</v-icon>
+                Comfortable
+              </v-btn>
+              <v-btn value="compact">
+                <v-icon start size="18">mdi-format-align-justify</v-icon>
+                Compact
+              </v-btn>
+            </v-btn-toggle>
+            <div class="text-caption text-medium-emphasis mt-2">
+              Compact tightens card padding and table rows for denser screens.
+            </div>
+          </v-card-text>
+        </v-card>
+
         <v-snackbar
           v-model="snackbar.show"
           :color="snackbar.color"
@@ -129,6 +165,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import api from '../api/axios'
+import { density, setDensity, type Density } from '../utils/density'
 
 interface Preferences {
   emailNotifications: boolean
@@ -203,6 +240,10 @@ async function save() {
 
 function reset() {
   Object.assign(prefs, original.value)
+}
+
+function onDensityChange(value: Density | null) {
+  if (value) setDensity(value)
 }
 
 onMounted(load)

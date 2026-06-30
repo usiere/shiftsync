@@ -476,3 +476,13 @@ h1, h2, h3, h4, h5, h6,
     border: 2px solid currentColor !important;
   }
 }
+
+/* Compact density — tightens cards, list rows, and tables */
+html[data-density='compact'] .v-card-title { padding: 12px 16px !important; }
+html[data-density='compact'] .v-card-subtitle { padding: 0 16px 8px !important; }
+html[data-density='compact'] .v-card-text { padding: 12px 16px !important; }
+html[data-density='compact'] .v-card-actions { padding: 4px 12px 8px !important; }
+html[data-density='compact'] .v-list-item { min-height: 36px !important; padding-top: 4px !important; padding-bottom: 4px !important; }
+html[data-density='compact'] .v-data-table td,
+html[data-density='compact'] .v-data-table th { padding: 6px 10px !important; height: auto !important; }
+html[data-density='compact'] .v-container { padding-top: 12px !important; padding-bottom: 12px !important; }
