@@ -1,11 +1,20 @@
 <template>
-  <v-app>
+  <v-app :class="{ 'app--sidebar-collapsed': sidebarCollapsed }">
     <!-- Clean Linear/Vercel-style Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" :class="{ 'sidebar--collapsed': sidebarCollapsed }">
       <!-- Logo Section -->
       <div class="logo-area">
         <div class="logo-mark">SS</div>
         <span class="logo-text">ShiftSync</span>
+        <button
+          class="sidebar-toggle"
+          :title="sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+          @click="toggleSidebar"
+        >
+          <v-icon size="16">
+            {{ sidebarCollapsed ? 'mdi-chevron-right' : 'mdi-chevron-left' }}
+          </v-icon>
+        </button>
       </div>
 
       <!-- Navigation Section -->
@@ -181,6 +190,7 @@ import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
+import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -608,5 +618,77 @@ onMounted(() => {
   border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   border-radius: 4px;
   color: #94A3B8;
+}
+
+/* Sidebar collapse toggle */
+.sidebar-toggle {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background: transparent;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #94A3B8;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(148, 163, 184, 0.12);
+  color: #1D4ED8;
+}
+
+/* Collapsed sidebar — narrow rail with icons only */
+.sidebar {
+  transition: width 180ms ease;
+}
+
+.sidebar--collapsed {
+  width: 64px;
+}
+
+.sidebar--collapsed .logo-area {
+  padding: 0 12px;
+  justify-content: center;
+}
+
+.sidebar--collapsed .logo-text,
+.sidebar--collapsed .nav-label,
+.sidebar--collapsed .nav-group-label,
+.sidebar--collapsed .user-info,
+.sidebar--collapsed .pin-btn {
+  display: none;
+}
+
+.sidebar--collapsed .sidebar-toggle {
+  margin: 0;
+}
+
+.sidebar--collapsed .nav-section {
+  padding: 12px 8px;
+  align-items: center;
+}
+
+.sidebar--collapsed .nav-item {
+  justify-content: center;
+  padding: 0;
+  width: 40px;
+}
+
+.sidebar--collapsed .user-card {
+  justify-content: center;
+  padding: 12px 8px;
+}
+
+.app--sidebar-collapsed .v-main {
+  margin-left: 64px !important;
+}
+
+.app--sidebar-collapsed .topbar {
+  left: 64px !important;
+  width: calc(100% - 64px) !important;
 }
 </style>
