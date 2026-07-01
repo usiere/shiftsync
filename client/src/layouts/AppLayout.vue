@@ -168,6 +168,7 @@
 
     <v-main>
       <v-container fluid>
+        <AnnouncementBanner />
         <router-view />
       </v-container>
     </v-main>
@@ -195,6 +196,7 @@ import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
+import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
