@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
   const userId = computed(() => user.value?.userId)
   const userRole = computed(() => user.value?.role)
   const userName = computed(() => user.value?.name)
+  const expiresAt = computed(() => (user.value?.exp ? user.value.exp * 1000 : null))
 
   function setToken(newToken: string) {
     token.value = newToken
@@ -75,6 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
     userId,
     userRole,
     userName,
+    expiresAt,
     setToken,
     logout
   }

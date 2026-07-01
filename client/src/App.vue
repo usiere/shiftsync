@@ -3,12 +3,14 @@
     <router-view />
     <GlobalToasts />
     <NetworkStatusBanner />
+    <SessionExpiryBanner />
   </v-app>
 </template>
 
 <script setup lang="ts">
 import GlobalToasts from './components/GlobalToasts.vue'
 import NetworkStatusBanner from './components/NetworkStatusBanner.vue'
+import SessionExpiryBanner from './components/SessionExpiryBanner.vue'
 </script>
 
 <style>
