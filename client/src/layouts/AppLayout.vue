@@ -118,6 +118,8 @@
         {{ authStore.userRole }}
       </div>
 
+      <CopyLinkButton />
+
       <v-btn
         icon
         @click="openWhatsNew"
@@ -192,6 +194,7 @@ import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
+import CopyLinkButton from '../components/CopyLinkButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
