@@ -97,6 +97,8 @@
         <span class="cmdk-kbd">⌘K</span>
       </button>
 
+      <TopbarClock class="me-4" />
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -189,6 +191,7 @@ import WhatsNewModal from '../components/WhatsNewModal.vue'
 import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
+import TopbarClock from '../components/TopbarClock.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
