@@ -122,6 +122,8 @@
 
       <CopyLinkButton />
 
+      <TextZoomMenu />
+
       <v-btn
         icon
         @click="openWhatsNew"
@@ -198,6 +200,7 @@ import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
+import TextZoomMenu from '../components/TextZoomMenu.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'

@@ -38,6 +38,13 @@ body, .v-application {
   line-height: 1.5;
 }
 
+/* User-adjustable text zoom (see utils/textZoom.ts).
+   Applied to the main content area only so the sidebar/topbar chrome
+   stays a stable target for pointer interactions. */
+.v-main {
+  zoom: var(--app-text-zoom, 1);
+}
+
 code, .mono {
   font-family: 'DM Mono', monospace;
 }
