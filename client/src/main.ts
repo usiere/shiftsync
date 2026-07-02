@@ -14,6 +14,7 @@ import router from './router'
 import './utils/density'
 import './utils/textZoom'
 import './utils/focusMode'
+import './utils/reducedMotion'
 
 const savedTheme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
 

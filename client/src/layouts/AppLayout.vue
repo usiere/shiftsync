@@ -127,6 +127,8 @@
 
       <FocusModeToggle />
 
+      <ReducedMotionMenu />
+
       <v-btn
         icon
         @click="openWhatsNew"
@@ -206,6 +208,7 @@ import IsoWeekChip from '../components/IsoWeekChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
 import FocusModeToggle from '../components/FocusModeToggle.vue'
 import HistoryNavButtons from '../components/HistoryNavButtons.vue'
+import ReducedMotionMenu from '../components/ReducedMotionMenu.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'

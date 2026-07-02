@@ -68,6 +68,26 @@ html.app-focus-mode .topbar:focus-within {
   opacity: 1;
 }
 
+/* Reduced-motion preference (see utils/reducedMotion.ts). When active,
+   collapse transitions and animations to a near-instant duration so the
+   UI still responds but nothing eases, slides, or spins for effect.
+   Preserved: the app spinner (mdi-loading) — indeterminate progress
+   still needs to visibly rotate. */
+html.app-reduced-motion *,
+html.app-reduced-motion *::before,
+html.app-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html.app-reduced-motion .v-progress-circular,
+html.app-reduced-motion .v-progress-linear__indeterminate {
+  animation-duration: revert !important;
+  animation-iteration-count: revert !important;
+}
+
 code, .mono {
   font-family: 'DM Mono', monospace;
 }
