@@ -124,6 +124,8 @@
 
       <TextZoomMenu />
 
+      <FocusModeToggle />
+
       <v-btn
         icon
         @click="openWhatsNew"
@@ -201,6 +203,7 @@ import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
+import FocusModeToggle from '../components/FocusModeToggle.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'

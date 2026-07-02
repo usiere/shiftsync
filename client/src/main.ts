@@ -13,6 +13,7 @@ import App from './App.vue'
 import router from './router'
 import './utils/density'
 import './utils/textZoom'
+import './utils/focusMode'
 
 const savedTheme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
 

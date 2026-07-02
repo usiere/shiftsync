@@ -45,6 +45,29 @@ body, .v-application {
   zoom: var(--app-text-zoom, 1);
 }
 
+/* Focus mode (see utils/focusMode.ts) — hide the sidebar and dim the
+   top-bar chrome so the current view fills the screen. Toggled via
+   the top-bar button or Shift+F. */
+html.app-focus-mode .sidebar {
+  display: none !important;
+}
+
+html.app-focus-mode .v-main {
+  margin-left: 0 !important;
+}
+
+html.app-focus-mode .topbar {
+  left: 0 !important;
+  width: 100% !important;
+  opacity: 0.35;
+  transition: opacity 160ms ease;
+}
+
+html.app-focus-mode .topbar:hover,
+html.app-focus-mode .topbar:focus-within {
+  opacity: 1;
+}
+
 code, .mono {
   font-family: 'DM Mono', monospace;
 }
