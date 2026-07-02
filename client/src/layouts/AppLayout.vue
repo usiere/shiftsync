@@ -84,7 +84,8 @@
       class="border-b topbar"
       fixed
     >
-      <Breadcrumbs class="ms-4" />
+      <HistoryNavButtons class="ms-4" />
+      <Breadcrumbs />
       <v-spacer />
 
       <button
@@ -204,6 +205,7 @@ import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
 import FocusModeToggle from '../components/FocusModeToggle.vue'
+import HistoryNavButtons from '../components/HistoryNavButtons.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
