@@ -99,6 +99,8 @@
 
       <TopbarClock class="me-4" />
 
+      <IsoWeekChip class="me-4" />
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -195,6 +197,7 @@ import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
 import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
+import IsoWeekChip from '../components/IsoWeekChip.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
