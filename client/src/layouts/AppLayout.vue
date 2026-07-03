@@ -98,6 +98,8 @@
         <span class="cmdk-kbd">⌘K</span>
       </button>
 
+      <GreetingChip class="me-4" />
+
       <TopbarClock class="me-4" />
 
       <IsoWeekChip class="me-4" />
@@ -230,6 +232,7 @@ import PageTitleMenu from '../components/PageTitleMenu.vue'
 import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
 import '../utils/sidebarWidth'
+import GreetingChip from '../components/GreetingChip.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
