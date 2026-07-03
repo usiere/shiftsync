@@ -127,6 +127,8 @@
 
       <CopyLinkButton />
 
+      <JumpToTodayButton />
+
       <TextZoomMenu />
 
       <FocusModeToggle />
@@ -217,6 +219,7 @@ import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
+import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
