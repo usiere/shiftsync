@@ -1,7 +1,7 @@
 <template>
   <div class="global-toasts">
     <v-snackbar
-      v-for="toast in notificationStore.toasts"
+      v-for="toast in visibleToasts"
       :key="toast.id"
       v-model="toast.show"
       :color="getSnackbarColor(toast.type)"
@@ -35,9 +35,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useNotificationStore } from '../stores/notifications'
+import { doNotDisturb } from '../utils/dnd'
 
 const notificationStore = useNotificationStore()
+
+const visibleToasts = computed(() =>
+  doNotDisturb.value ? [] : notificationStore.toasts
+)
 
 function getSnackbarColor(type: string): string {
   switch (type) {

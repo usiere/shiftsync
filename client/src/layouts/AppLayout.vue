@@ -131,6 +131,8 @@
 
       <PageTitleMenu />
 
+      <DoNotDisturbToggle />
+
       <TextZoomMenu />
 
       <FocusModeToggle />
@@ -223,6 +225,7 @@ import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
 import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import PageTitleMenu from '../components/PageTitleMenu.vue'
+import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
