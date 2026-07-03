@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { jwtDecode } from 'jwt-decode'
+import { clearSessionStart, markSessionStart } from '../utils/sessionUptime'
 
 interface JwtPayload {
   userId: number
@@ -41,6 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       user.value = jwtDecode<JwtPayload>(newToken)
+      markSessionStart()
     } catch (error) {
       console.error('Failed to decode token:', error)
       logout()
@@ -51,6 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = null
     user.value = null
     localStorage.removeItem('token')
+    clearSessionStart()
   }
 
   // Initialize user data if token exists
@@ -60,6 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
       // Check if token is not expired
       if (decoded.exp * 1000 > Date.now()) {
         user.value = decoded
+        markSessionStart()
       } else {
         logout()
       }

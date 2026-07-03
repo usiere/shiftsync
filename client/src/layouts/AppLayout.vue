@@ -104,6 +104,8 @@
 
       <LocalTimeZoneChip class="me-4" />
 
+      <SessionUptimeChip class="me-4" />
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -214,6 +216,7 @@ import ReducedMotionMenu from '../components/ReducedMotionMenu.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
+import SessionUptimeChip from '../components/SessionUptimeChip.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
