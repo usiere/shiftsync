@@ -607,3 +607,35 @@ html[data-density='compact'] .v-container { padding-top: 12px !important; paddin
     margin: 14mm;
   }
 }
+
+/* High-contrast mode — thicker borders, darker text, sharper focus */
+body.hc-mode {
+  --hc-fg: #000000;
+  --hc-border: #000000;
+}
+
+body.hc-mode.v-theme--dark {
+  --hc-fg: #FFFFFF;
+  --hc-border: #FFFFFF;
+}
+
+body.hc-mode * {
+  border-color: var(--hc-border) !important;
+}
+
+body.hc-mode .text-medium-emphasis,
+body.hc-mode .text-caption {
+  color: var(--hc-fg) !important;
+  opacity: 1 !important;
+}
+
+body.hc-mode .v-btn,
+body.hc-mode .v-card,
+body.hc-mode .v-list-item {
+  outline: 1px solid var(--hc-border);
+}
+
+body.hc-mode :focus-visible {
+  outline: 3px solid #FBBF24 !important;
+  outline-offset: 2px !important;
+}
