@@ -133,6 +133,8 @@
 
       <DoNotDisturbToggle />
 
+      <SidebarWidthMenu />
+
       <TextZoomMenu />
 
       <FocusModeToggle />
@@ -226,6 +228,8 @@ import SessionUptimeChip from '../components/SessionUptimeChip.vue'
 import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import PageTitleMenu from '../components/PageTitleMenu.vue'
 import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
+import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
+import '../utils/sidebarWidth'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
 
@@ -332,7 +336,7 @@ onMounted(() => {
 <style scoped>
 /* Sidebar Container - Linear/Vercel Style */
 .sidebar {
-  width: 220px;
+  width: var(--app-sidebar-width, 220px);
   position: fixed;
   top: 0;
   left: 0;
@@ -573,7 +577,7 @@ onMounted(() => {
 
 /* Adjust main content to accommodate fixed sidebar and topbar */
 .v-main {
-  margin-left: 220px !important;
+  margin-left: var(--app-sidebar-width, 220px) !important;
   padding-top: 64px !important;
 }
 
@@ -586,8 +590,8 @@ onMounted(() => {
 .topbar {
   position: fixed !important;
   top: 0 !important;
-  left: 220px !important;
-  width: calc(100% - 220px) !important;
+  left: var(--app-sidebar-width, 220px) !important;
+  width: calc(100% - var(--app-sidebar-width, 220px)) !important;
   z-index: 999 !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
