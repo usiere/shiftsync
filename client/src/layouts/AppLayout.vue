@@ -145,6 +145,8 @@
 
       <HighContrastToggle />
 
+      <ClockSecondsToggle />
+
       <FeedbackButton />
 
       <TextZoomMenu />
@@ -247,6 +249,7 @@ import HighContrastToggle from '../components/HighContrastToggle.vue'
 import WorldClockChip from '../components/WorldClockChip.vue'
 import UtcClockChip from '../components/UtcClockChip.vue'
 import AppVersionChip from '../components/AppVersionChip.vue'
+import ClockSecondsToggle from '../components/ClockSecondsToggle.vue'
 import FeedbackButton from '../components/FeedbackButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'

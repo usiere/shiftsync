@@ -8,13 +8,21 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { clockShowSeconds } from '../utils/clockFormat'
 
 const now = ref(new Date())
 let timer: ReturnType<typeof setInterval> | null = null
 
-const timeFormatter = new Intl.DateTimeFormat(undefined, {
+const timeFormatterHM = new Intl.DateTimeFormat(undefined, {
   hour: '2-digit',
   minute: '2-digit',
+  hour12: false,
+})
+
+const timeFormatterHMS = new Intl.DateTimeFormat(undefined, {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
   hour12: false,
 })
 
@@ -29,7 +37,11 @@ const fullFormatter = new Intl.DateTimeFormat(undefined, {
   timeZoneName: 'long',
 })
 
-const timeLabel = computed(() => timeFormatter.format(now.value))
+const timeLabel = computed(() =>
+  clockShowSeconds.value
+    ? timeFormatterHMS.format(now.value)
+    : timeFormatterHM.format(now.value),
+)
 const fullLabel = computed(() => fullFormatter.format(now.value))
 
 const tzAbbrev = computed(() => {
