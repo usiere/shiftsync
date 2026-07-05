@@ -108,6 +108,8 @@
 
       <WorldClockChip class="me-4" />
 
+      <UtcClockChip class="me-4" />
+
       <SessionUptimeChip class="me-4" />
 
       <v-chip
@@ -241,6 +243,7 @@ import '../utils/sidebarWidth'
 import GreetingChip from '../components/GreetingChip.vue'
 import HighContrastToggle from '../components/HighContrastToggle.vue'
 import WorldClockChip from '../components/WorldClockChip.vue'
+import UtcClockChip from '../components/UtcClockChip.vue'
 import FeedbackButton from '../components/FeedbackButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
 import { sidebarCollapsed, toggleSidebar } from '../utils/sidebar'
