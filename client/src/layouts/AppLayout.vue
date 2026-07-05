@@ -153,6 +153,8 @@
 
       <PomodoroButton />
 
+      <StickyNoteButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -257,6 +259,7 @@ import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
 import NotificationSnoozeMenu from '../components/NotificationSnoozeMenu.vue'
 import AutoRefreshMenu from '../components/AutoRefreshMenu.vue'
 import PomodoroButton from '../components/PomodoroButton.vue'
+import StickyNoteButton from '../components/StickyNoteButton.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
 import '../utils/sidebarWidth'
 import GreetingChip from '../components/GreetingChip.vue'
