@@ -651,3 +651,20 @@ body.underline-links a:hover,
 body.underline-links .v-btn--variant-text:hover {
   text-decoration-thickness: 2px !important;
 }
+
+/* App-wide font family switcher */
+body.font-family-serif,
+body.font-family-serif .v-application,
+body.font-family-serif .v-application .v-btn,
+body.font-family-serif .v-application .v-card,
+body.font-family-serif .v-application .v-list-item {
+  font-family: 'Georgia', 'Times New Roman', serif !important;
+}
+
+body.font-family-mono,
+body.font-family-mono .v-application,
+body.font-family-mono .v-application .v-btn,
+body.font-family-mono .v-application .v-card,
+body.font-family-mono .v-application .v-list-item {
+  font-family: 'DM Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace !important;
+}
