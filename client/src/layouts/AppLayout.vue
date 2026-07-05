@@ -112,6 +112,8 @@
 
       <AppVersionChip class="me-4" />
 
+      <ViewportSizeChip class="me-4" />
+
       <SessionUptimeChip class="me-4" />
 
       <v-chip
@@ -249,6 +251,7 @@ import HighContrastToggle from '../components/HighContrastToggle.vue'
 import WorldClockChip from '../components/WorldClockChip.vue'
 import UtcClockChip from '../components/UtcClockChip.vue'
 import AppVersionChip from '../components/AppVersionChip.vue'
+import ViewportSizeChip from '../components/ViewportSizeChip.vue'
 import ClockSecondsToggle from '../components/ClockSecondsToggle.vue'
 import FeedbackButton from '../components/FeedbackButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
