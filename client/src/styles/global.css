@@ -639,3 +639,15 @@ body.hc-mode :focus-visible {
   outline: 3px solid #FBBF24 !important;
   outline-offset: 2px !important;
 }
+
+/* Underline links accessibility mode — force every link visible */
+body.underline-links a,
+body.underline-links .v-btn--variant-text {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+body.underline-links a:hover,
+body.underline-links .v-btn--variant-text:hover {
+  text-decoration-thickness: 2px !important;
+}
