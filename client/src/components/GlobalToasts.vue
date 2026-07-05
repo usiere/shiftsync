@@ -38,11 +38,12 @@
 import { computed } from 'vue'
 import { useNotificationStore } from '../stores/notifications'
 import { doNotDisturb } from '../utils/dnd'
+import { snoozeActive } from '../utils/snooze'
 
 const notificationStore = useNotificationStore()
 
 const visibleToasts = computed(() =>
-  doNotDisturb.value ? [] : notificationStore.toasts
+  doNotDisturb.value || snoozeActive.value ? [] : notificationStore.toasts
 )
 
 function getSnackbarColor(type: string): string {

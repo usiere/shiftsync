@@ -147,6 +147,8 @@
 
       <DoNotDisturbToggle />
 
+      <NotificationSnoozeMenu />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -248,6 +250,7 @@ import SessionUptimeChip from '../components/SessionUptimeChip.vue'
 import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import PageTitleMenu from '../components/PageTitleMenu.vue'
 import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
+import NotificationSnoozeMenu from '../components/NotificationSnoozeMenu.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
 import '../utils/sidebarWidth'
 import GreetingChip from '../components/GreetingChip.vue'
