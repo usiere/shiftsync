@@ -116,6 +116,8 @@
 
       <WeekendChip class="me-4" />
 
+      <MoonPhaseChip class="me-4" />
+
       <BatteryChip class="me-4" />
 
       <SessionUptimeChip class="me-4" />
@@ -276,6 +278,7 @@ import AppVersionChip from '../components/AppVersionChip.vue'
 import ViewportSizeChip from '../components/ViewportSizeChip.vue'
 import WeekendChip from '../components/WeekendChip.vue'
 import BatteryChip from '../components/BatteryChip.vue'
+import MoonPhaseChip from '../components/MoonPhaseChip.vue'
 import ClockSecondsToggle from '../components/ClockSecondsToggle.vue'
 import FeedbackButton from '../components/FeedbackButton.vue'
 import { pinnedRoutes, togglePinned } from '../utils/pinnedNav'
