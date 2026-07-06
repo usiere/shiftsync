@@ -106,6 +106,8 @@
 
       <DayOfYearChip class="me-4" />
 
+      <YearEndCountdownChip class="me-4" />
+
       <LocalTimeZoneChip class="me-4" />
 
       <WorldClockChip class="me-4" />
@@ -272,6 +274,7 @@ import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
 import DayOfYearChip from '../components/DayOfYearChip.vue'
+import YearEndCountdownChip from '../components/YearEndCountdownChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
 import FocusModeToggle from '../components/FocusModeToggle.vue'
 import HistoryNavButtons from '../components/HistoryNavButtons.vue'
