@@ -163,6 +163,8 @@
 
       <StickyNoteButton />
 
+      <ConfettiButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -278,6 +280,7 @@ import NotificationSnoozeMenu from '../components/NotificationSnoozeMenu.vue'
 import AutoRefreshMenu from '../components/AutoRefreshMenu.vue'
 import PomodoroButton from '../components/PomodoroButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
+import ConfettiButton from '../components/ConfettiButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
