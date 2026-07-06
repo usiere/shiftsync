@@ -234,6 +234,7 @@
 
     <CommandPalette />
     <ShortcutsModal ref="shortcutsRef" />
+    <ScrollProgressBar />
     <ScrollToTopButton />
     <WhatsNewModal ref="whatsNewRef" />
     <IdleTimeoutModal />
@@ -249,6 +250,7 @@ import { useTheme } from 'vuetify'
 import CommandPalette from '../components/CommandPalette.vue'
 import ShortcutsModal from '../components/ShortcutsModal.vue'
 import ScrollToTopButton from '../components/ScrollToTopButton.vue'
+import ScrollProgressBar from '../components/ScrollProgressBar.vue'
 import WhatsNewModal from '../components/WhatsNewModal.vue'
 import IdleTimeoutModal from '../components/IdleTimeoutModal.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
