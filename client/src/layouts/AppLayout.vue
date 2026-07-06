@@ -183,6 +183,8 @@
 
       <FullscreenToggle />
 
+      <WakeLockToggle />
+
       <ReducedMotionMenu />
 
       <v-btn
@@ -284,6 +286,7 @@ import ConfettiButton from '../components/ConfettiButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
+import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
 import '../utils/sidebarWidth'
 import GreetingChip from '../components/GreetingChip.vue'
