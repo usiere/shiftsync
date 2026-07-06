@@ -147,6 +147,8 @@
 
       <CopyLinkButton />
 
+      <CopyDebugInfoButton />
+
       <JumpToTodayButton />
 
       <PageTitleMenu />
@@ -265,6 +267,7 @@ import FocusModeToggle from '../components/FocusModeToggle.vue'
 import HistoryNavButtons from '../components/HistoryNavButtons.vue'
 import ReducedMotionMenu from '../components/ReducedMotionMenu.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
+import CopyDebugInfoButton from '../components/CopyDebugInfoButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
