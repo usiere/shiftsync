@@ -159,6 +159,8 @@
 
       <CopyTimeButton />
 
+      <PrintPageButton />
+
       <JumpToTodayButton />
 
       <PageTitleMenu />
@@ -299,6 +301,7 @@ import CopyLinkButton from '../components/CopyLinkButton.vue'
 import CopyDebugInfoButton from '../components/CopyDebugInfoButton.vue'
 import InstallAppButton from '../components/InstallAppButton.vue'
 import CopyTimeButton from '../components/CopyTimeButton.vue'
+import PrintPageButton from '../components/PrintPageButton.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
