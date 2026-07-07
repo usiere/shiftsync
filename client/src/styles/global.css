@@ -684,3 +684,12 @@ body.cursor-size-xl * {
 body.sepia-mode {
   filter: sepia(0.35) saturate(1.05) hue-rotate(-10deg);
 }
+
+/* Grayscale mode — removes distractions and helps color contrast checks */
+body.grayscale-mode {
+  filter: grayscale(1);
+}
+
+body.sepia-mode.grayscale-mode {
+  filter: grayscale(1) sepia(0.35);
+}
