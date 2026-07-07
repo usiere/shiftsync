@@ -705,3 +705,25 @@ body.invert-colors svg,
 body.invert-colors .v-icon {
   filter: invert(1) hue-rotate(180deg);
 }
+
+/* Line-height accessibility scale — variable set by JS; applied to text nodes */
+body.line-height-tight,
+body.line-height-relaxed,
+body.line-height-loose {
+  line-height: var(--app-line-height) !important;
+}
+
+body.line-height-tight p,
+body.line-height-tight li,
+body.line-height-tight .v-list-item-title,
+body.line-height-tight .v-list-item-subtitle,
+body.line-height-relaxed p,
+body.line-height-relaxed li,
+body.line-height-relaxed .v-list-item-title,
+body.line-height-relaxed .v-list-item-subtitle,
+body.line-height-loose p,
+body.line-height-loose li,
+body.line-height-loose .v-list-item-title,
+body.line-height-loose .v-list-item-subtitle {
+  line-height: var(--app-line-height) !important;
+}
