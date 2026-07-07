@@ -114,6 +114,8 @@
 
       <UtcClockChip class="me-4" />
 
+      <UtcOffsetChip class="me-4" />
+
       <AppVersionChip class="me-4" />
 
       <ViewportSizeChip class="me-4" />
@@ -325,6 +327,7 @@ import GreetingChip from '../components/GreetingChip.vue'
 import HighContrastToggle from '../components/HighContrastToggle.vue'
 import WorldClockChip from '../components/WorldClockChip.vue'
 import UtcClockChip from '../components/UtcClockChip.vue'
+import UtcOffsetChip from '../components/UtcOffsetChip.vue'
 import AppVersionChip from '../components/AppVersionChip.vue'
 import ViewportSizeChip from '../components/ViewportSizeChip.vue'
 import CpuCoresChip from '../components/CpuCoresChip.vue'
