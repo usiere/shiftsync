@@ -185,6 +185,8 @@
 
       <LineHeightMenu />
 
+      <LetterSpacingToggle />
+
       <ClockSecondsToggle />
 
       <FeedbackButton />
@@ -304,6 +306,7 @@ import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
 import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import LineHeightMenu from '../components/LineHeightMenu.vue'
+import LetterSpacingToggle from '../components/LetterSpacingToggle.vue'
 import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'

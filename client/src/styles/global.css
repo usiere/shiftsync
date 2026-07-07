@@ -727,3 +727,18 @@ body.line-height-loose .v-list-item-title,
 body.line-height-loose .v-list-item-subtitle {
   line-height: var(--app-line-height) !important;
 }
+
+/* Wide letter spacing — helps readers with dyslexia and low vision */
+body.letter-spacing-wide {
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+}
+
+body.letter-spacing-wide p,
+body.letter-spacing-wide li,
+body.letter-spacing-wide .v-list-item-title,
+body.letter-spacing-wide .v-list-item-subtitle,
+body.letter-spacing-wide .v-btn__content {
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+}
