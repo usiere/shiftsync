@@ -181,6 +181,8 @@
 
       <GrayscaleModeToggle />
 
+      <InvertColorsToggle />
+
       <ClockSecondsToggle />
 
       <FeedbackButton />
@@ -298,6 +300,7 @@ import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
+import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'

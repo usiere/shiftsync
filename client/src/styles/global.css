@@ -693,3 +693,15 @@ body.grayscale-mode {
 body.sepia-mode.grayscale-mode {
   filter: grayscale(1) sepia(0.35);
 }
+
+/* Invert colors — flips brightness so bright backgrounds go dark, images auto-un-invert */
+body.invert-colors {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+body.invert-colors img,
+body.invert-colors video,
+body.invert-colors svg,
+body.invert-colors .v-icon {
+  filter: invert(1) hue-rotate(180deg);
+}
