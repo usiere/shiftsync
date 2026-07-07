@@ -239,6 +239,8 @@
         <v-icon size="22">mdi-keyboard-outline</v-icon>
       </v-btn>
 
+      <AutoThemeMenu />
+
       <v-btn
         icon
         @click="toggleTheme"
@@ -307,6 +309,7 @@ import CopyDebugInfoButton from '../components/CopyDebugInfoButton.vue'
 import InstallAppButton from '../components/InstallAppButton.vue'
 import CopyTimeButton from '../components/CopyTimeButton.vue'
 import PrintPageButton from '../components/PrintPageButton.vue'
+import AutoThemeMenu from '../components/AutoThemeMenu.vue'
 import AnnouncementBanner from '../components/AnnouncementBanner.vue'
 import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
