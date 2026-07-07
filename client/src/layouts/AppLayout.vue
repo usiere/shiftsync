@@ -169,6 +169,8 @@
 
       <ConfettiButton />
 
+      <QuickCalcButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -300,6 +302,7 @@ import AutoRefreshMenu from '../components/AutoRefreshMenu.vue'
 import PomodoroButton from '../components/PomodoroButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
+import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
