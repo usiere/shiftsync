@@ -191,6 +191,8 @@
 
       <EmojiPickerButton />
 
+      <PasswordGenButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -337,6 +339,7 @@ import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnitConverterButton from '../components/UnitConverterButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
+import PasswordGenButton from '../components/PasswordGenButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
