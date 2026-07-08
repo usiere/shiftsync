@@ -183,6 +183,8 @@
 
       <CountdownTimerButton />
 
+      <StopwatchButton />
+
       <StickyNoteButton />
 
       <ConfettiButton />
@@ -341,6 +343,7 @@ import NotificationSnoozeMenu from '../components/NotificationSnoozeMenu.vue'
 import AutoRefreshMenu from '../components/AutoRefreshMenu.vue'
 import PomodoroButton from '../components/PomodoroButton.vue'
 import CountdownTimerButton from '../components/CountdownTimerButton.vue'
+import StopwatchButton from '../components/StopwatchButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
