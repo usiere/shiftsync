@@ -195,6 +195,8 @@
 
       <ColorPickerButton />
 
+      <DiceRollButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -343,6 +345,7 @@ import UnitConverterButton from '../components/UnitConverterButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
+import DiceRollButton from '../components/DiceRollButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
