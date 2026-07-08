@@ -742,3 +742,17 @@ body.letter-spacing-wide .v-btn__content {
   letter-spacing: 0.05em !important;
   word-spacing: 0.1em !important;
 }
+
+/* Uppercase mode — transforms body text to upper case (headings emphasized) */
+body.uppercase-mode p,
+body.uppercase-mode li,
+body.uppercase-mode .v-list-item-title,
+body.uppercase-mode .v-list-item-subtitle,
+body.uppercase-mode .v-btn__content,
+body.uppercase-mode .v-card-title,
+body.uppercase-mode h1,
+body.uppercase-mode h2,
+body.uppercase-mode h3,
+body.uppercase-mode h4 {
+  text-transform: uppercase !important;
+}
