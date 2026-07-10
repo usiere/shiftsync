@@ -215,6 +215,8 @@
 
       <SlugifyButton />
 
+      <CaseConverterButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -381,6 +383,7 @@ import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import HashButton from '../components/HashButton.vue'
 import RegexTesterButton from '../components/RegexTesterButton.vue'
 import SlugifyButton from '../components/SlugifyButton.vue'
+import CaseConverterButton from '../components/CaseConverterButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
