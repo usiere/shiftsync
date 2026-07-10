@@ -211,6 +211,8 @@
 
       <HashButton />
 
+      <RegexTesterButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -375,6 +377,7 @@ import UuidButton from '../components/UuidButton.vue'
 import TextDiffButton from '../components/TextDiffButton.vue'
 import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import HashButton from '../components/HashButton.vue'
+import RegexTesterButton from '../components/RegexTesterButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
