@@ -197,6 +197,8 @@
 
       <TextStatsButton />
 
+      <JsonFormatterButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -354,6 +356,7 @@ import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnitConverterButton from '../components/UnitConverterButton.vue'
 import Base64Button from '../components/Base64Button.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
+import JsonFormatterButton from '../components/JsonFormatterButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
