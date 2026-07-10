@@ -219,6 +219,8 @@
 
       <LoremIpsumButton />
 
+      <NumberBaseButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -387,6 +389,7 @@ import RegexTesterButton from '../components/RegexTesterButton.vue'
 import SlugifyButton from '../components/SlugifyButton.vue'
 import CaseConverterButton from '../components/CaseConverterButton.vue'
 import LoremIpsumButton from '../components/LoremIpsumButton.vue'
+import NumberBaseButton from '../components/NumberBaseButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
