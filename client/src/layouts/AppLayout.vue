@@ -207,6 +207,8 @@
 
       <TextDiffButton />
 
+      <MarkdownPreviewButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -369,6 +371,7 @@ import UrlEncoderButton from '../components/UrlEncoderButton.vue'
 import JwtDecoderButton from '../components/JwtDecoderButton.vue'
 import UuidButton from '../components/UuidButton.vue'
 import TextDiffButton from '../components/TextDiffButton.vue'
+import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
