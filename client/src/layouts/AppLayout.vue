@@ -223,6 +223,8 @@
 
       <TimestampConverterButton />
 
+      <HtmlEntitiesButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -393,6 +395,7 @@ import CaseConverterButton from '../components/CaseConverterButton.vue'
 import LoremIpsumButton from '../components/LoremIpsumButton.vue'
 import NumberBaseButton from '../components/NumberBaseButton.vue'
 import TimestampConverterButton from '../components/TimestampConverterButton.vue'
+import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
