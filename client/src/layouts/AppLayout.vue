@@ -225,6 +225,8 @@
 
       <HtmlEntitiesButton />
 
+      <HttpStatusButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -396,6 +398,7 @@ import LoremIpsumButton from '../components/LoremIpsumButton.vue'
 import NumberBaseButton from '../components/NumberBaseButton.vue'
 import TimestampConverterButton from '../components/TimestampConverterButton.vue'
 import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
+import HttpStatusButton from '../components/HttpStatusButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
