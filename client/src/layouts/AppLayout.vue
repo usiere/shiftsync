@@ -241,6 +241,8 @@
 
       <LocalStorageViewerButton />
 
+      <QuickTodoButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -420,6 +422,7 @@ import GradientGenButton from '../components/GradientGenButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
 import TextToSpeechButton from '../components/TextToSpeechButton.vue'
 import LocalStorageViewerButton from '../components/LocalStorageViewerButton.vue'
+import QuickTodoButton from '../components/QuickTodoButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
