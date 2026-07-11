@@ -233,6 +233,8 @@
 
       <TextReverserButton />
 
+      <GradientGenButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -408,6 +410,7 @@ import HttpStatusButton from '../components/HttpStatusButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
+import GradientGenButton from '../components/GradientGenButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
