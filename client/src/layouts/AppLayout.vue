@@ -231,6 +231,8 @@
 
       <RomanNumeralsButton />
 
+      <TextReverserButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -405,6 +407,7 @@ import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import HttpStatusButton from '../components/HttpStatusButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
+import TextReverserButton from '../components/TextReverserButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
