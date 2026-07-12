@@ -237,6 +237,8 @@
 
       <BoxShadowGenButton />
 
+      <BorderRadiusGenButton />
+
       <CsvViewerButton />
 
       <TextToSpeechButton />
@@ -436,6 +438,7 @@ import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
 import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
+import BorderRadiusGenButton from '../components/BorderRadiusGenButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
 import TextToSpeechButton from '../components/TextToSpeechButton.vue'
 import SpeechToTextButton from '../components/SpeechToTextButton.vue'
