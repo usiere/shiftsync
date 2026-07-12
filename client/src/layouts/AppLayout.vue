@@ -281,6 +281,8 @@
 
       <SepiaModeToggle />
 
+      <ScreenDimmer />
+
       <GrayscaleModeToggle />
 
       <InvertColorsToggle />
@@ -460,6 +462,7 @@ import DiceRollButton from '../components/DiceRollButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
+import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
 import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import LineHeightMenu from '../components/LineHeightMenu.vue'
