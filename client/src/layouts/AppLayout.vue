@@ -249,6 +249,8 @@
 
       <AgeCalculatorButton />
 
+      <DateDiffButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -432,6 +434,7 @@ import LocalStorageViewerButton from '../components/LocalStorageViewerButton.vue
 import QuickTodoButton from '../components/QuickTodoButton.vue'
 import CronPreviewButton from '../components/CronPreviewButton.vue'
 import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
+import DateDiffButton from '../components/DateDiffButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
