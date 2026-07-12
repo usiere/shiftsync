@@ -239,6 +239,8 @@
 
       <TextToSpeechButton />
 
+      <SpeechToTextButton />
+
       <LocalStorageViewerButton />
 
       <QuickTodoButton />
@@ -423,6 +425,7 @@ import TextReverserButton from '../components/TextReverserButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
 import TextToSpeechButton from '../components/TextToSpeechButton.vue'
+import SpeechToTextButton from '../components/SpeechToTextButton.vue'
 import LocalStorageViewerButton from '../components/LocalStorageViewerButton.vue'
 import QuickTodoButton from '../components/QuickTodoButton.vue'
 import CronPreviewButton from '../components/CronPreviewButton.vue'
