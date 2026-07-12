@@ -255,6 +255,8 @@
 
       <BmiCalcButton />
 
+      <PercentCalcButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -441,6 +443,7 @@ import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
+import PercentCalcButton from '../components/PercentCalcButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
