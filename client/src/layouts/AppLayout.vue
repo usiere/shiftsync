@@ -185,6 +185,8 @@
 
       <WhiteNoiseButton />
 
+      <BookmarksButton />
+
       <CountdownTimerButton />
 
       <StopwatchButton />
@@ -418,6 +420,7 @@ import AutoRefreshMenu from '../components/AutoRefreshMenu.vue'
 import PomodoroButton from '../components/PomodoroButton.vue'
 import BreathTimerButton from '../components/BreathTimerButton.vue'
 import WhiteNoiseButton from '../components/WhiteNoiseButton.vue'
+import BookmarksButton from '../components/BookmarksButton.vue'
 import CountdownTimerButton from '../components/CountdownTimerButton.vue'
 import StopwatchButton from '../components/StopwatchButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
