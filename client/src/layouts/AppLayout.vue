@@ -140,6 +140,8 @@
 
       <PingLatencyChip class="me-4" />
 
+      <EnvironmentChip class="me-4" />
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -415,6 +417,7 @@ import LocalTimeZoneChip from '../components/LocalTimeZoneChip.vue'
 import SessionUptimeChip from '../components/SessionUptimeChip.vue'
 import NotificationCounterChip from '../components/NotificationCounterChip.vue'
 import PingLatencyChip from '../components/PingLatencyChip.vue'
+import EnvironmentChip from '../components/EnvironmentChip.vue'
 import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import PageTitleMenu from '../components/PageTitleMenu.vue'
 import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
