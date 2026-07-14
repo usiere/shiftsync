@@ -285,6 +285,8 @@
 
       <ColorPickerButton />
 
+      <NamedColorButton />
+
       <DiceRollButton />
 
       <SidebarWidthMenu />
@@ -482,6 +484,7 @@ import PercentCalcButton from '../components/PercentCalcButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
+import NamedColorButton from '../components/NamedColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
