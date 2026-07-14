@@ -255,6 +255,8 @@
 
       <BorderRadiusGenButton />
 
+      <CssFilterGenButton />
+
       <CsvViewerButton />
 
       <TextToSpeechButton />
@@ -465,6 +467,7 @@ import TextReverserButton from '../components/TextReverserButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
 import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
 import BorderRadiusGenButton from '../components/BorderRadiusGenButton.vue'
+import CssFilterGenButton from '../components/CssFilterGenButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
 import TextToSpeechButton from '../components/TextToSpeechButton.vue'
 import SpeechToTextButton from '../components/SpeechToTextButton.vue'
