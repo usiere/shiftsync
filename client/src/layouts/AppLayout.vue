@@ -144,6 +144,8 @@
 
       <LunchCountdownChip class="me-4" />
 
+      <EodCountdownChip class="me-4" />
+
       <v-chip
         v-if="authStore.userName"
         class="me-4"
@@ -421,6 +423,7 @@ import NotificationCounterChip from '../components/NotificationCounterChip.vue'
 import PingLatencyChip from '../components/PingLatencyChip.vue'
 import EnvironmentChip from '../components/EnvironmentChip.vue'
 import LunchCountdownChip from '../components/LunchCountdownChip.vue'
+import EodCountdownChip from '../components/EodCountdownChip.vue'
 import JumpToTodayButton from '../components/JumpToTodayButton.vue'
 import PageTitleMenu from '../components/PageTitleMenu.vue'
 import DoNotDisturbToggle from '../components/DoNotDisturbToggle.vue'
