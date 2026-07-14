@@ -217,6 +217,8 @@
 
       <DedupeLinesButton />
 
+      <UnicodeLookupButton />
+
       <JsonFormatterButton />
 
       <UrlEncoderButton />
@@ -454,6 +456,7 @@ import TextStatsButton from '../components/TextStatsButton.vue'
 import WordFrequencyButton from '../components/WordFrequencyButton.vue'
 import SortLinesButton from '../components/SortLinesButton.vue'
 import DedupeLinesButton from '../components/DedupeLinesButton.vue'
+import UnicodeLookupButton from '../components/UnicodeLookupButton.vue'
 import JsonFormatterButton from '../components/JsonFormatterButton.vue'
 import UrlEncoderButton from '../components/UrlEncoderButton.vue'
 import JwtDecoderButton from '../components/JwtDecoderButton.vue'
