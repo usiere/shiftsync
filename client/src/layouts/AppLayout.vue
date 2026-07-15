@@ -265,6 +265,8 @@
 
       <TextReverserButton />
 
+      <AnagramButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -500,6 +502,7 @@ import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import NumberWordsButton from '../components/NumberWordsButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
+import AnagramButton from '../components/AnagramButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
 import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
 import BorderRadiusGenButton from '../components/BorderRadiusGenButton.vue'
