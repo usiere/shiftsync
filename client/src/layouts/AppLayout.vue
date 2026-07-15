@@ -297,6 +297,8 @@
 
       <DiceRollButton />
 
+      <CoinFlipButton />
+
       <SidebarWidthMenu />
 
       <HighContrastToggle />
@@ -500,6 +502,7 @@ import PasswordGenButton from '../components/PasswordGenButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
 import NamedColorButton from '../components/NamedColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
+import CoinFlipButton from '../components/CoinFlipButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
