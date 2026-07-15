@@ -112,6 +112,8 @@
 
       <YearEndCountdownChip class="me-4" />
 
+      <NewYearCountdownChip class="me-4" />
+
       <LocalTimeZoneChip class="me-4" />
 
       <WorldClockChip class="me-4" />
@@ -427,6 +429,7 @@ import DayOfYearChip from '../components/DayOfYearChip.vue'
 import WeekParityChip from '../components/WeekParityChip.vue'
 import NextMondayChip from '../components/NextMondayChip.vue'
 import YearEndCountdownChip from '../components/YearEndCountdownChip.vue'
+import NewYearCountdownChip from '../components/NewYearCountdownChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
 import FocusModeToggle from '../components/FocusModeToggle.vue'
 import HistoryNavButtons from '../components/HistoryNavButtons.vue'
