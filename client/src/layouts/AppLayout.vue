@@ -263,6 +263,8 @@
 
       <NumberWordsButton />
 
+      <NumberFormatButton />
+
       <TextReverserButton />
 
       <AnagramButton />
@@ -501,6 +503,7 @@ import HttpStatusButton from '../components/HttpStatusButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import NumberWordsButton from '../components/NumberWordsButton.vue'
+import NumberFormatButton from '../components/NumberFormatButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
 import AnagramButton from '../components/AnagramButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
