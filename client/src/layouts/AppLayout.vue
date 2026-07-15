@@ -259,6 +259,8 @@
 
       <RomanNumeralsButton />
 
+      <NumberWordsButton />
+
       <TextReverserButton />
 
       <GradientGenButton />
@@ -489,6 +491,7 @@ import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import HttpStatusButton from '../components/HttpStatusButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
+import NumberWordsButton from '../components/NumberWordsButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
 import GradientGenButton from '../components/GradientGenButton.vue'
 import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
