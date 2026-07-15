@@ -301,6 +301,8 @@
 
       <PercentCalcButton />
 
+      <DistanceCalcButton />
+
       <EmojiPickerButton />
 
       <PasswordGenButton />
@@ -522,6 +524,7 @@ import DateDiffButton from '../components/DateDiffButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
+import DistanceCalcButton from '../components/DistanceCalcButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import PasswordStrengthButton from '../components/PasswordStrengthButton.vue'
