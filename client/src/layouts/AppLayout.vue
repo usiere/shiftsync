@@ -291,6 +291,8 @@
 
       <PasswordGenButton />
 
+      <PasswordStrengthButton />
+
       <ColorPickerButton />
 
       <NamedColorButton />
@@ -499,6 +501,7 @@ import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
+import PasswordStrengthButton from '../components/PasswordStrengthButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
 import NamedColorButton from '../components/NamedColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
