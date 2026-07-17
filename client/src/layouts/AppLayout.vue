@@ -203,6 +203,8 @@
 
       <StopwatchButton />
 
+      <BpmTapperButton />
+
       <StickyNoteButton />
 
       <ConfettiButton />
@@ -483,6 +485,7 @@ import WhiteNoiseButton from '../components/WhiteNoiseButton.vue'
 import BookmarksButton from '../components/BookmarksButton.vue'
 import CountdownTimerButton from '../components/CountdownTimerButton.vue'
 import StopwatchButton from '../components/StopwatchButton.vue'
+import BpmTapperButton from '../components/BpmTapperButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
