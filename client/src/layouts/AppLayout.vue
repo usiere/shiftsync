@@ -285,6 +285,8 @@
 
       <CssFilterGenButton />
 
+      <CssAnimationButton />
+
       <CsvViewerButton />
 
       <CsvToJsonButton />
@@ -530,6 +532,7 @@ import GradientGenButton from '../components/GradientGenButton.vue'
 import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
 import BorderRadiusGenButton from '../components/BorderRadiusGenButton.vue'
 import CssFilterGenButton from '../components/CssFilterGenButton.vue'
+import CssAnimationButton from '../components/CssAnimationButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
 import CsvToJsonButton from '../components/CsvToJsonButton.vue'
 import JsonToCsvButton from '../components/JsonToCsvButton.vue'
