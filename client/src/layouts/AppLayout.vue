@@ -247,6 +247,8 @@
 
       <MarkdownTableButton />
 
+      <BionicReaderButton />
+
       <HashButton />
 
       <RegexTesterButton />
@@ -513,6 +515,7 @@ import UuidButton from '../components/UuidButton.vue'
 import TextDiffButton from '../components/TextDiffButton.vue'
 import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import MarkdownTableButton from '../components/MarkdownTableButton.vue'
+import BionicReaderButton from '../components/BionicReaderButton.vue'
 import HashButton from '../components/HashButton.vue'
 import RegexTesterButton from '../components/RegexTesterButton.vue'
 import SlugifyButton from '../components/SlugifyButton.vue'
