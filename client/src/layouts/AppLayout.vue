@@ -287,6 +287,8 @@
 
       <CsvViewerButton />
 
+      <CsvToJsonButton />
+
       <TextToSpeechButton />
 
       <SpeechToTextButton />
@@ -527,6 +529,7 @@ import BoxShadowGenButton from '../components/BoxShadowGenButton.vue'
 import BorderRadiusGenButton from '../components/BorderRadiusGenButton.vue'
 import CssFilterGenButton from '../components/CssFilterGenButton.vue'
 import CsvViewerButton from '../components/CsvViewerButton.vue'
+import CsvToJsonButton from '../components/CsvToJsonButton.vue'
 import TextToSpeechButton from '../components/TextToSpeechButton.vue'
 import SpeechToTextButton from '../components/SpeechToTextButton.vue'
 import LocalStorageViewerButton from '../components/LocalStorageViewerButton.vue'
