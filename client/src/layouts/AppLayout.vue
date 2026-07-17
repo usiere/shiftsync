@@ -265,6 +265,8 @@
 
       <TimestampConverterButton />
 
+      <TimezoneDiffButton />
+
       <HtmlEntitiesButton />
 
       <HttpStatusButton />
@@ -530,6 +532,7 @@ import CaseConverterButton from '../components/CaseConverterButton.vue'
 import LoremIpsumButton from '../components/LoremIpsumButton.vue'
 import NumberBaseButton from '../components/NumberBaseButton.vue'
 import TimestampConverterButton from '../components/TimestampConverterButton.vue'
+import TimezoneDiffButton from '../components/TimezoneDiffButton.vue'
 import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import HttpStatusButton from '../components/HttpStatusButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
