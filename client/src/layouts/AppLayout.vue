@@ -333,6 +333,8 @@
 
       <NamedColorButton />
 
+      <RandomColorButton />
+
       <DiceRollButton />
 
       <CoinFlipButton />
@@ -560,6 +562,7 @@ import PasswordGenButton from '../components/PasswordGenButton.vue'
 import PasswordStrengthButton from '../components/PasswordStrengthButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
 import NamedColorButton from '../components/NamedColorButton.vue'
+import RandomColorButton from '../components/RandomColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
 import CoinFlipButton from '../components/CoinFlipButton.vue'
 import RandomPickerButton from '../components/RandomPickerButton.vue'
