@@ -215,6 +215,8 @@
 
       <CaesarCipherButton />
 
+      <MorseCodeButton />
+
       <TextStatsButton />
 
       <WordFrequencyButton />
@@ -483,6 +485,7 @@ import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnitConverterButton from '../components/UnitConverterButton.vue'
 import Base64Button from '../components/Base64Button.vue'
 import CaesarCipherButton from '../components/CaesarCipherButton.vue'
+import MorseCodeButton from '../components/MorseCodeButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
 import WordFrequencyButton from '../components/WordFrequencyButton.vue'
 import SortLinesButton from '../components/SortLinesButton.vue'
