@@ -205,6 +205,8 @@
 
       <AlarmButton />
 
+      <CustomCountdownButton />
+
       <StopwatchButton />
 
       <BpmTapperButton />
@@ -508,6 +510,7 @@ import WhiteNoiseButton from '../components/WhiteNoiseButton.vue'
 import BookmarksButton from '../components/BookmarksButton.vue'
 import CountdownTimerButton from '../components/CountdownTimerButton.vue'
 import AlarmButton from '../components/AlarmButton.vue'
+import CustomCountdownButton from '../components/CustomCountdownButton.vue'
 import StopwatchButton from '../components/StopwatchButton.vue'
 import BpmTapperButton from '../components/BpmTapperButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
