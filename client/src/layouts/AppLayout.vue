@@ -311,6 +311,8 @@
 
       <DayRatingButton />
 
+      <HabitTrackerButton />
+
       <CronPreviewButton />
 
       <AgeCalculatorButton />
@@ -557,6 +559,7 @@ import SpeechToTextButton from '../components/SpeechToTextButton.vue'
 import LocalStorageViewerButton from '../components/LocalStorageViewerButton.vue'
 import QuickTodoButton from '../components/QuickTodoButton.vue'
 import DayRatingButton from '../components/DayRatingButton.vue'
+import HabitTrackerButton from '../components/HabitTrackerButton.vue'
 import CronPreviewButton from '../components/CronPreviewButton.vue'
 import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
