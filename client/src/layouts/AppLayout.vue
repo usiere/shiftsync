@@ -213,6 +213,8 @@
 
       <MetronomeButton />
 
+      <VibrateButton />
+
       <StickyNoteButton />
 
       <ConfettiButton />
@@ -524,6 +526,7 @@ import CustomCountdownButton from '../components/CustomCountdownButton.vue'
 import StopwatchButton from '../components/StopwatchButton.vue'
 import BpmTapperButton from '../components/BpmTapperButton.vue'
 import MetronomeButton from '../components/MetronomeButton.vue'
+import VibrateButton from '../components/VibrateButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
