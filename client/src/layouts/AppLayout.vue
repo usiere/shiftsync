@@ -225,6 +225,8 @@
 
       <MorseCodeButton />
 
+      <LeetspeakButton />
+
       <NatoPhoneticButton />
 
       <BinaryTextButton />
@@ -522,6 +524,7 @@ import UnitConverterButton from '../components/UnitConverterButton.vue'
 import Base64Button from '../components/Base64Button.vue'
 import CaesarCipherButton from '../components/CaesarCipherButton.vue'
 import MorseCodeButton from '../components/MorseCodeButton.vue'
+import LeetspeakButton from '../components/LeetspeakButton.vue'
 import NatoPhoneticButton from '../components/NatoPhoneticButton.vue'
 import BinaryTextButton from '../components/BinaryTextButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
