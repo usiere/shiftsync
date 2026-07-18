@@ -229,6 +229,8 @@
 
       <FlipTextButton />
 
+      <BigTextButton />
+
       <NatoPhoneticButton />
 
       <BinaryTextButton />
@@ -528,6 +530,7 @@ import CaesarCipherButton from '../components/CaesarCipherButton.vue'
 import MorseCodeButton from '../components/MorseCodeButton.vue'
 import LeetspeakButton from '../components/LeetspeakButton.vue'
 import FlipTextButton from '../components/FlipTextButton.vue'
+import BigTextButton from '../components/BigTextButton.vue'
 import NatoPhoneticButton from '../components/NatoPhoneticButton.vue'
 import BinaryTextButton from '../components/BinaryTextButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
