@@ -381,6 +381,8 @@
 
       <GridOverlayToggle />
 
+      <MatrixRainToggle />
+
       <GrayscaleModeToggle />
 
       <InvertColorsToggle />
@@ -610,6 +612,7 @@ import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GridOverlayToggle from '../components/GridOverlayToggle.vue'
+import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
 import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import LineHeightMenu from '../components/LineHeightMenu.vue'
