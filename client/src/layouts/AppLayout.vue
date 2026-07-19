@@ -219,6 +219,8 @@
 
       <VibrateButton />
 
+      <VoiceRecorderButton />
+
       <StickyNoteButton />
 
       <ConfettiButton />
@@ -535,6 +537,7 @@ import StopwatchButton from '../components/StopwatchButton.vue'
 import BpmTapperButton from '../components/BpmTapperButton.vue'
 import MetronomeButton from '../components/MetronomeButton.vue'
 import VibrateButton from '../components/VibrateButton.vue'
+import VoiceRecorderButton from '../components/VoiceRecorderButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
