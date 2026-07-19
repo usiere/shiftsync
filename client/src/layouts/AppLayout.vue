@@ -181,6 +181,8 @@
 
       <CopyDebugInfoButton />
 
+      <SpeedTestButton />
+
       <CopyUserEmailButton />
 
       <InstallAppButton />
@@ -515,6 +517,7 @@ import HistoryNavButtons from '../components/HistoryNavButtons.vue'
 import ReducedMotionMenu from '../components/ReducedMotionMenu.vue'
 import CopyLinkButton from '../components/CopyLinkButton.vue'
 import CopyDebugInfoButton from '../components/CopyDebugInfoButton.vue'
+import SpeedTestButton from '../components/SpeedTestButton.vue'
 import CopyUserEmailButton from '../components/CopyUserEmailButton.vue'
 import InstallAppButton from '../components/InstallAppButton.vue'
 import CopyTimeButton from '../components/CopyTimeButton.vue'
