@@ -223,6 +223,8 @@
 
       <StickyNoteButton />
 
+      <DoodlePadButton />
+
       <ConfettiButton />
 
       <QuickCalcButton />
@@ -539,6 +541,7 @@ import MetronomeButton from '../components/MetronomeButton.vue'
 import VibrateButton from '../components/VibrateButton.vue'
 import VoiceRecorderButton from '../components/VoiceRecorderButton.vue'
 import StickyNoteButton from '../components/StickyNoteButton.vue'
+import DoodlePadButton from '../components/DoodlePadButton.vue'
 import ConfettiButton from '../components/ConfettiButton.vue'
 import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnitConverterButton from '../components/UnitConverterButton.vue'
