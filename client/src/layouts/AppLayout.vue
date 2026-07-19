@@ -401,6 +401,8 @@
 
       <GridOverlayToggle />
 
+      <RulerOverlayToggle />
+
       <MatrixRainToggle />
 
       <PrivacyBlurToggle />
@@ -644,6 +646,7 @@ import CursorSizeMenu from '../components/CursorSizeMenu.vue'
 import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GridOverlayToggle from '../components/GridOverlayToggle.vue'
+import RulerOverlayToggle from '../components/RulerOverlayToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
