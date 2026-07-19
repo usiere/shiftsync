@@ -265,6 +265,8 @@
 
       <UuidButton />
 
+      <FakeNameButton />
+
       <TextDiffButton />
 
       <MarkdownPreviewButton />
@@ -564,6 +566,7 @@ import JsonFormatterButton from '../components/JsonFormatterButton.vue'
 import UrlEncoderButton from '../components/UrlEncoderButton.vue'
 import JwtDecoderButton from '../components/JwtDecoderButton.vue'
 import UuidButton from '../components/UuidButton.vue'
+import FakeNameButton from '../components/FakeNameButton.vue'
 import TextDiffButton from '../components/TextDiffButton.vue'
 import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import MarkdownTableButton from '../components/MarkdownTableButton.vue'
