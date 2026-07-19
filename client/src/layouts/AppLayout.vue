@@ -383,6 +383,8 @@
 
       <YesNoButton />
 
+      <MemoryGameButton />
+
       <RandomPickerButton />
 
       <SidebarWidthMenu />
@@ -635,6 +637,7 @@ import RandomColorButton from '../components/RandomColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
 import CoinFlipButton from '../components/CoinFlipButton.vue'
 import YesNoButton from '../components/YesNoButton.vue'
+import MemoryGameButton from '../components/MemoryGameButton.vue'
 import RandomPickerButton from '../components/RandomPickerButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
