@@ -694,6 +694,13 @@ body.sepia-mode.grayscale-mode {
   filter: grayscale(1) sepia(0.35);
 }
 
+/* Privacy blur — obscure the main content and sidebar for shoulder-surfing safety */
+body.privacy-blur .v-main,
+body.privacy-blur .sidebar {
+  filter: blur(var(--privacy-blur, 6px));
+  transition: filter 200ms ease;
+}
+
 /* Invert colors — flips brightness so bright backgrounds go dark, images auto-un-invert */
 body.invert-colors {
   filter: invert(1) hue-rotate(180deg);

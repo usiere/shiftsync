@@ -399,6 +399,8 @@
 
       <MatrixRainToggle />
 
+      <PrivacyBlurToggle />
+
       <GrayscaleModeToggle />
 
       <InvertColorsToggle />
@@ -637,6 +639,7 @@ import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GridOverlayToggle from '../components/GridOverlayToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
+import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
 import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import LineHeightMenu from '../components/LineHeightMenu.vue'
