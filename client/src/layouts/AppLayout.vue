@@ -215,6 +215,8 @@
 
       <MeetingCostButton />
 
+      <ChessClockButton />
+
       <CustomCountdownButton />
 
       <StopwatchButton />
@@ -557,6 +559,7 @@ import BookmarksButton from '../components/BookmarksButton.vue'
 import CountdownTimerButton from '../components/CountdownTimerButton.vue'
 import AlarmButton from '../components/AlarmButton.vue'
 import MeetingCostButton from '../components/MeetingCostButton.vue'
+import ChessClockButton from '../components/ChessClockButton.vue'
 import CustomCountdownButton from '../components/CustomCountdownButton.vue'
 import StopwatchButton from '../components/StopwatchButton.vue'
 import BpmTapperButton from '../components/BpmTapperButton.vue'
