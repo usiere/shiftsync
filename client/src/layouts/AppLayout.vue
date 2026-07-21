@@ -417,6 +417,8 @@
 
       <PrivacyBlurToggle />
 
+      <SnowfallToggle />
+
       <GrayscaleModeToggle />
 
       <InvertColorsToggle />
@@ -664,6 +666,7 @@ import GridOverlayToggle from '../components/GridOverlayToggle.vue'
 import RulerOverlayToggle from '../components/RulerOverlayToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
+import SnowfallToggle from '../components/SnowfallToggle.vue'
 import GrayscaleModeToggle from '../components/GrayscaleModeToggle.vue'
 import InvertColorsToggle from '../components/InvertColorsToggle.vue'
 import LineHeightMenu from '../components/LineHeightMenu.vue'
