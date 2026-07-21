@@ -313,6 +313,8 @@
 
       <VimCheatButton />
 
+      <GitCheatButton />
+
       <UserAgentButton />
 
       <RomanNumeralsButton />
@@ -618,6 +620,7 @@ import TimezoneDiffButton from '../components/TimezoneDiffButton.vue'
 import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import HttpStatusButton from '../components/HttpStatusButton.vue'
 import VimCheatButton from '../components/VimCheatButton.vue'
+import GitCheatButton from '../components/GitCheatButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import NumberWordsButton from '../components/NumberWordsButton.vue'
