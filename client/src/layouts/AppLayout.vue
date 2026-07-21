@@ -307,6 +307,8 @@
 
       <TimezoneDiffButton />
 
+      <TimeFormatButton />
+
       <HtmlEntitiesButton />
 
       <HttpStatusButton />
@@ -617,6 +619,7 @@ import NumberBaseButton from '../components/NumberBaseButton.vue'
 import ExcelColumnButton from '../components/ExcelColumnButton.vue'
 import TimestampConverterButton from '../components/TimestampConverterButton.vue'
 import TimezoneDiffButton from '../components/TimezoneDiffButton.vue'
+import TimeFormatButton from '../components/TimeFormatButton.vue'
 import HtmlEntitiesButton from '../components/HtmlEntitiesButton.vue'
 import HttpStatusButton from '../components/HttpStatusButton.vue'
 import VimCheatButton from '../components/VimCheatButton.vue'
