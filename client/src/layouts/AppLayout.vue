@@ -245,6 +245,8 @@
 
       <CaesarCipherButton />
 
+      <AesCipherButton />
+
       <MorseCodeButton />
 
       <LeetspeakButton />
@@ -588,6 +590,7 @@ import UnitConverterButton from '../components/UnitConverterButton.vue'
 import CurrencyConvertButton from '../components/CurrencyConvertButton.vue'
 import Base64Button from '../components/Base64Button.vue'
 import CaesarCipherButton from '../components/CaesarCipherButton.vue'
+import AesCipherButton from '../components/AesCipherButton.vue'
 import MorseCodeButton from '../components/MorseCodeButton.vue'
 import LeetspeakButton from '../components/LeetspeakButton.vue'
 import FlipTextButton from '../components/FlipTextButton.vue'
