@@ -407,6 +407,8 @@
 
       <RpsButton />
 
+      <TicTacToeButton />
+
       <RandomPickerButton />
 
       <SidebarWidthMenu />
@@ -679,6 +681,7 @@ import YesNoButton from '../components/YesNoButton.vue'
 import MemoryGameButton from '../components/MemoryGameButton.vue'
 import ReactionGameButton from '../components/ReactionGameButton.vue'
 import RpsButton from '../components/RpsButton.vue'
+import TicTacToeButton from '../components/TicTacToeButton.vue'
 import RandomPickerButton from '../components/RandomPickerButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
