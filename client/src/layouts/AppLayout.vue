@@ -373,6 +373,8 @@
 
       <DistanceCalcButton />
 
+      <TrigCalcButton />
+
       <AspectRatioButton />
 
       <DmsConverterButton />
@@ -654,6 +656,7 @@ import TipCalcButton from '../components/TipCalcButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
 import DistanceCalcButton from '../components/DistanceCalcButton.vue'
+import TrigCalcButton from '../components/TrigCalcButton.vue'
 import AspectRatioButton from '../components/AspectRatioButton.vue'
 import DmsConverterButton from '../components/DmsConverterButton.vue'
 import MapsUrlButton from '../components/MapsUrlButton.vue'
