@@ -449,6 +449,8 @@
 
       <RtlModeToggle />
 
+      <ZebraRowsToggle />
+
       <FocusModeToggle />
 
       <FullscreenToggle />
@@ -691,6 +693,7 @@ import LetterSpacingToggle from '../components/LetterSpacingToggle.vue'
 import UppercaseModeToggle from '../components/UppercaseModeToggle.vue'
 import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import RtlModeToggle from '../components/RtlModeToggle.vue'
+import ZebraRowsToggle from '../components/ZebraRowsToggle.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'

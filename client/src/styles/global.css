@@ -701,6 +701,13 @@ body.privacy-blur .sidebar {
   transition: filter 200ms ease;
 }
 
+/* Zebra rows — apply alternating row backgrounds to all tables and v-data-tables */
+body.zebra-rows table tr:nth-child(even),
+body.zebra-rows .v-table tr:nth-child(even),
+body.zebra-rows .v-data-table__tr:nth-child(even) {
+  background: rgba(148, 163, 184, 0.08) !important;
+}
+
 /* Invert colors — flips brightness so bright backgrounds go dark, images auto-un-invert */
 body.invert-colors {
   filter: invert(1) hue-rotate(180deg);
