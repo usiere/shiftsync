@@ -261,6 +261,8 @@
 
       <BigTextButton />
 
+      <AsciiBannerButton />
+
       <NatoPhoneticButton />
 
       <BinaryTextButton />
@@ -616,6 +618,7 @@ import FlipTextButton from '../components/FlipTextButton.vue'
 import ZalgoTextButton from '../components/ZalgoTextButton.vue'
 import TextTruncateButton from '../components/TextTruncateButton.vue'
 import BigTextButton from '../components/BigTextButton.vue'
+import AsciiBannerButton from '../components/AsciiBannerButton.vue'
 import NatoPhoneticButton from '../components/NatoPhoneticButton.vue'
 import BinaryTextButton from '../components/BinaryTextButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
