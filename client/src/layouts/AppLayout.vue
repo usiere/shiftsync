@@ -257,6 +257,8 @@
 
       <ZalgoTextButton />
 
+      <TextTruncateButton />
+
       <BigTextButton />
 
       <NatoPhoneticButton />
@@ -612,6 +614,7 @@ import MorseCodeButton from '../components/MorseCodeButton.vue'
 import LeetspeakButton from '../components/LeetspeakButton.vue'
 import FlipTextButton from '../components/FlipTextButton.vue'
 import ZalgoTextButton from '../components/ZalgoTextButton.vue'
+import TextTruncateButton from '../components/TextTruncateButton.vue'
 import BigTextButton from '../components/BigTextButton.vue'
 import NatoPhoneticButton from '../components/NatoPhoneticButton.vue'
 import BinaryTextButton from '../components/BinaryTextButton.vue'
