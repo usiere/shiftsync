@@ -419,6 +419,8 @@
 
       <WordScrambleButton />
 
+      <WhackAMoleButton />
+
       <RandomPickerButton />
 
       <SidebarWidthMenu />
@@ -697,6 +699,7 @@ import ReactionGameButton from '../components/ReactionGameButton.vue'
 import RpsButton from '../components/RpsButton.vue'
 import TicTacToeButton from '../components/TicTacToeButton.vue'
 import WordScrambleButton from '../components/WordScrambleButton.vue'
+import WhackAMoleButton from '../components/WhackAMoleButton.vue'
 import RandomPickerButton from '../components/RandomPickerButton.vue'
 import UnderlineLinksToggle from '../components/UnderlineLinksToggle.vue'
 import CursorSizeMenu from '../components/CursorSizeMenu.vue'
