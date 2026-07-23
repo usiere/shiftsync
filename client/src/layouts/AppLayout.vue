@@ -459,6 +459,8 @@
 
       <RulerOverlayToggle />
 
+      <CrosshairOverlayToggle />
+
       <MatrixRainToggle />
 
       <PrivacyBlurToggle />
@@ -735,6 +737,7 @@ import SepiaModeToggle from '../components/SepiaModeToggle.vue'
 import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GridOverlayToggle from '../components/GridOverlayToggle.vue'
 import RulerOverlayToggle from '../components/RulerOverlayToggle.vue'
+import CrosshairOverlayToggle from '../components/CrosshairOverlayToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
 import SnowfallToggle from '../components/SnowfallToggle.vue'
