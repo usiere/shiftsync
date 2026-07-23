@@ -732,6 +732,23 @@ body.compact-scroll *::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.75);
 }
 
+/* Force focus outlines — always visible for accessibility / keyboard nav */
+body.force-focus-outline *:focus {
+  outline: 2px solid #2563EB !important;
+  outline-offset: 2px !important;
+}
+
+body.force-focus-outline button:focus,
+body.force-focus-outline a:focus,
+body.force-focus-outline input:focus,
+body.force-focus-outline textarea:focus,
+body.force-focus-outline select:focus,
+body.force-focus-outline [tabindex]:focus {
+  outline: 2px solid #2563EB !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
+}
+
 /* Invert colors — flips brightness so bright backgrounds go dark, images auto-un-invert */
 body.invert-colors {
   filter: invert(1) hue-rotate(180deg);

@@ -485,6 +485,8 @@
 
       <CompactScrollToggle />
 
+      <FocusOutlineToggle />
+
       <FocusModeToggle />
 
       <FullscreenToggle />
@@ -739,6 +741,7 @@ import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import RtlModeToggle from '../components/RtlModeToggle.vue'
 import ZebraRowsToggle from '../components/ZebraRowsToggle.vue'
 import CompactScrollToggle from '../components/CompactScrollToggle.vue'
+import FocusOutlineToggle from '../components/FocusOutlineToggle.vue'
 import TemperatureConvertButton from '../components/TemperatureConvertButton.vue'
 import PalindromeCheckButton from '../components/PalindromeCheckButton.vue'
 import PrimeCheckButton from '../components/PrimeCheckButton.vue'
