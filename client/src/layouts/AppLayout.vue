@@ -383,6 +383,8 @@
 
       <TrigCalcButton />
 
+      <TemperatureConvertButton />
+
       <AspectRatioButton />
 
       <DmsConverterButton />
@@ -721,6 +723,7 @@ import FontFamilyMenu from '../components/FontFamilyMenu.vue'
 import RtlModeToggle from '../components/RtlModeToggle.vue'
 import ZebraRowsToggle from '../components/ZebraRowsToggle.vue'
 import CompactScrollToggle from '../components/CompactScrollToggle.vue'
+import TemperatureConvertButton from '../components/TemperatureConvertButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
