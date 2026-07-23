@@ -106,6 +106,8 @@
 
       <DayOfYearChip class="me-4" />
 
+      <JulianDateChip class="me-4" />
+
       <WeekParityChip class="me-4" />
 
       <NextMondayChip class="me-4" />
@@ -570,6 +572,7 @@ import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
 import DayOfYearChip from '../components/DayOfYearChip.vue'
+import JulianDateChip from '../components/JulianDateChip.vue'
 import WeekParityChip from '../components/WeekParityChip.vue'
 import NextMondayChip from '../components/NextMondayChip.vue'
 import YearEndCountdownChip from '../components/YearEndCountdownChip.vue'
