@@ -423,6 +423,8 @@
 
       <YesNoButton />
 
+      <Magic8BallButton />
+
       <RandomNumberButton />
 
       <MemoryGameButton />
@@ -715,6 +717,7 @@ import RandomColorButton from '../components/RandomColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
 import CoinFlipButton from '../components/CoinFlipButton.vue'
 import YesNoButton from '../components/YesNoButton.vue'
+import Magic8BallButton from '../components/Magic8BallButton.vue'
 import RandomNumberButton from '../components/RandomNumberButton.vue'
 import MemoryGameButton from '../components/MemoryGameButton.vue'
 import ReactionGameButton from '../components/ReactionGameButton.vue'
