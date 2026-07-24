@@ -481,6 +481,8 @@
 
       <CrosshairOverlayToggle />
 
+      <CrtScanlineToggle />
+
       <MatrixRainToggle />
 
       <PrivacyBlurToggle />
@@ -766,6 +768,7 @@ import ScreenDimmer from '../components/ScreenDimmer.vue'
 import GridOverlayToggle from '../components/GridOverlayToggle.vue'
 import RulerOverlayToggle from '../components/RulerOverlayToggle.vue'
 import CrosshairOverlayToggle from '../components/CrosshairOverlayToggle.vue'
+import CrtScanlineToggle from '../components/CrtScanlineToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
 import SnowfallToggle from '../components/SnowfallToggle.vue'

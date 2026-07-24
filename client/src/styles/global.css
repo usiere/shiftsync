@@ -749,6 +749,23 @@ body.force-focus-outline [tabindex]:focus {
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
 }
 
+/* CRT scanlines — retro monitor look via full-viewport overlay */
+body.crt-scanline::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0px,
+    rgba(0, 0, 0, 0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 9998;
+  mix-blend-mode: multiply;
+}
+
 /* Invert colors — flips brightness so bright backgrounds go dark, images auto-un-invert */
 body.invert-colors {
   filter: invert(1) hue-rotate(180deg);
