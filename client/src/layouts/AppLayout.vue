@@ -395,6 +395,8 @@
 
       <LoanCalcButton />
 
+      <CompoundInterestButton />
+
       <BmiCalcButton />
 
       <PercentCalcButton />
@@ -712,6 +714,7 @@ import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
 import LoanCalcButton from '../components/LoanCalcButton.vue'
+import CompoundInterestButton from '../components/CompoundInterestButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
 import DistanceCalcButton from '../components/DistanceCalcButton.vue'
