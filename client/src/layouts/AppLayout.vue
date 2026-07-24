@@ -273,6 +273,8 @@
 
       <TextStatsButton />
 
+      <ReadingTimeButton />
+
       <WordFrequencyButton />
 
       <SortLinesButton />
@@ -660,6 +662,7 @@ import AsciiBannerButton from '../components/AsciiBannerButton.vue'
 import NatoPhoneticButton from '../components/NatoPhoneticButton.vue'
 import BinaryTextButton from '../components/BinaryTextButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
+import ReadingTimeButton from '../components/ReadingTimeButton.vue'
 import WordFrequencyButton from '../components/WordFrequencyButton.vue'
 import SortLinesButton from '../components/SortLinesButton.vue'
 import DedupeLinesButton from '../components/DedupeLinesButton.vue'
