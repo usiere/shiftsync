@@ -353,6 +353,8 @@
 
       <GcdLcmButton />
 
+      <QuadraticSolverButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -757,6 +759,7 @@ import PrimeCheckButton from '../components/PrimeCheckButton.vue'
 import FactorialButton from '../components/FactorialButton.vue'
 import FibonacciButton from '../components/FibonacciButton.vue'
 import GcdLcmButton from '../components/GcdLcmButton.vue'
+import QuadraticSolverButton from '../components/QuadraticSolverButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
