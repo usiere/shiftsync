@@ -283,6 +283,8 @@
 
       <DedupeLinesButton />
 
+      <LineEndingButton />
+
       <UnicodeLookupButton />
 
       <JsonFormatterButton />
@@ -669,6 +671,7 @@ import VowelCounterButton from '../components/VowelCounterButton.vue'
 import WordFrequencyButton from '../components/WordFrequencyButton.vue'
 import SortLinesButton from '../components/SortLinesButton.vue'
 import DedupeLinesButton from '../components/DedupeLinesButton.vue'
+import LineEndingButton from '../components/LineEndingButton.vue'
 import UnicodeLookupButton from '../components/UnicodeLookupButton.vue'
 import JsonFormatterButton from '../components/JsonFormatterButton.vue'
 import UrlEncoderButton from '../components/UrlEncoderButton.vue'
