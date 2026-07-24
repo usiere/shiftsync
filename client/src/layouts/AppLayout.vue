@@ -425,6 +425,8 @@
 
       <PasswordStrengthButton />
 
+      <DicewareButton />
+
       <ColorPickerButton />
 
       <NamedColorButton />
@@ -734,6 +736,7 @@ import MapsUrlButton from '../components/MapsUrlButton.vue'
 import EmojiPickerButton from '../components/EmojiPickerButton.vue'
 import PasswordGenButton from '../components/PasswordGenButton.vue'
 import PasswordStrengthButton from '../components/PasswordStrengthButton.vue'
+import DicewareButton from '../components/DicewareButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
 import NamedColorButton from '../components/NamedColorButton.vue'
 import RandomColorButton from '../components/RandomColorButton.vue'
