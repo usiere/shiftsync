@@ -156,6 +156,8 @@
 
       <MouseCoordChip class="me-4" />
 
+      <SelectionCountChip class="me-4" />
+
       <CompassChip class="me-4" />
 
       <EnvironmentChip class="me-4" />
@@ -628,6 +630,7 @@ import NotificationCounterChip from '../components/NotificationCounterChip.vue'
 import PingLatencyChip from '../components/PingLatencyChip.vue'
 import IdleTimeChip from '../components/IdleTimeChip.vue'
 import MouseCoordChip from '../components/MouseCoordChip.vue'
+import SelectionCountChip from '../components/SelectionCountChip.vue'
 import CompassChip from '../components/CompassChip.vue'
 import EnvironmentChip from '../components/EnvironmentChip.vue'
 import LunchCountdownChip from '../components/LunchCountdownChip.vue'
