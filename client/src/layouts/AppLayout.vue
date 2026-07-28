@@ -451,6 +451,8 @@
 
       <ZodiacLookupButton />
 
+      <ChineseZodiacButton />
+
       <RandomNumberButton />
 
       <MemoryGameButton />
@@ -761,6 +763,7 @@ import CoinFlipButton from '../components/CoinFlipButton.vue'
 import YesNoButton from '../components/YesNoButton.vue'
 import Magic8BallButton from '../components/Magic8BallButton.vue'
 import ZodiacLookupButton from '../components/ZodiacLookupButton.vue'
+import ChineseZodiacButton from '../components/ChineseZodiacButton.vue'
 import RandomNumberButton from '../components/RandomNumberButton.vue'
 import MemoryGameButton from '../components/MemoryGameButton.vue'
 import ReactionGameButton from '../components/ReactionGameButton.vue'
