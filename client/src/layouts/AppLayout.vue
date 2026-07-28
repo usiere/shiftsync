@@ -403,6 +403,8 @@
 
       <AgeCalculatorButton />
 
+      <PlanetAgeButton />
+
       <DateDiffButton />
 
       <TipCalcButton />
@@ -740,6 +742,7 @@ import DayRatingButton from '../components/DayRatingButton.vue'
 import HabitTrackerButton from '../components/HabitTrackerButton.vue'
 import CronPreviewButton from '../components/CronPreviewButton.vue'
 import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
+import PlanetAgeButton from '../components/PlanetAgeButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
 import LoanCalcButton from '../components/LoanCalcButton.vue'
