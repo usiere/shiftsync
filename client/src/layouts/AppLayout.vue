@@ -124,6 +124,8 @@
 
       <SeasonChip class="me-4" />
 
+      <HalfYearProgressChip class="me-4" />
+
       <LocalTimeZoneChip class="me-4" />
 
       <WorldClockChip class="me-4" />
@@ -635,6 +637,7 @@ import NewYearCountdownChip from '../components/NewYearCountdownChip.vue'
 import NextHourChip from '../components/NextHourChip.vue'
 import TimeOfDayChip from '../components/TimeOfDayChip.vue'
 import SeasonChip from '../components/SeasonChip.vue'
+import HalfYearProgressChip from '../components/HalfYearProgressChip.vue'
 import TextZoomMenu from '../components/TextZoomMenu.vue'
 import FocusModeToggle from '../components/FocusModeToggle.vue'
 import HistoryNavButtons from '../components/HistoryNavButtons.vue'
