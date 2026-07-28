@@ -285,6 +285,8 @@
 
       <VowelCounterButton />
 
+      <RepeatTextButton />
+
       <WordFrequencyButton />
 
       <SortLinesButton />
@@ -696,6 +698,7 @@ import BinaryTextButton from '../components/BinaryTextButton.vue'
 import TextStatsButton from '../components/TextStatsButton.vue'
 import ReadingTimeButton from '../components/ReadingTimeButton.vue'
 import VowelCounterButton from '../components/VowelCounterButton.vue'
+import RepeatTextButton from '../components/RepeatTextButton.vue'
 import WordFrequencyButton from '../components/WordFrequencyButton.vue'
 import SortLinesButton from '../components/SortLinesButton.vue'
 import DedupeLinesButton from '../components/DedupeLinesButton.vue'
