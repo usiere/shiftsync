@@ -409,6 +409,8 @@
 
       <DateDiffButton />
 
+      <LeapYearButton />
+
       <TipCalcButton />
 
       <LoanCalcButton />
@@ -747,6 +749,7 @@ import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
 import PlanetAgeButton from '../components/PlanetAgeButton.vue'
 import DaysAliveButton from '../components/DaysAliveButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
+import LeapYearButton from '../components/LeapYearButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
 import LoanCalcButton from '../components/LoanCalcButton.vue'
 import CompoundInterestButton from '../components/CompoundInterestButton.vue'
