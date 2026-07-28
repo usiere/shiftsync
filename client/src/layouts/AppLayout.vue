@@ -263,6 +263,8 @@
 
       <LeetspeakButton />
 
+      <PigLatinButton />
+
       <FlipTextButton />
 
       <ZalgoTextButton />
@@ -673,6 +675,7 @@ import AesCipherButton from '../components/AesCipherButton.vue'
 import VigenereButton from '../components/VigenereButton.vue'
 import MorseCodeButton from '../components/MorseCodeButton.vue'
 import LeetspeakButton from '../components/LeetspeakButton.vue'
+import PigLatinButton from '../components/PigLatinButton.vue'
 import FlipTextButton from '../components/FlipTextButton.vue'
 import ZalgoTextButton from '../components/ZalgoTextButton.vue'
 import TextTruncateButton from '../components/TextTruncateButton.vue'
