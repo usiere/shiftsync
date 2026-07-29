@@ -327,6 +327,8 @@
 
       <QuoteButton />
 
+      <RandomComplimentButton />
+
       <HashButton />
 
       <RegexTesterButton />
@@ -739,6 +741,7 @@ import MarkdownPreviewButton from '../components/MarkdownPreviewButton.vue'
 import MarkdownTableButton from '../components/MarkdownTableButton.vue'
 import BionicReaderButton from '../components/BionicReaderButton.vue'
 import QuoteButton from '../components/QuoteButton.vue'
+import RandomComplimentButton from '../components/RandomComplimentButton.vue'
 import HashButton from '../components/HashButton.vue'
 import RegexTesterButton from '../components/RegexTesterButton.vue'
 import RegexEscapeButton from '../components/RegexEscapeButton.vue'
