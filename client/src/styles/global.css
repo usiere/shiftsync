@@ -749,6 +749,22 @@ body.force-focus-outline [tabindex]:focus {
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
 }
 
+/* 8px baseline grid — horizontal rule every 8px for vertical rhythm audits */
+body.baseline-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9991;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(37, 99, 235, 0.18) 0,
+    rgba(37, 99, 235, 0.18) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
 /* CRT scanlines — retro monitor look via full-viewport overlay */
 body.crt-scanline::after {
   content: '';

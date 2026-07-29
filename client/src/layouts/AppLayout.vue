@@ -527,6 +527,8 @@
 
       <RuleOfThirdsToggle />
 
+      <BaselineGridToggle />
+
       <CrtScanlineToggle />
 
       <MatrixRainToggle />
@@ -836,6 +838,7 @@ import GridOverlayToggle from '../components/GridOverlayToggle.vue'
 import RulerOverlayToggle from '../components/RulerOverlayToggle.vue'
 import CrosshairOverlayToggle from '../components/CrosshairOverlayToggle.vue'
 import RuleOfThirdsToggle from '../components/RuleOfThirdsToggle.vue'
+import BaselineGridToggle from '../components/BaselineGridToggle.vue'
 import CrtScanlineToggle from '../components/CrtScanlineToggle.vue'
 import MatrixRainToggle from '../components/MatrixRainToggle.vue'
 import PrivacyBlurToggle from '../components/PrivacyBlurToggle.vue'
