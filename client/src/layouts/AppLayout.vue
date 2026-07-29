@@ -427,6 +427,8 @@
 
       <BirthWeekdayButton />
 
+      <NextBirthdayButton />
+
       <DateDiffButton />
 
       <LeapYearButton />
@@ -785,6 +787,7 @@ import AgeCalculatorButton from '../components/AgeCalculatorButton.vue'
 import PlanetAgeButton from '../components/PlanetAgeButton.vue'
 import DaysAliveButton from '../components/DaysAliveButton.vue'
 import BirthWeekdayButton from '../components/BirthWeekdayButton.vue'
+import NextBirthdayButton from '../components/NextBirthdayButton.vue'
 import DateDiffButton from '../components/DateDiffButton.vue'
 import LeapYearButton from '../components/LeapYearButton.vue'
 import TipCalcButton from '../components/TipCalcButton.vue'
