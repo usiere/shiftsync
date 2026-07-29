@@ -459,6 +459,8 @@
 
       <ColorPickerButton />
 
+      <RgbHslButton />
+
       <NamedColorButton />
 
       <RandomColorButton />
@@ -790,6 +792,7 @@ import PasswordGenButton from '../components/PasswordGenButton.vue'
 import PasswordStrengthButton from '../components/PasswordStrengthButton.vue'
 import DicewareButton from '../components/DicewareButton.vue'
 import ColorPickerButton from '../components/ColorPickerButton.vue'
+import RgbHslButton from '../components/RgbHslButton.vue'
 import NamedColorButton from '../components/NamedColorButton.vue'
 import RandomColorButton from '../components/RandomColorButton.vue'
 import DiceRollButton from '../components/DiceRollButton.vue'
