@@ -365,6 +365,8 @@
 
       <NumberWordsButton />
 
+      <OrdinalButton />
+
       <NumberFormatButton />
 
       <TextReverserButton />
@@ -760,6 +762,7 @@ import GitCheatButton from '../components/GitCheatButton.vue'
 import UserAgentButton from '../components/UserAgentButton.vue'
 import RomanNumeralsButton from '../components/RomanNumeralsButton.vue'
 import NumberWordsButton from '../components/NumberWordsButton.vue'
+import OrdinalButton from '../components/OrdinalButton.vue'
 import NumberFormatButton from '../components/NumberFormatButton.vue'
 import TextReverserButton from '../components/TextReverserButton.vue'
 import AnagramButton from '../components/AnagramButton.vue'
