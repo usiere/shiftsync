@@ -267,6 +267,8 @@
 
       <VigenereButton />
 
+      <XorCipherButton />
+
       <MorseCodeButton />
 
       <LeetspeakButton />
@@ -705,6 +707,7 @@ import Base64Button from '../components/Base64Button.vue'
 import CaesarCipherButton from '../components/CaesarCipherButton.vue'
 import AesCipherButton from '../components/AesCipherButton.vue'
 import VigenereButton from '../components/VigenereButton.vue'
+import XorCipherButton from '../components/XorCipherButton.vue'
 import MorseCodeButton from '../components/MorseCodeButton.vue'
 import LeetspeakButton from '../components/LeetspeakButton.vue'
 import PigLatinButton from '../components/PigLatinButton.vue'
