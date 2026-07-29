@@ -441,6 +441,8 @@
 
       <OhmsLawButton />
 
+      <HalfLifeButton />
+
       <BmiCalcButton />
 
       <PercentCalcButton />
@@ -798,6 +800,7 @@ import TipCalcButton from '../components/TipCalcButton.vue'
 import LoanCalcButton from '../components/LoanCalcButton.vue'
 import CompoundInterestButton from '../components/CompoundInterestButton.vue'
 import OhmsLawButton from '../components/OhmsLawButton.vue'
+import HalfLifeButton from '../components/HalfLifeButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
 import DistanceCalcButton from '../components/DistanceCalcButton.vue'
