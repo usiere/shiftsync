@@ -257,6 +257,8 @@
 
       <FuelEconomyButton />
 
+      <SpeedConvertButton />
+
       <CurrencyConvertButton />
 
       <Base64Button />
@@ -722,6 +724,7 @@ import QuickCalcButton from '../components/QuickCalcButton.vue'
 import UnitConverterButton from '../components/UnitConverterButton.vue'
 import CookingConvertButton from '../components/CookingConvertButton.vue'
 import FuelEconomyButton from '../components/FuelEconomyButton.vue'
+import SpeedConvertButton from '../components/SpeedConvertButton.vue'
 import CurrencyConvertButton from '../components/CurrencyConvertButton.vue'
 import Base64Button from '../components/Base64Button.vue'
 import CaesarCipherButton from '../components/CaesarCipherButton.vue'
