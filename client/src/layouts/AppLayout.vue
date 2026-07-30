@@ -389,6 +389,8 @@
 
       <DivisorsButton />
 
+      <ModuloButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -865,6 +867,7 @@ import GcdLcmButton from '../components/GcdLcmButton.vue'
 import QuadraticSolverButton from '../components/QuadraticSolverButton.vue'
 import PrimeFactorButton from '../components/PrimeFactorButton.vue'
 import DivisorsButton from '../components/DivisorsButton.vue'
+import ModuloButton from '../components/ModuloButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
