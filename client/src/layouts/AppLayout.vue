@@ -391,6 +391,8 @@
 
       <PythagorasButton />
 
+      <CircleGeometryButton />
+
       <PrimeFactorButton />
 
       <DivisorsButton />
@@ -880,6 +882,7 @@ import FibonacciButton from '../components/FibonacciButton.vue'
 import GcdLcmButton from '../components/GcdLcmButton.vue'
 import QuadraticSolverButton from '../components/QuadraticSolverButton.vue'
 import PythagorasButton from '../components/PythagorasButton.vue'
+import CircleGeometryButton from '../components/CircleGeometryButton.vue'
 import PrimeFactorButton from '../components/PrimeFactorButton.vue'
 import DivisorsButton from '../components/DivisorsButton.vue'
 import ModuloButton from '../components/ModuloButton.vue'
