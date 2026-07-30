@@ -451,6 +451,8 @@
 
       <PercentChangeButton />
 
+      <DiscountCalcButton />
+
       <DistanceCalcButton />
 
       <TrigCalcButton />
@@ -808,6 +810,7 @@ import HalfLifeButton from '../components/HalfLifeButton.vue'
 import BmiCalcButton from '../components/BmiCalcButton.vue'
 import PercentCalcButton from '../components/PercentCalcButton.vue'
 import PercentChangeButton from '../components/PercentChangeButton.vue'
+import DiscountCalcButton from '../components/DiscountCalcButton.vue'
 import DistanceCalcButton from '../components/DistanceCalcButton.vue'
 import TrigCalcButton from '../components/TrigCalcButton.vue'
 import AspectRatioButton from '../components/AspectRatioButton.vue'
