@@ -399,6 +399,8 @@
 
       <ModuloButton />
 
+      <CollatzButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
