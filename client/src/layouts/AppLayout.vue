@@ -423,6 +423,8 @@
 
       <LookAndSayButton />
 
+      <PowerOfTwoButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -921,6 +923,7 @@ import PascalRowButton from '../components/PascalRowButton.vue'
 import DigitalRootButton from '../components/DigitalRootButton.vue'
 import AsciiValueButton from '../components/AsciiValueButton.vue'
 import LookAndSayButton from '../components/LookAndSayButton.vue'
+import PowerOfTwoButton from '../components/PowerOfTwoButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
