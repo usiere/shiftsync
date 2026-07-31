@@ -403,6 +403,8 @@
 
       <PerfectNumberButton />
 
+      <ArmstrongNumberButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -891,6 +893,7 @@ import PrimeFactorButton from '../components/PrimeFactorButton.vue'
 import DivisorsButton from '../components/DivisorsButton.vue'
 import ModuloButton from '../components/ModuloButton.vue'
 import PerfectNumberButton from '../components/PerfectNumberButton.vue'
+import ArmstrongNumberButton from '../components/ArmstrongNumberButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
