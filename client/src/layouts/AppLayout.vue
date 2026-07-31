@@ -401,6 +401,8 @@
 
       <CollatzButton />
 
+      <PerfectNumberButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -888,6 +890,7 @@ import CircleGeometryButton from '../components/CircleGeometryButton.vue'
 import PrimeFactorButton from '../components/PrimeFactorButton.vue'
 import DivisorsButton from '../components/DivisorsButton.vue'
 import ModuloButton from '../components/ModuloButton.vue'
+import PerfectNumberButton from '../components/PerfectNumberButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
