@@ -407,6 +407,8 @@
 
       <HappyNumberButton />
 
+      <TriangularNumberButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -897,6 +899,7 @@ import ModuloButton from '../components/ModuloButton.vue'
 import PerfectNumberButton from '../components/PerfectNumberButton.vue'
 import ArmstrongNumberButton from '../components/ArmstrongNumberButton.vue'
 import HappyNumberButton from '../components/HappyNumberButton.vue'
+import TriangularNumberButton from '../components/TriangularNumberButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
