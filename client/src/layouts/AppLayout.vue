@@ -106,6 +106,8 @@
 
       <DayOfYearChip class="me-4" />
 
+      <QuarterChip class="me-4" />
+
       <JulianDateChip class="me-4" />
 
       <UnixEpochChip class="me-4" />
@@ -716,6 +718,7 @@ import LogoutConfirmDialog from '../components/LogoutConfirmDialog.vue'
 import TopbarClock from '../components/TopbarClock.vue'
 import IsoWeekChip from '../components/IsoWeekChip.vue'
 import DayOfYearChip from '../components/DayOfYearChip.vue'
+import QuarterChip from '../components/QuarterChip.vue'
 import JulianDateChip from '../components/JulianDateChip.vue'
 import UnixEpochChip from '../components/UnixEpochChip.vue'
 import WeekParityChip from '../components/WeekParityChip.vue'
