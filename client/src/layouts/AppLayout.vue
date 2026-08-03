@@ -427,6 +427,8 @@
 
       <SlopeCalcButton />
 
+      <MidpointButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -927,6 +929,7 @@ import AsciiValueButton from '../components/AsciiValueButton.vue'
 import LookAndSayButton from '../components/LookAndSayButton.vue'
 import PowerOfTwoButton from '../components/PowerOfTwoButton.vue'
 import SlopeCalcButton from '../components/SlopeCalcButton.vue'
+import MidpointButton from '../components/MidpointButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
