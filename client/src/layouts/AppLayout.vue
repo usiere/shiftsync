@@ -443,6 +443,8 @@
 
       <EasterDateButton />
 
+      <ResistorColorButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -951,6 +953,7 @@ import LuhnCheckButton from '../components/LuhnCheckButton.vue'
 import IsbnCheckButton from '../components/IsbnCheckButton.vue'
 import ClockAngleButton from '../components/ClockAngleButton.vue'
 import EasterDateButton from '../components/EasterDateButton.vue'
+import ResistorColorButton from '../components/ResistorColorButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
