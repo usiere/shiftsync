@@ -433,6 +433,8 @@
 
       <CylinderGeometryButton />
 
+      <ConeGeometryButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -936,6 +938,7 @@ import SlopeCalcButton from '../components/SlopeCalcButton.vue'
 import MidpointButton from '../components/MidpointButton.vue'
 import SphereGeometryButton from '../components/SphereGeometryButton.vue'
 import CylinderGeometryButton from '../components/CylinderGeometryButton.vue'
+import ConeGeometryButton from '../components/ConeGeometryButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
