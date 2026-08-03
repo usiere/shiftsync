@@ -437,6 +437,8 @@
 
       <LuhnCheckButton />
 
+      <IsbnCheckButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -942,6 +944,7 @@ import SphereGeometryButton from '../components/SphereGeometryButton.vue'
 import CylinderGeometryButton from '../components/CylinderGeometryButton.vue'
 import ConeGeometryButton from '../components/ConeGeometryButton.vue'
 import LuhnCheckButton from '../components/LuhnCheckButton.vue'
+import IsbnCheckButton from '../components/IsbnCheckButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
