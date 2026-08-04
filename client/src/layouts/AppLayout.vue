@@ -455,6 +455,8 @@
 
       <EllipseGeometryButton />
 
+      <PyramidGeometryButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -969,6 +971,7 @@ import PizzaCalcButton from '../components/PizzaCalcButton.vue'
 import TrapezoidAreaButton from '../components/TrapezoidAreaButton.vue'
 import RegularPolygonButton from '../components/RegularPolygonButton.vue'
 import EllipseGeometryButton from '../components/EllipseGeometryButton.vue'
+import PyramidGeometryButton from '../components/PyramidGeometryButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
