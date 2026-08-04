@@ -449,6 +449,8 @@
 
       <PizzaCalcButton />
 
+      <TrapezoidAreaButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -960,6 +962,7 @@ import ClockAngleButton from '../components/ClockAngleButton.vue'
 import EasterDateButton from '../components/EasterDateButton.vue'
 import ResistorColorButton from '../components/ResistorColorButton.vue'
 import PizzaCalcButton from '../components/PizzaCalcButton.vue'
+import TrapezoidAreaButton from '../components/TrapezoidAreaButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
