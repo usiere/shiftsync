@@ -467,6 +467,8 @@
 
       <SalesTaxButton />
 
+      <AwgWireButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -987,6 +989,7 @@ import RuleOf72Button from '../components/RuleOf72Button.vue'
 import SimpleInterestButton from '../components/SimpleInterestButton.vue'
 import MarkupMarginButton from '../components/MarkupMarginButton.vue'
 import SalesTaxButton from '../components/SalesTaxButton.vue'
+import AwgWireButton from '../components/AwgWireButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
