@@ -461,6 +461,8 @@
 
       <RuleOf72Button />
 
+      <SimpleInterestButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -978,6 +980,7 @@ import EllipseGeometryButton from '../components/EllipseGeometryButton.vue'
 import PyramidGeometryButton from '../components/PyramidGeometryButton.vue'
 import SectorArcButton from '../components/SectorArcButton.vue'
 import RuleOf72Button from '../components/RuleOf72Button.vue'
+import SimpleInterestButton from '../components/SimpleInterestButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
