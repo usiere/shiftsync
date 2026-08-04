@@ -469,6 +469,8 @@
 
       <AwgWireButton />
 
+      <WavelengthButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -990,6 +992,7 @@ import SimpleInterestButton from '../components/SimpleInterestButton.vue'
 import MarkupMarginButton from '../components/MarkupMarginButton.vue'
 import SalesTaxButton from '../components/SalesTaxButton.vue'
 import AwgWireButton from '../components/AwgWireButton.vue'
+import WavelengthButton from '../components/WavelengthButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
