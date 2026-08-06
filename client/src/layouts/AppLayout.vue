@@ -481,6 +481,8 @@
 
       <KineticEnergyButton />
 
+      <TorusGeometryButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1008,6 +1010,7 @@ import RectangleGeometryButton from '../components/RectangleGeometryButton.vue'
 import WindChillButton from '../components/WindChillButton.vue'
 import HeatIndexButton from '../components/HeatIndexButton.vue'
 import KineticEnergyButton from '../components/KineticEnergyButton.vue'
+import TorusGeometryButton from '../components/TorusGeometryButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
