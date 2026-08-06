@@ -473,6 +473,8 @@
 
       <TarotCardButton />
 
+      <RectangleGeometryButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -996,6 +998,7 @@ import SalesTaxButton from '../components/SalesTaxButton.vue'
 import AwgWireButton from '../components/AwgWireButton.vue'
 import WavelengthButton from '../components/WavelengthButton.vue'
 import TarotCardButton from '../components/TarotCardButton.vue'
+import RectangleGeometryButton from '../components/RectangleGeometryButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
