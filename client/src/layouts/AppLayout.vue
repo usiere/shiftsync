@@ -477,6 +477,8 @@
 
       <WindChillButton />
 
+      <HeatIndexButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1002,6 +1004,7 @@ import WavelengthButton from '../components/WavelengthButton.vue'
 import TarotCardButton from '../components/TarotCardButton.vue'
 import RectangleGeometryButton from '../components/RectangleGeometryButton.vue'
 import WindChillButton from '../components/WindChillButton.vue'
+import HeatIndexButton from '../components/HeatIndexButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
