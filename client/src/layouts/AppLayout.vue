@@ -497,6 +497,8 @@
 
       <FrustumGeometryButton />
 
+      <TetrahedronGeometryButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1032,6 +1034,7 @@ import DepreciationButton from '../components/DepreciationButton.vue'
 import BsaButton from '../components/BsaButton.vue'
 import ForceButton from '../components/ForceButton.vue'
 import FrustumGeometryButton from '../components/FrustumGeometryButton.vue'
+import TetrahedronGeometryButton from '../components/TetrahedronGeometryButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
