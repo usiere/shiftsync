@@ -489,6 +489,8 @@
 
       <BreakEvenButton />
 
+      <DepreciationButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1020,6 +1022,7 @@ import TorusGeometryButton from '../components/TorusGeometryButton.vue'
 import DewPointButton from '../components/DewPointButton.vue'
 import PresentValueButton from '../components/PresentValueButton.vue'
 import BreakEvenButton from '../components/BreakEvenButton.vue'
+import DepreciationButton from '../components/DepreciationButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
