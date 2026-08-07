@@ -493,6 +493,8 @@
 
       <BsaButton />
 
+      <ForceButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1026,6 +1028,7 @@ import PresentValueButton from '../components/PresentValueButton.vue'
 import BreakEvenButton from '../components/BreakEvenButton.vue'
 import DepreciationButton from '../components/DepreciationButton.vue'
 import BsaButton from '../components/BsaButton.vue'
+import ForceButton from '../components/ForceButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
