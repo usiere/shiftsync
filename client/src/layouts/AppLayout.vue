@@ -503,6 +503,8 @@
 
       <Vector2DButton />
 
+      <Matrix2x2Button />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1041,6 +1043,7 @@ import FrustumGeometryButton from '../components/FrustumGeometryButton.vue'
 import TetrahedronGeometryButton from '../components/TetrahedronGeometryButton.vue'
 import RightTriangleButton from '../components/RightTriangleButton.vue'
 import Vector2DButton from '../components/Vector2DButton.vue'
+import Matrix2x2Button from '../components/Matrix2x2Button.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
