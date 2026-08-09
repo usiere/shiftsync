@@ -511,6 +511,8 @@
 
       <RacePaceButton />
 
+      <VoltageDividerButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1053,6 +1055,7 @@ import Matrix2x2Button from '../components/Matrix2x2Button.vue'
 import PrismGeometryButton from '../components/PrismGeometryButton.vue'
 import CoffeeRatioButton from '../components/CoffeeRatioButton.vue'
 import RacePaceButton from '../components/RacePaceButton.vue'
+import VoltageDividerButton from '../components/VoltageDividerButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
