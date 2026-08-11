@@ -521,6 +521,8 @@
 
       <ScreenDpiButton />
 
+      <ParallelResistanceButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1068,6 +1070,7 @@ import RcTimeButton from '../components/RcTimeButton.vue'
 import BirthstoneButton from '../components/BirthstoneButton.vue'
 import AnniversaryButton from '../components/AnniversaryButton.vue'
 import ScreenDpiButton from '../components/ScreenDpiButton.vue'
+import ParallelResistanceButton from '../components/ParallelResistanceButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
