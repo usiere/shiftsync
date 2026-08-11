@@ -551,6 +551,8 @@
 
       <FrameTimeButton />
 
+      <HslToHexButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1113,6 +1115,7 @@ import RecipeScalerButton from '../components/RecipeScalerButton.vue'
 import BakersPercentButton from '../components/BakersPercentButton.vue'
 import FuelTripButton from '../components/FuelTripButton.vue'
 import FrameTimeButton from '../components/FrameTimeButton.vue'
+import HslToHexButton from '../components/HslToHexButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
