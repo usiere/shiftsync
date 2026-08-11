@@ -529,6 +529,8 @@
 
       <IpConverterButton />
 
+      <CidrSubnetButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1080,6 +1082,7 @@ import ParallelResistanceButton from '../components/ParallelResistanceButton.vue
 import CapacitorEnergyButton from '../components/CapacitorEnergyButton.vue'
 import RacePredictorButton from '../components/RacePredictorButton.vue'
 import IpConverterButton from '../components/IpConverterButton.vue'
+import CidrSubnetButton from '../components/CidrSubnetButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
