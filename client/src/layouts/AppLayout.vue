@@ -525,6 +525,8 @@
 
       <CapacitorEnergyButton />
 
+      <RacePredictorButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1074,6 +1076,7 @@ import AnniversaryButton from '../components/AnniversaryButton.vue'
 import ScreenDpiButton from '../components/ScreenDpiButton.vue'
 import ParallelResistanceButton from '../components/ParallelResistanceButton.vue'
 import CapacitorEnergyButton from '../components/CapacitorEnergyButton.vue'
+import RacePredictorButton from '../components/RacePredictorButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
