@@ -547,6 +547,8 @@
 
       <BakersPercentButton />
 
+      <FuelTripButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1107,6 +1109,7 @@ import TdeeButton from '../components/TdeeButton.vue'
 import IdealWeightButton from '../components/IdealWeightButton.vue'
 import RecipeScalerButton from '../components/RecipeScalerButton.vue'
 import BakersPercentButton from '../components/BakersPercentButton.vue'
+import FuelTripButton from '../components/FuelTripButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
