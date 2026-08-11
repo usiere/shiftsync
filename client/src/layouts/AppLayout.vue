@@ -537,6 +537,8 @@
 
       <BloodTypeButton />
 
+      <CocktailButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1092,6 +1094,7 @@ import CidrSubnetButton from '../components/CidrSubnetButton.vue'
 import NoteFrequencyButton from '../components/NoteFrequencyButton.vue'
 import EloButton from '../components/EloButton.vue'
 import BloodTypeButton from '../components/BloodTypeButton.vue'
+import CocktailButton from '../components/CocktailButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
