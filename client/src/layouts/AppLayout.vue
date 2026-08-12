@@ -573,6 +573,8 @@
 
       <Vo2MaxButton />
 
+      <UuidV1DecodeButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1146,6 +1148,7 @@ import SpeedOfSoundButton from '../components/SpeedOfSoundButton.vue'
 import SnellLawButton from '../components/SnellLawButton.vue'
 import KarvonenButton from '../components/KarvonenButton.vue'
 import Vo2MaxButton from '../components/Vo2MaxButton.vue'
+import UuidV1DecodeButton from '../components/UuidV1DecodeButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
