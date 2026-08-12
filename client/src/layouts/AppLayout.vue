@@ -577,6 +577,8 @@
 
       <SnowflakeButton />
 
+      <FermiEstimateButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1152,6 +1154,7 @@ import KarvonenButton from '../components/KarvonenButton.vue'
 import Vo2MaxButton from '../components/Vo2MaxButton.vue'
 import UuidV1DecodeButton from '../components/UuidV1DecodeButton.vue'
 import SnowflakeButton from '../components/SnowflakeButton.vue'
+import FermiEstimateButton from '../components/FermiEstimateButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
