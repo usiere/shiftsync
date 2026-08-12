@@ -569,6 +569,8 @@
 
       <SnellLawButton />
 
+      <KarvonenButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1140,6 +1142,7 @@ import RentSplitButton from '../components/RentSplitButton.vue'
 import DopplerButton from '../components/DopplerButton.vue'
 import SpeedOfSoundButton from '../components/SpeedOfSoundButton.vue'
 import SnellLawButton from '../components/SnellLawButton.vue'
+import KarvonenButton from '../components/KarvonenButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
