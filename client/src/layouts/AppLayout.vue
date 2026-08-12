@@ -561,6 +561,8 @@
 
       <PercentOfButton />
 
+      <RentSplitButton />
+
       <GradientGenButton />
 
       <BoxShadowGenButton />
@@ -1128,6 +1130,7 @@ import IChingButton from '../components/IChingButton.vue'
 import UnitPriceButton from '../components/UnitPriceButton.vue'
 import DbSumButton from '../components/DbSumButton.vue'
 import PercentOfButton from '../components/PercentOfButton.vue'
+import RentSplitButton from '../components/RentSplitButton.vue'
 import FullscreenToggle from '../components/FullscreenToggle.vue'
 import WakeLockToggle from '../components/WakeLockToggle.vue'
 import SidebarWidthMenu from '../components/SidebarWidthMenu.vue'
